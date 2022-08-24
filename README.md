@@ -1,6 +1,3 @@
-# dots: personal configs
-
-
 ## 💊 post-install
 
 ```shell
