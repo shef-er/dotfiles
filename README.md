@@ -42,7 +42,7 @@ sudo pacman -Rs arc-gtk-theme-eos eos-qogit-icons
 
 ## 🧠 hardware
 
-## power optimization
+### power optimization
 
 ```shell
 sudo pacman -S tlp tlp-rdw
