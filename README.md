@@ -29,17 +29,6 @@ timedatectl
 ```
 
 
-## 🔪 unwanted apps
-
-```shell
-sudo pacman -Rs xterm
-sudo pacman -Rs pavucontrol
-sudo pacman -Rs firewalld
-sudo pacman -Rs stoken openconnect
-sudo pacman -Rs arc-gtk-theme-eos eos-qogit-icons
-```
-
-
 ## 🧠 hardware
 
 ### power optimization
@@ -193,17 +182,22 @@ exit
 sudo systemctl restart gdm
 ```
 
-### nice extensions
 
-* [Quick Close in Overview](https://extensions.gnome.org/extension/352/middle-click-to-close-in-overview/)
-* [Miniview](https://extensions.gnome.org/extension/1459/miniview/)
-* [gTile](https://extensions.gnome.org/extension/28/gtile/)
-
-
-## 💈 apps
+## 💡 usefull apps
 
 ```shell
 sudo pacman -S transmission-gtk gimp inkscape rhythmbox picard
+```
+
+
+## 🔪 unwanted apps
+
+```shell
+sudo pacman -Rs xterm
+sudo pacman -Rs pavucontrol
+sudo pacman -Rs firewalld
+sudo pacman -Rs stoken openconnect
+sudo pacman -Rs arc-gtk-theme-eos eos-qogit-icons
 ```
 
 
