@@ -163,7 +163,7 @@ gsettings set org.gnome.desktop.interface font-antialiasing 'grayscale'
 gsettings set org.gnome.desktop.interface font-hinting 'full'
 ```
 
-### gdm tap-to-click
+### enable gdm tap-to-click
 
 ```shell
 ## enter root mode
