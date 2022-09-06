@@ -12,6 +12,7 @@ chsh -s /bin/zsh
 git config --global user.name "Ernest Shefer"
 git config --global core.editor nano
 git config --global core.autocrlf input
+git config --global core.safecrlf true
 git config --global core.filemode false
 git config --global credential.helper cache
 git config --global pull.rebase false
