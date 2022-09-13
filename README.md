@@ -217,3 +217,10 @@ sudo usermod -aG docker $USER
 docker run hello-world
 ```
 
+
+
+## 🦊 firefox tweaks
+
+### disable pocket
+Go to [about:config](about:config) and disable `extensions.pocket.enabled` setting 
+
