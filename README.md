@@ -5,7 +5,7 @@
 sudo pacman -Syu
 
 ## shell tools
-sudo pacman -S git git-lfs zsh zsh-autosuggestions zsh-completions htop
+sudo pacman -S git git-lfs zsh zsh-autosuggestions zsh-completions btop
 chsh -s /bin/zsh
 
 ## git config
