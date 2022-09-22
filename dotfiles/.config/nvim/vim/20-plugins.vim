@@ -14,47 +14,16 @@ endif
 
 call plug#begin(plugged_dir)
 
-""
-"" Plugins: Syntax
-""
-
 "Plug 'sheerun/vim-polyglot'
 
-"" WebDev
-"Plug 'tpope/vim-liquid'
-"Plug 'hail2u/vim-css3-syntax'
-"Plug 'cakebaker/scss-syntax.vim'
-"Plug 'groenewege/vim-less'
-
-
-""
-"" Plugins: Linting
-""
 
 "" Asynchronous Lint Engine
 "Plug 'w0rp/ale'
 
-"" Alternative great linter
-"Plug 'vim-syntastic/syntastic'
 
-
-""
-"" Plugins: Autocompletion
-""
-
-"" IntelliSense
-"Plug 'neoclide/coc.nvim', {'branch': 'release'}
-
-"" Deoplete
+"" Deoplete completion
 "Plug 'shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 
-"" HTML closing tag completion
-"Plug 'alvan/vim-closetag'
-
-
-""
-"" Plugins: Tools
-""
 
 "" Fuzzy search
 "Plug 'junegunn/fzf'
@@ -69,21 +38,11 @@ Plug 'scrooloose/nerdcommenter'
 Plug 'majutsushi/tagbar'
 
 "" Git
-"Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 "Plug 'xuyuanp/nerdtree-git-plugin'
 
-"" Display vertical indetation level lines
-"Plug 'yggdroot/indentline'
-
 "" Close buffer leaving split or window
 Plug 'qpkorr/vim-bufkill'
-
-"" Status line replacement
-"Plug 'itchyny/lightline.vim'
-
-"" Sublime text-like multiple cursors
-"Plug 'terryma/vim-multiple-cursors'
 
 call plug#end()
 
