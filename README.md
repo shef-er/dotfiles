@@ -137,6 +137,9 @@ sudo pacman -S \
 ### settings
 
 ```shell
+## wise gnome tracker search index size 
+gsettings set org.freedesktop.Tracker3.Extract max-bytes 10000
+
 ## tap to click
 gsettings set org.gnome.desktop.peripherals.touchpad tap-to-click true
 
