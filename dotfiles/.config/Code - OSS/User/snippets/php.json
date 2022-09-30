@@ -1,66 +1,66 @@
 {
-  "Echo": {
+  "echo": {
     "prefix": "eco",
     "body": "echo \"$0\";",
     "description": "'echo' statement"
   },
 
-  "Include statement": {
+  "include": {
     "prefix": "inc",
     "body": "include \"$0\";",
     "description": "'include' statement"
   },
-  "Include_once statement": {
+  "include_once": {
     "prefix": "inco",
     "body": "include_once \"$0\";",
     "description": "'include_once' statement"
   },
 
-  "Require statement": {
+  "require": {
     "prefix": "rqr",
     "body": "require \"$0\";",
     "description": "'require' statement"
   },
-  "Require_once statement": {
+  "require_once": {
     "prefix": "rqro",
     "body": "require_once \"$0\";",
     "description": "'require_once' statement"
   },
 
-  "Throw new": {
+  "throw new": {
     "prefix": "thr",
     "body": "throw new $0",
     "description": "throw new"
   },
 
-  "Private method": {
+  "private method": {
     "prefix": "prif",
     "body": ["private function ${1:method}($2)$3", "{", "\t$0", "}"],
     "description": "private function"
   },
-  "Private static method": {
+  "private static method": {
     "prefix": "prisf",
     "body": ["private static function ${1:method}($2)$3", "{", "\t$0", "}"],
     "description": "private static function"
   },
 
-  "Protected method": {
+  "protected method": {
     "prefix": "prof",
     "body": ["protected function ${1:method}($2)$3", "{", "\t$0", "}"],
     "description": "protected function"
   },
-  "Protected static method": {
+  "protected static method": {
     "prefix": "prosf",
     "body": ["protected static function ${1:method}($2)$3", "{", "\t$0", "}"],
     "description": "protected static function"
   },
 
-  "Public method": {
+  "public method": {
     "prefix": "pubf",
     "body": ["public function ${1:method}($2)$3", "{", "\t$0", "}"],
     "description": "public function"
   },
-  "Public static method": {
+  "public static method": {
     "prefix": "pubsf",
     "body": ["public static function ${1:method}($2)$3", "{", "\t$0", "}"],
     "description": "public static function"
