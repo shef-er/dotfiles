@@ -19,7 +19,7 @@ git config --global pull.rebase false
 git config --global init.defaultBranch master
 ```
 
-## 👯‍♀️ clones
+## 🃏 clone
 
 ```shell
 cd
