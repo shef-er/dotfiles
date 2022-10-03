@@ -39,27 +39,71 @@ function precmd {
 }
 
 
+# function custom_prompt {
+
+#   case `id -u` in
+#     0)
+#       local PROMPT=" %F{red}#%k%f%s"
+#       ;;
+#     *)
+#       local PROMPT=" %F{green}→%k%f%s"
+#       ;;
+#   esac
+
+#   local PROMPT_PATH=" %F{blue}%2~%k%f%s"
+#   #local PROMPT_VCS=" %F{blue}${vcs_info_msg_0_}%k%f%s"
+
+#   #local VCS="${vcs_info_msg_0_}"
+#   #vcs_info
+#   #[[ -n "$VCS" ]] && echo 'test'
+
+
+#   echo "${PROMPT_VCS}${PROMPT_PATH}${PROMPT}%k%f%s "
+# }
+
 function custom_prompt {
+  echo -n "%B"
 
-  case `id -u` in
-    0)
-      local PROMPT=" %F{red}#%k%f%s"
-      ;;
-    *)
-      local PROMPT=" %F{green}→%k%f%s"
-      ;;
-  esac
+  function prompt_sign {
+    case $(id -u) in
+      0)
+        echo -n "%F{red}"
+        echo -n "#"
+        ;;
+      *)
+        echo -n "%F{green}"
+        echo -n "→"
+        ;;
+    esac
+    echo -n "%k%f%s"
+    echo -n " "
+  }
 
-  local PROMPT_PATH=" %F{blue}%2~%k%f%s"
-  #local PROMPT_VCS=" %F{blue}${vcs_info_msg_0_}%k%f%s"
+  function prompt_path {
+    echo -n "%F{blue}"
+    echo -n "%2~"
+    echo -n "%k%f%s"
+    echo -n " "
+  }
 
-  #local VCS="${vcs_info_msg_0_}"
-  #vcs_info
-  #[[ -n "$VCS" ]] && echo 'test'
+  function prompt_vcs {
+    if [[ ! -n $vcs_info_msg_0_ ]]; then
+      exit
+    fi
 
+    echo -n "%F{blue}"
+    echo -n "$vcs_info_msg_0_"
+    echo -n "%k%f%s"
+    echo -n " "
+  }
 
-  echo "${PROMPT_VCS}${PROMPT_PATH}${PROMPT}%k%f%s "
+  echo -n " "
+  echo -n "$(prompt_path)"
+  echo -n "$(prompt_sign)"
+
+  echo -n "%b"
 }
 
-export PROMPT="$(custom_prompt)"
+export PROMPT=$(custom_prompt)
 
+unfunction custom_prompt
