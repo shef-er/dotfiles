@@ -137,6 +137,11 @@ sudo pacman -S \
 ### settings
 
 ```shell
+## permamently disable tracker-miner-fs and free cache
+gsettings set org.freedesktop.Tracker3.Miner.Files crawling-interval -2
+gsettings set org.freedesktop.Tracker3.Miner.Files enable-monitors false
+tracker3 reset --filesystem
+
 ## wise gnome tracker search index size 
 gsettings set org.freedesktop.Tracker3.Extract max-bytes 10000
 
