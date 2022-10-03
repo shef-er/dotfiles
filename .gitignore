@@ -1,0 +1,34 @@
+/*
+
+!.gitignore
+!README.md
+
+
+!.config/
+.config/*
+
+## btop
+.config/btop/*
+!.config/btop/
+!.config/btop/btop.conf
+
+## ssh
+.ssh/*
+!.ssh/
+!.ssh/config
+
+## zsh
+.zsh.d/*
+!.zsh.d/
+!.zsh.d/00-init.zsh
+!.zsh.d/10-completion.zsh
+!.zsh.d/20-prompt.zsh
+!.zsh.d/30-keys.zsh
+!.zsh.d/40-colors.zsh
+!.zsh.d/50-aliases.zsh
+!.zsh.d/90-archives.zsh
+!.zsh.d/90-etc.zsh
+!.zsh.d/90-media.zsh
+!.zprofile
+!.zshenv
+!.zshrc

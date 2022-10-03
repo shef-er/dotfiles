@@ -17,29 +17,43 @@ git config --global core.filemode false
 git config --global credential.helper cache
 git config --global pull.rebase false
 git config --global init.defaultBranch master
+```
 
-## neovim
-sudo pacman -S neovim wl-clipboard
+### clone current repo into home dir
 
-## disable pc speaker kernel module (reboot after)
-echo "blacklist pcspkr" | sudo tee /etc/modprobe.d/nobeep.conf
+```shell
+cd
+git init
+git remote add origin git@github.com:shef-er/dotfiles.git
+git fetch
+# git reset origin/master
+git checkout -t origin/master
+```
 
-## check time and language settings
+### check time and language settings
+
+```shell
 localectl
 timedatectl
 ```
 
-
 ## 🧠 hardware
+
+### disable hw speaker
+```shell
+echo "blacklist pcspkr" | sudo tee /etc/modprobe.d/nobeep.conf
+```
+
 
 ### power optimization
 
 ```shell
+## tlp
 sudo pacman -S tlp tlp-rdw
 sudo systemctl enable --now tlp.service
 sudo systemctl enable --now NetworkManager-dispatcher.service
 
-## set up your tlp configuration
+## set tlp settings: https://linrunner.de/tlp/settings/index.html
 nano /etc/tlp.conf
 sudo systemctl restart tlp.service
 ```
@@ -229,11 +243,11 @@ docker run hello-world
 ## 🦊 firefox tweaks
 
 ### disable pocket
-Go to [about:config](about:config) and disable `extensions.pocket.enabled` setting 
+
+`about:config > extensions.pocket.enabled`
 
 
 ## Unicode test sheet
-
 
 ```
 UTF-8 encoded sample plain-text file
@@ -438,5 +452,4 @@ Box drawing alignment tests:                                          █
   ║│╱ ╲│║  │║   ║│  ││ │ ││  │║ ┃ ║│  ┃│ ╽ │┃  ░░▒▒▓▓██ ┊  ┆ ╎ ╏  ┇ ┋ ▎
   ║└─╥─┘║  │╚═╤═╝│  │╘═╪═╛│  │╙─╀─╜│  ┃└─╂─┘┃  ░░▒▒▓▓██ ┊  ┆ ╎ ╏  ┇ ┋ ▏
   ╚══╩══╝  └──┴──┘  ╰──┴──╯  ╰──┴──╯  ┗━━┻━━┛           └╌╌┘ ╎ ┗╍╍┛ ┋  ▁▂▃▄▅▆▇█
-
 ```
