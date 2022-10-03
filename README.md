@@ -30,7 +30,7 @@ git reset origin/master
 ```
 
 
-## ⏰ time and lang
+## ⏰ lang & time
 
 ```shell
 localectl
