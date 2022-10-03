@@ -1,4 +1,4 @@
-## 💊 post-install
+## 💊 install
 
 ```shell
 ## get last updates
@@ -19,18 +19,18 @@ git config --global pull.rebase false
 git config --global init.defaultBranch master
 ```
 
-### clone current repo into home dir
+## 👯‍♀️ clones
 
 ```shell
 cd
 git init
 git remote add origin git@github.com:shef-er/dotfiles.git
 git fetch
-# git reset origin/master
-git checkout -t origin/master
+git reset origin/master
 ```
 
-### check time and language settings
+
+## ⏰ time and lang
 
 ```shell
 localectl
@@ -43,7 +43,6 @@ timedatectl
 ```shell
 echo "blacklist pcspkr" | sudo tee /etc/modprobe.d/nobeep.conf
 ```
-
 
 ### power optimization
 
@@ -237,6 +236,14 @@ sudo usermod -aG docker $USER
 
 ## run to check is everything ok
 docker run hello-world
+
+## neovim
+sudo pacman -S neovim wl-clipboard
+git clone git@github.com:shef-er/nvim.git ~/.config/nvim
+
+# code-oss
+sudo pacman -S code
+git clone git@github.com:shef-er/code.git "~/.config/Code - OSS"
 ```
 
 
