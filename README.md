@@ -19,17 +19,6 @@ git config --global pull.rebase false
 git config --global init.defaultBranch master
 ```
 
-## 👯 clone (risky)
-
-```shell
-cd
-git init
-git remote add origin git@github.com:shef-er/dotfiles.git
-git fetch
-git reset origin/master
-```
-
-
 ## ⏰ lang & time
 
 ```shell
