@@ -136,6 +136,18 @@ sudo pacman -S \
   gnome-tweaks
 ```
 
+### language switch
+
+```
+## using caps lock
+gsettings set org.gnome.desktop.input-sources xkb-options "['grp:caps_toggle']"
+
+## using shift + alt
+gsettings set org.gnome.desktop.input-sources xkb-options "['grp:alt_shift_toggle', 'caps:none']"
+gsettings set org.gnome.desktop.wm.keybindings switch-input-source "['<Shift>Alt_L']"
+gsettings set org.gnome.desktop.wm.keybindings switch-input-source-backward "['<Alt>Shift_L']"
+```
+
 ### settings
 
 ```shell
@@ -149,11 +161,6 @@ gsettings set org.freedesktop.Tracker3.Extract max-bytes 10000
 
 ## tap to click
 gsettings set org.gnome.desktop.peripherals.touchpad tap-to-click true
-
-## keyboard
-gsettings set org.gnome.desktop.input-sources xkb-options "['grp:alt_shift_toggle', 'caps:none']"
-gsettings set org.gnome.desktop.wm.keybindings switch-input-source "['<Shift>Alt_L']"
-gsettings set org.gnome.desktop.wm.keybindings switch-input-source-backward "['<Alt>Shift_L']"
 
 ## gnome terminal
 gsettings set org.gnome.Terminal.Legacy.Settings menu-accelerator-enabled false
