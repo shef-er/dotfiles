@@ -29,6 +29,7 @@ timedatectl
 ## 🧠 hardware
 
 ### disable hw speaker
+
 ```shell
 echo "blacklist pcspkr" | sudo tee /etc/modprobe.d/nobeep.conf
 ```
@@ -88,9 +89,11 @@ sudo grub-mkconfig -o /boot/grub/grub.cfg
 ## gnome shell
 sudo pacman -S \
   baobab \
+  dconf-editor \
   eog \
   evince \
   file-roller \
+  fragments \
   gdm \
   gedit \
   gnome-backgrounds \
@@ -101,10 +104,13 @@ sudo pacman -S \
   gnome-color-manager \
   gnome-control-center \
   gnome-disk-utility \
+  gnome-epub-thumbnailer \
+  gnome-firmware \
   gnome-font-viewer \
   gnome-keyring \
   gnome-logs \
   gnome-menus \
+  gnome-passwordsafe \
   gnome-remote-desktop \
   gnome-session \
   gnome-settings-daemon \
@@ -112,8 +118,10 @@ sudo pacman -S \
   gnome-shell-extensions \
   gnome-shell-extension-appindicator \
   gnome-software \
+  gnome-software-packagekit-plugin \
   gnome-system-monitor \
   gnome-terminal \
+  gnome-tweaks \
   gnome-user-share \
   gnome-video-effects \
   gnome-weather \
@@ -121,7 +129,6 @@ sudo pacman -S \
   gvfs \
   gvfs-afc \
   gvfs-goa \
-  gvfs-google \
   gvfs-gphoto2 \
   gvfs-mtp \
   gvfs-nfs \
@@ -130,10 +137,20 @@ sudo pacman -S \
   nautilus \
   sushi \
   tracker3-miners \
-  xdg-user-dirs-gtk \
-  dconf-editor \
-  devhelp \
-  gnome-tweaks
+  xdg-user-dirs-gtk
+
+## daily driver
+sudo pacman -S gimp inkscape rhythmbox picard
+```
+
+## 🔪 unwanted
+
+```shell
+sudo pacman -Rs xterm
+sudo pacman -Rs pavucontrol
+sudo pacman -Rs firewalld
+sudo pacman -Rs stoken openconnect
+sudo pacman -Rs arc-gtk-theme-eos eos-qogit-icons
 ```
 
 ### language switch
@@ -201,30 +218,10 @@ sudo systemctl restart gdm
 ```
 
 
-## 💡 usefull apps
-
-```shell
-sudo pacman -S transmission-gtk gimp inkscape rhythmbox picard
-```
-
-
-## 🔪 unwanted apps
-
-```shell
-sudo pacman -Rs xterm
-sudo pacman -Rs pavucontrol
-sudo pacman -Rs firewalld
-sudo pacman -Rs stoken openconnect
-sudo pacman -Rs arc-gtk-theme-eos eos-qogit-icons
-```
-
 
 ## 🧰 development
 
 ```shell
-## vpn
-sudo pacman -S networkmanager-fortisslvpn
-
 ## docker
 sudo pacman -S docker docker-compose
 sudo systemctl enable --now docker.service
