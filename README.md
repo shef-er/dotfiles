@@ -95,7 +95,6 @@ sudo pacman -S \
   file-roller \
   fragments \
   gdm \
-  gedit \
   gnome-backgrounds \
   gnome-calculator \
   gnome-calendar \
@@ -121,6 +120,7 @@ sudo pacman -S \
   gnome-software \
   gnome-software-packagekit-plugin \
   gnome-system-monitor \
+  gnome-text-editor \
   gnome-tweaks \
   gnome-user-share \
   gnome-video-effects \
