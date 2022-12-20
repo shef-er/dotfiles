@@ -143,14 +143,10 @@ sudo pacman -S \
 sudo pacman -S gimp inkscape rhythmbox picard
 ```
 
-## 🔪 unwanted eOS deafults
+## 🔪 unwanted eOS defaults
 
 ```shell
-sudo pacman -Rs xterm
-sudo pacman -Rs pavucontrol
-sudo pacman -Rs firewalld
-sudo pacman -Rs stoken openconnect
-sudo pacman -Rs arc-gtk-theme-eos eos-qogit-icons
+sudo pacman -Rs xterm pavucontrol firewalld stoken openconnect arc-gtk-theme-eos eos-qogit-icons
 ```
 
 ### language switch
