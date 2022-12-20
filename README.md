@@ -7,7 +7,7 @@ sudo pacman -Syu \
   zsh \
   zsh-autosuggestions \
   zsh-completions \
-  btop
+  htop
 chsh -s /bin/zsh
 
 git config --global user.name "Ernest Shefer"

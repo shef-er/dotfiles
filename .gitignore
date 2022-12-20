@@ -6,10 +6,10 @@
 /.config/*
 !/.config/
 
-## btop
-/.config/btop/*
-!/.config/btop/
-!/.config/btop/btop.conf
+## htop
+/.config/htop/*
+!/.config/htop/
+!/.config/htop/htoprc
 
 ## ssh
 /.ssh/*
