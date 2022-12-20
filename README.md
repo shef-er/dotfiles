@@ -110,7 +110,6 @@ sudo pacman -S \
   gnome-font-viewer \
   gnome-keyring \
   gnome-logs \
-  gnome-menus \
   gnome-passwordsafe \
   gnome-remote-desktop \
   gnome-session \
@@ -119,12 +118,10 @@ sudo pacman -S \
   gnome-shell-extensions \
   gnome-shell-extension-appindicator \
   gnome-software \
-  gnome-software-packagekit-plugin \
   gnome-system-monitor \
   gnome-text-editor \
   gnome-tweaks \
   gnome-user-share \
-  gnome-video-effects \
   gnome-weather \
   grilo-plugins \
   gvfs \
@@ -144,7 +141,7 @@ sudo pacman -S \
   picard
 ```
 
-## 🔪 unwanted endeavourOS defaults
+### endeavourOS unwanted defaults
 
 ```shell
 sudo pacman -Rs \
@@ -220,7 +217,6 @@ exit
 # restart system or apply changes with
 sudo systemctl restart gdm
 ```
-
 
 
 ## 🧰 development
