@@ -1,14 +1,15 @@
-## 💊 install
+## 💊 essentials
 
 ```shell
-## get last updates
-sudo pacman -Syu
-
-## shell tools
-sudo pacman -S git git-lfs zsh zsh-autosuggestions zsh-completions btop
+sudo pacman -Syu \
+  git \
+  git-lfs 
+  zsh \
+  zsh-autosuggestions \
+  zsh-completions \
+  btop
 chsh -s /bin/zsh
 
-## git config
 git config --global user.name "Ernest Shefer"
 git config --global core.editor nano
 git config --global core.autocrlf input
@@ -37,12 +38,12 @@ echo "blacklist pcspkr" | sudo tee /etc/modprobe.d/nobeep.conf
 ### power optimization
 
 ```shell
-## tlp
+# tlp
 sudo pacman -S tlp tlp-rdw
 sudo systemctl enable --now tlp.service
 sudo systemctl enable --now NetworkManager-dispatcher.service
 
-## set tlp settings: https://linrunner.de/tlp/settings/index.html
+# set tlp settings: https://linrunner.de/tlp/settings/index.html
 nano /etc/tlp.conf
 sudo systemctl restart tlp.service
 ```
@@ -86,7 +87,7 @@ sudo grub-mkconfig -o /boot/grub/grub.cfg
 ### packages
 
 ```shell
-## gnome shell
+# gnome shell
 sudo pacman -S \
   baobab \
   dconf-editor \
@@ -127,35 +128,42 @@ sudo pacman -S \
   gnome-weather \
   grilo-plugins \
   gvfs \
-  gvfs-afc \
   gvfs-goa \
   gvfs-gphoto2 \
   gvfs-mtp \
   gvfs-nfs \
-  gvfs-smb \
-  mutter \
   nautilus \
   sushi \
-  tracker3-miners \
   xdg-user-dirs-gtk
 
-## daily driver
-sudo pacman -S gimp inkscape rhythmbox picard
+# daily driver
+sudo pacman -S \
+  gimp \
+  inkscape \
+  rhythmbox \
+  picard
 ```
 
-## 🔪 unwanted eOS defaults
+## 🔪 unwanted endeavourOS defaults
 
 ```shell
-sudo pacman -Rs xterm pavucontrol firewalld stoken openconnect arc-gtk-theme-eos eos-qogit-icons
+sudo pacman -Rs \
+  xterm \
+  pavucontrol \
+  firewalld \
+  stoken \
+  openconnect \
+  arc-gtk-theme-eos \
+  eos-qogit-icons
 ```
 
 ### language switch
 
 ```
-## using caps lock
+# using caps lock
 gsettings set org.gnome.desktop.input-sources xkb-options "['grp:caps_toggle']"
 
-## using shift + alt
+# using shift + alt
 gsettings set org.gnome.desktop.input-sources xkb-options "['grp:alt_shift_toggle', 'caps:none']"
 gsettings set org.gnome.desktop.wm.keybindings switch-input-source "['<Shift>Alt_L']"
 gsettings set org.gnome.desktop.wm.keybindings switch-input-source-backward "['<Alt>Shift_L']"
@@ -164,22 +172,22 @@ gsettings set org.gnome.desktop.wm.keybindings switch-input-source-backward "['<
 ### settings
 
 ```shell
-## permamently disable tracker-miner-fs and free cache
+# permamently disable tracker-miner-fs and free cache
 gsettings set org.freedesktop.Tracker3.Miner.Files crawling-interval -2
 gsettings set org.freedesktop.Tracker3.Miner.Files enable-monitors false
 tracker3 reset --filesystem
 
-## wise gnome tracker search index size 
+# wise gnome tracker search index size 
 gsettings set org.freedesktop.Tracker3.Extract max-bytes 10000
 
-## tap to click
+# tap to click
 gsettings set org.gnome.desktop.peripherals.touchpad tap-to-click true
 
-## gnome terminal
+# gnome terminal
 gsettings set org.gnome.Terminal.Legacy.Settings menu-accelerator-enabled false
 gsettings set org.gnome.Terminal.Legacy.Settings theme-variant 'light'
 
-## disable ibus hotkeys
+# disable ibus hotkeys
 gsettings set org.freedesktop.ibus.panel.emoji hotkey "@as []"
 gsettings set org.freedesktop.ibus.panel.emoji unicode-hotkey "@as []"
 ```
@@ -197,19 +205,19 @@ gsettings set org.gnome.desktop.interface font-hinting 'full'
 ### enable gdm tap-to-click
 
 ```shell
-## enter root mode
+# enter root mode
 sudo su
 
-## switch to gdm user
+# switch to gdm user
 su - gdm -s /bin/sh
 
 export $(dbus-launch)
 GSETTINGS_BACKEND=dconf gsettings set org.gnome.desktop.peripherals.touchpad tap-to-click true
 
-## exit from the root user
+# exit from the root user
 exit
 
-## restart machine or apply changes with
+# restart system or apply changes with
 sudo systemctl restart gdm
 ```
 
@@ -218,15 +226,13 @@ sudo systemctl restart gdm
 ## 🧰 development
 
 ```shell
-## docker
+# docker
 sudo pacman -S docker docker-compose
 sudo systemctl enable --now docker.service
 sudo usermod -aG docker $USER
-
-## run to check is everything ok
 docker run hello-world
 
-## neovim
+# neovim
 sudo pacman -S neovim wl-clipboard
 git clone git@github.com:shef-er/nvim.git ~/.config/nvim
 

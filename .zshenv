@@ -10,7 +10,5 @@ if ! [[ "$PATH" =~ "$HOME/.local/bin:" ]] ; then
 fi
 
 export EDITOR=nano
-
-# for qt5 apps
 export QT_STYLE_OVERRIDE=GTK+
 
