@@ -102,6 +102,7 @@ sudo pacman -S \
   gnome-characters \
   gnome-clocks \
   gnome-color-manager \
+  gnome-console \
   gnome-control-center \
   gnome-disk-utility \
   gnome-epub-thumbnailer \
@@ -120,7 +121,6 @@ sudo pacman -S \
   gnome-software \
   gnome-software-packagekit-plugin \
   gnome-system-monitor \
-  gnome-terminal \
   gnome-tweaks \
   gnome-user-share \
   gnome-video-effects \
@@ -143,7 +143,7 @@ sudo pacman -S \
 sudo pacman -S gimp inkscape rhythmbox picard
 ```
 
-## 🔪 unwanted
+## 🔪 unwanted eOS deafults
 
 ```shell
 sudo pacman -Rs xterm
