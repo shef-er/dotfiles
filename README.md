@@ -11,6 +11,7 @@ sudo pacman -Syu \
 chsh -s /bin/zsh
 
 git config --global user.name "Ernest Shefer"
+git config --global user.email "<my email>"
 git config --global core.editor nano
 git config --global core.autocrlf input
 git config --global core.safecrlf true
@@ -39,7 +40,7 @@ echo "blacklist pcspkr" | sudo tee /etc/modprobe.d/nobeep.conf
 
 ```shell
 # tlp
-sudo pacman -S tlp tlp-rdw
+sudo pacman -Sy tlp tlp-rdw
 sudo systemctl enable --now tlp.service
 sudo systemctl enable --now NetworkManager-dispatcher.service
 
@@ -61,7 +62,7 @@ extending ssd lifespan: `sudo nano /etc/fstab`:
 ### bluetooth
 
 ```shell
-sudo pacman -S bluez-utils
+sudo pacman -Sy bluez-utils
 sudo systemctl enable --now bluetooth.service
 ```
 
@@ -70,14 +71,14 @@ sudo systemctl enable --now bluetooth.service
 #### intel
 
 ```shell
-sudo pacman -S intel-ucode
+sudo pacman -Sy intel-ucode
 sudo grub-mkconfig -o /boot/grub/grub.cfg
 ```
 
 #### amd
 
 ```shell
-sudo pacman -S linux-firmware
+sudo pacman -Sy linux-firmware
 sudo grub-mkconfig -o /boot/grub/grub.cfg
 ```
 
@@ -87,13 +88,14 @@ sudo grub-mkconfig -o /boot/grub/grub.cfg
 ### packages
 
 ```shell
-# gnome shell
-sudo pacman -S \
+sudo pacman -Sy \
   baobab \
+  celluloid \
   dconf-editor \
   eog \
   evince \
   file-roller \
+  flatpak \
   fragments \
   gdm \
   gnome-backgrounds \
@@ -134,10 +136,9 @@ sudo pacman -S \
   xdg-user-dirs-gtk
 
 # daily driver
-sudo pacman -S \
+sudo pacman -Sy \
   gimp \
   inkscape \
-  rhythmbox \
   picard
 ```
 
@@ -154,45 +155,32 @@ sudo pacman -Rs \
   eos-qogit-icons
 ```
 
-### language switch
-
-```
-# using caps lock
-gsettings set org.gnome.desktop.input-sources xkb-options "['grp:caps_toggle']"
-
-# using shift + alt
-gsettings set org.gnome.desktop.input-sources xkb-options "['grp:alt_shift_toggle', 'caps:none']"
-gsettings set org.gnome.desktop.wm.keybindings switch-input-source "['<Shift>Alt_L']"
-gsettings set org.gnome.desktop.wm.keybindings switch-input-source-backward "['<Alt>Shift_L']"
-```
-
 ### settings
 
 ```shell
-# permamently disable tracker-miner-fs and free cache
-gsettings set org.freedesktop.Tracker3.Miner.Files crawling-interval -2
-gsettings set org.freedesktop.Tracker3.Miner.Files enable-monitors false
-tracker3 reset --filesystem
-
-# wise gnome tracker search index size 
-gsettings set org.freedesktop.Tracker3.Extract max-bytes 10000
-
 # tap to click
 gsettings set org.gnome.desktop.peripherals.touchpad tap-to-click true
 
-# gnome terminal
-gsettings set org.gnome.Terminal.Legacy.Settings menu-accelerator-enabled false
-gsettings set org.gnome.Terminal.Legacy.Settings theme-variant 'light'
+# caps lock to switch keyboard layout
+gsettings set org.gnome.desktop.input-sources xkb-options "['grp:caps_toggle']"
 
 # disable ibus hotkeys
 gsettings set org.freedesktop.ibus.panel.emoji hotkey "@as []"
 gsettings set org.freedesktop.ibus.panel.emoji unicode-hotkey "@as []"
+
+# wise gnome tracker search index size 
+gsettings set org.freedesktop.Tracker3.Extract max-bytes 10000
+
+# permamently disable tracker-miner-fs and free cache
+gsettings set org.freedesktop.Tracker3.Miner.Files crawling-interval -2
+gsettings set org.freedesktop.Tracker3.Miner.Files enable-monitors false
+tracker3 reset --filesystem
 ```
 
 ### fonts
 
 ```shell
-sudo pacman -S ttf-jetbrains-mono
+sudo pacman -Sy ttf-jetbrains-mono
 gsettings set org.gnome.desktop.interface monospace-font-name 'JetBrains Mono 13'
 
 gsettings set org.gnome.desktop.interface font-antialiasing 'grayscale'
@@ -208,7 +196,7 @@ sudo su - gdm -s /bin/sh
 export $(dbus-launch)
 GSETTINGS_BACKEND=dconf gsettings set org.gnome.desktop.peripherals.touchpad tap-to-click true
 
-# exit from the root user
+# exit from the gdm user
 exit
 
 # restart system or apply changes with
@@ -220,17 +208,17 @@ sudo systemctl restart gdm
 
 ```shell
 # docker
-sudo pacman -S docker docker-compose
+sudo pacman -Sy docker docker-compose
 sudo systemctl enable --now docker.service
-sudo usermod -aG docker $USER
+sudo usermod -aG docker "$USER"
 docker run hello-world
 
 # neovim
-sudo pacman -S neovim wl-clipboard
+sudo pacman -Sy neovim wl-clipboard
 git clone git@github.com:shef-er/nvim.git ~/.config/nvim
 
 # code-oss
-sudo pacman -S code
+sudo pacman -Sy code
 git clone git@github.com:shef-er/code.git "~/.config/Code - OSS"
 ```
 
