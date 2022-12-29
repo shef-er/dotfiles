@@ -135,11 +135,16 @@ sudo pacman -Sy \
   sushi \
   xdg-user-dirs-gtk
 
-# daily driver
+# some tools
 sudo pacman -Sy \
   gimp \
   inkscape \
   picard
+
+# daily driver
+flatpak install flathub \
+  io.bassi.Amberol \
+  md.obsidian.Obsidian
 ```
 
 ### endeavourOS unwanted defaults
