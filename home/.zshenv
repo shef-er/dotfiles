@@ -9,5 +9,6 @@ if ! [[ "$PATH" =~ "$HOME/.local/bin:" ]] ; then
   export PATH="$HOME/.local/bin:$PATH"
 fi
 
+export VISUAL=nano
 export EDITOR=nano
 export QT_STYLE_OVERRIDE=GTK+
