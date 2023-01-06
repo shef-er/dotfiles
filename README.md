@@ -3,7 +3,7 @@
 ```shell
 sudo pacman -Syu \
   git \
-  git-lfs 
+  git-lfs \
   zsh \
   zsh-autosuggestions \
   zsh-completions \
