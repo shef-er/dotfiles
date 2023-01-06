@@ -1,6 +1,6 @@
-# Personal install guide
+# Personal Arch Linux install guide
 
-## 1. **Prepare installtion**
+## 1. **Prepare installation**
 
 ### 1.1 **Set the console keyboard layout**
 
@@ -177,8 +177,8 @@ In particular, consider installing:
 * userspace utilities for the management of [file systems](https://wiki.archlinux.org/title/File_systems) that will be used on the system,
 * utilities for accessing [RAID](https://wiki.archlinux.org/title/RAID) or [LVM](https://wiki.archlinux.org/title/LVM) partitions,
 * specific firmware for other devices not included in [linux-firmware](https://archlinux.org/packages/?name=linux-firmware) (e.g. [sof-firmware](https://archlinux.org/packages/?name=sof-firmware) for [sound cards](https://wiki.archlinux.org/title/Advanced_Linux_Sound_Architecture#ALSA_firmware)),
-* software necessary for [networking](https://wiki.archlinux.org/title/Networking), for example [NetworkManager](https://wiki.archlinux.org/title/Network_management),
-* a [text editor](https://wiki.archlinux.org/title/Text_editor), for example [nano](https://wiki.archlinux.org/title/nano)
+* software necessary for [networking](https://wiki.archlinux.org/title/Networking), for example [NetworkManager](https://wiki.archlinux.org/title/Network_management) and [BlueZ](https://wiki.archlinux.org/title/bluetooth),
+* a [text editor](https://wiki.archlinux.org/title/Text_editor), for example [nano](https://wiki.archlinux.org/title/nano) or [vim](https://wiki.archlinux.org/title/vim)
 * packages for accessing documentation in [man](https://wiki.archlinux.org/title/Man) and [info](https://wiki.archlinux.org/title/Info) pages: [man-db](https://archlinux.org/packages/?name=man-db), [man-pages](https://archlinux.org/packages/?name=man-pages) and [texinfo](https://archlinux.org/packages/?name=texinfo).
 
 To [install](https://wiki.archlinux.org/title/Install) other packages or package groups, append the names to the *pacstrap* command above (space separated) or use [pacman](https://wiki.archlinux.org/title/Pacman) while [chrooted into the new system](https://wiki.archlinux.org/title/Installation_guide#Chroot).
@@ -189,27 +189,11 @@ Example set of essential packages:
 
 ```shell
 pacman -S \
-    sudo tree fwupd \
-    linux-firmware-qcom linux-firmware-qlogic linux-firmware-whence alsa-firmware sof-firmware \
-    networkmanager \
+    sudo tree \
+    fwupd linux-firmware-qcom linux-firmware-qlogic linux-firmware-whence alsa-firmware sof-firmware \
+    networkmanager bluez-utils \
     nano vim \
     man-db man-pages texinfo
-```
-
-### 2.3 **Install microcode**
-
-If you have an Intel or AMD CPU, enable [microcode](https://wiki.archlinux.org/title/Microcode) updates.
-
-Install AMD microcode:
-
-```shell
-pacman -S amd-ucode
-```
-
-Or install Intel microcode:
-
-```shell
-pacman -S intel-ucode
 ```
 
 ## 3. **Configure the system**
@@ -304,7 +288,23 @@ For [LVM](https://wiki.archlinux.org/title/Install_Arch_Linux_on_LVM#Adding_mkin
 mkinitcpio -P
 ```
 
-### 3.8 **Boot loader**
+### 3.8 **Install microcode**
+
+If you have an Intel or AMD CPU, enable [microcode](https://wiki.archlinux.org/title/Microcode) updates.
+
+Install AMD microcode:
+
+```shell
+pacman -S amd-ucode
+```
+
+Or install Intel microcode:
+
+```shell
+pacman -S intel-ucode
+```
+
+### 3.9 **Boot loader**
 
 Choose and install a Linux-capable [boot loader](https://wiki.archlinux.org/title/Boot_loader). For example [systemd-boot](https://wiki.archlinux.org/title/Systemd-boot).
 
