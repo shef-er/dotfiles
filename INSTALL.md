@@ -119,9 +119,10 @@ If you created a partition for [swap](https://wiki.archlinux.org/title/Swap), in
 
 ```shell
 mkswap /dev/swap_partition
+```
 
 If you created an EFI system partition, [format it](https://wiki.archlinux.org/title/EFI_system_partition#Format_the_partition) to FAT32 using [mkfs.fat(8)](https://man.archlinux.org/man/mkfs.fat.8).
-```
+
 > **Warning:** Only format the EFI system partition if you created it during the partitioning step. If there already was an EFI system partition on disk beforehand, reformatting it can destroy the boot loaders of other installed operating systems.
 
 ```shell
@@ -176,17 +177,40 @@ In particular, consider installing:
 * userspace utilities for the management of [file systems](https://wiki.archlinux.org/title/File_systems) that will be used on the system,
 * utilities for accessing [RAID](https://wiki.archlinux.org/title/RAID) or [LVM](https://wiki.archlinux.org/title/LVM) partitions,
 * specific firmware for other devices not included in [linux-firmware](https://archlinux.org/packages/?name=linux-firmware) (e.g. [sof-firmware](https://archlinux.org/packages/?name=sof-firmware) for [sound cards](https://wiki.archlinux.org/title/Advanced_Linux_Sound_Architecture#ALSA_firmware)),
-* software necessary for [networking](https://wiki.archlinux.org/title/Networking) (e.g. a network manager or DHCP client),
-* a [text editor](https://wiki.archlinux.org/title/Text_editor),
+* software necessary for [networking](https://wiki.archlinux.org/title/Networking), for example [NetworkManager](https://wiki.archlinux.org/title/Network_management),
+* a [text editor](https://wiki.archlinux.org/title/Text_editor), for example [nano](https://wiki.archlinux.org/title/nano)
 * packages for accessing documentation in [man](https://wiki.archlinux.org/title/Man) and [info](https://wiki.archlinux.org/title/Info) pages: [man-db](https://archlinux.org/packages/?name=man-db), [man-pages](https://archlinux.org/packages/?name=man-pages) and [texinfo](https://archlinux.org/packages/?name=texinfo).
 
 To [install](https://wiki.archlinux.org/title/Install) other packages or package groups, append the names to the *pacstrap* command above (space separated) or use [pacman](https://wiki.archlinux.org/title/Pacman) while [chrooted into the new system](https://wiki.archlinux.org/title/Installation_guide#Chroot).
 
-For comparison, packages available in the live system can be found in [pkglist.x86_64.txt](https://geo.mirror.pkgbuild.com/iso/latest/arch/pkglist.x86_64.txt). 
+For comparison, packages available in the live system can be found in [pkglist.x86_64.txt](https://geo.mirror.pkgbuild.com/iso/latest/arch/pkglist.x86_64.txt).
 
+Example set of essential packages:
 
+```shell
+pacman -S \
+    sudo tree fwupd \
+    linux-firmware-qcom linux-firmware-qlogic linux-firmware-whence alsa-firmware sof-firmware \
+    networkmanager \
+    nano vim \
+    man-db man-pages texinfo
+```
 
+### 2.3 **Install microcode**
 
+If you have an Intel or AMD CPU, enable [microcode](https://wiki.archlinux.org/title/Microcode) updates.
+
+Install AMD microcode:
+
+```shell
+pacman -S amd-ucode
+```
+
+Or install Intel microcode:
+
+```shell
+pacman -S intel-ucode
+```
 
 ## 3. **Configure the system**
 
@@ -260,9 +284,17 @@ myhostname
 ```
 
 Complete the [network configuration](https://wiki.archlinux.org/title/Network_configuration) for the newly installed environment.
-That may include installing suitable [network management](https://wiki.archlinux.org/title/Network_management) software, for example [NetworkManager](https://wiki.archlinux.org/title/Network_management). 
+That may include installing suitable [network management](https://wiki.archlinux.org/title/Network_management) software.
 
-### 3.6 **Initramfs**
+### 3.6 **Root password**
+
+Set the root password:
+
+```shell
+passwd
+```
+
+### 3.7 **Initramfs**
 
 Creating a new *initramfs* is usually not required, because [mkinitcpio](https://wiki.archlinux.org/title/Mkinitcpio) was run on installation of the [kernel](https://wiki.archlinux.org/title/Kernel) package with *pacstrap*.
 
@@ -272,19 +304,7 @@ For [LVM](https://wiki.archlinux.org/title/Install_Arch_Linux_on_LVM#Adding_mkin
 mkinitcpio -P
 ```
 
-### 3.7 **Root password**
-
-Set the root password:
-
-```shell
-passwd
-```
-
-### 3.8 **Microcode**
-
-If you have an Intel or AMD CPU, enable [microcode](https://wiki.archlinux.org/title/Microcode) updates. 
-
-### 3.9 **Boot loader**
+### 3.8 **Boot loader**
 
 Choose and install a Linux-capable [boot loader](https://wiki.archlinux.org/title/Boot_loader). For example [systemd-boot](https://wiki.archlinux.org/title/Systemd-boot).
 
