@@ -52,7 +52,7 @@ sudo systemctl restart tlp.service
 ### ssd
 
 ```shell
-sudo systemctl enable --now fstrim.service
+sudo systemctl enable --now fstrim.timer
 ```
 
 extending ssd lifespan: `sudo nano /etc/fstab`:
