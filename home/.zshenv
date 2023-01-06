@@ -11,4 +11,3 @@ fi
 
 export EDITOR=nano
 export QT_STYLE_OVERRIDE=GTK+
-
