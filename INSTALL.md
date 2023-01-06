@@ -10,7 +10,9 @@ The default [console keymap](https://wiki.archlinux.org/title/Console_keymap) is
 ls /usr/share/kbd/keymaps/**/*.map.gz
 ```
 
-To set the keyboard layout, pass a corresponding file name to [loadkeys(1)](https://man.archlinux.org/man/loadkeys.1), omitting path and file extension. For example, to set a Russian keyboard layout: 
+To set the keyboard layout, pass a corresponding file name to [loadkeys(1)](https://man.archlinux.org/man/loadkeys.1), omitting path and file extension.
+
+To set a Russian keyboard layout: 
 
 ```shell
 loadkeys ru
