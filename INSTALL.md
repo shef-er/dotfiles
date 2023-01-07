@@ -416,11 +416,18 @@ systemctl restart tlp.service
 ### 5.2.3 **Disable hardware speaker**
 
 ```shell
-echo "blacklist pcspkr" | tee /etc/modprobe.d/nobeep.conf
+echo "blacklist pcspkr" > /etc/modprobe.d/nobeep.conf
 ```
 
 ### 5.2.4 **Nvidia** (TODO: driver install and modeprobe options)
 
+```shell
+echo "options nvidia_drm modeset=1" > /etc/modprobe.d/nvidia-drm-modeset.conf
+```
+
+```shell
+echo "options nvidia NVreg_PreserveVideoMemoryAllocations=1 NVreg_TemporaryFilePath=/tmp" > /etc/modprobe.d/nvidia-power-management.conf
+```
 
 ### 5.3 **Users and groups**
 
