@@ -514,7 +514,10 @@ pacman -Sy \
     gnome-shell-extensions \
     gnome-shell-extension-appindicator \
     gnome-tweaks \
+    wireplumber \
+    pipewire-jack \
     pipewire-pulse \
+    xdg-desktop-portal-gnome \
     dconf-editor \
     celluloid \
     fragments \
