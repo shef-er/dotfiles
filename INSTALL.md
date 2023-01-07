@@ -519,6 +519,7 @@ pacman -Sy \
     xdg-desktop-portal-gnome \
     dconf-editor \
     celluloid \
+    foliate \
     fragments \
     firefox \
     firefox-i18n-ru \

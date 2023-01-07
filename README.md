@@ -30,6 +30,7 @@ sudo pacman -Sy \
   picard
 
 sudo pacman -Rs \
+  gnome-music \
   gnome-photos \
   gnome-user-docs \
   yelp \
