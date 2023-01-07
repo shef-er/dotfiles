@@ -325,6 +325,10 @@ The loader configuration is stored in the file `/boot/loader/loader.conf`. See [
 > If `options` is present in a boot entry and [Secure Boot](https://wiki.archlinux.org/title/Secure_Boot) is disabled, the value of `options` will override any `.cmdline` string embedded in the EFI image that is specified by `efi` or `linux` (see [Unified kernel image#Preparing a unified kernel image](https://wiki.archlinux.org/title/Unified_kernel_image#Preparing_a_unified_kernel_image)).
 > With Secure Boot, however, `options` (and any edits made to the kernel command line in the bootloader UI) will be ignored, and only the embedded `.cmdline` will be used. 
 
+Use the `initrd` option to load the microcode, before the initial ramdisk. If not compiled into the kernel, microcode must be loaded by the early loader. It can be passed to the loader as part of a [unified kernel image](https://wiki.archlinux.org/title/Unified_kernel_image), or as an initrd image.
+
+The latest microcode `cpu_manufacturer-ucode.img` must be available at boot time in your ESP. The ESP must be mounted as `/boot` in order to have the microcode updated every time [amd-ucode](https://archlinux.org/packages/?name=amd-ucode) or [intel-ucode](https://archlinux.org/packages/?name=intel-ucode) is updated.
+
 An example of loader files launching Arch from a volume [labeled](https://wiki.archlinux.org/title/Persistent_block_device_naming#by-label) `ARCH_OS` and loading AMD CPU microcode is provided below.
 
 Contents of `/boot/loader/loader.conf`:
@@ -355,10 +359,6 @@ initrd  /amd-ucode.img
 initrd  /initramfs-linux-fallback.img
 options root="LABEL=ARCH_OS" rw
 ```
-
-Use the `initrd` option to load the microcode, before the initial ramdisk. If not compiled into the kernel, microcode must be loaded by the early loader. It can be passed to the loader as part of a [unified kernel image](https://wiki.archlinux.org/title/Unified_kernel_image), or as an initrd image.
-
-The latest microcode `cpu_manufacturer-ucode.img` must be available at boot time in your ESP. The ESP must be mounted as `/boot` in order to have the microcode updated every time [amd-ucode](https://archlinux.org/packages/?name=amd-ucode) or [intel-ucode](https://archlinux.org/packages/?name=intel-ucode) is updated.
 
 > **Tip:**
 > * The available boot entries which have been configured can be listed with the command `bootctl list`.
