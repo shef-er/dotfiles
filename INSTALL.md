@@ -210,7 +210,7 @@ Example set of essential packages:
 ```shell
 pacman -Sy \
     networkmanager bluez-utils \
-    nano \
+    nano nano-syntax-highlighting \
     man-db man-pages texinfo
 ```
 
@@ -515,6 +515,7 @@ pacman -Sy \
     gnome-tweaks \
     wireplumber \
     pipewire-jack \
+    pipewire-alsa \
     pipewire-pulse \
     xdg-desktop-portal-gnome \
     dconf-editor \
