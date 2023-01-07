@@ -68,7 +68,7 @@ timedatectl status
 
 When recognized by the live system, disks are assigned to a [block device](https://wiki.archlinux.org/title/Block_device) such as `/dev/sda`, `/dev/nvme0n1` or `/dev/mmcblk0`. To identify these devices, use [lsblk](https://wiki.archlinux.org/title/Lsblk) or [fdisk](https://wiki.archlinux.org/title/Fdisk).
 
-```
+```shell
 fdisk -l
 ```
 
@@ -187,10 +187,9 @@ Example set of essential packages:
 
 ```shell
 pacman -S \
-    sudo tree \
     fwupd linux-firmware-qcom linux-firmware-qlogic linux-firmware-whence alsa-firmware sof-firmware \
     networkmanager bluez-utils \
-    nano vim \
+    tree nano vim \
     man-db man-pages texinfo
 ```
 
@@ -268,12 +267,6 @@ myhostname
 Complete the [network configuration](https://wiki.archlinux.org/title/Network_configuration) for the newly installed environment.
 That may include installing suitable [network management](https://wiki.archlinux.org/title/Network_management) software.
 
-For example, if you installed [bluez-utils](https://archlinux.org/packages/?name=bluez-utils), you can enable bluetooth:
-
-```
-systemctl enable --now bluetooth.service
-```
-
 ### 3.6 **Root password**
 
 Set the root password:
@@ -302,7 +295,7 @@ Install AMD microcode:
 pacman -S amd-ucode
 ```
 
-Or install Intel microcode:
+Or Intel microcode:
 
 ```shell
 pacman -S intel-ucode
@@ -312,11 +305,11 @@ pacman -S intel-ucode
 
 Choose and install a Linux-capable [boot loader](https://wiki.archlinux.org/title/Boot_loader). For example [systemd-boot](https://wiki.archlinux.org/title/Systemd-boot).
 
-### 3.9.1 systemd-boot
+### 3.9.1 **systemd-boot**
 
 Use [bootctl(1)](https://man.archlinux.org/man/bootctl.1) to install systemd-boot to the [ESP mountpoint](https://wiki.archlinux.org/title/EFI_system_partition#Typical_mount_points) (e.g. `/efi` or `/boot`):
 
-```
+```shell
 bootctl install
 ```
 
@@ -381,5 +374,95 @@ Optionally manually unmount all the partitions with `umount -R /mnt`: this allow
 Finally, restart the machine by typing `reboot`: any partitions still mounted will be automatically unmounted by *systemd*. Remember to remove the installation medium and then login into the new system with the root account.
 
 ## 5. **Post-intallation**
+
+### 5.1 **Setup network connection**
+
+Connect to internet using `nmtui`
+
+```shell
+nmtui
+```
+
+If you installed [bluez-utils](https://archlinux.org/packages/?name=bluez-utils), you can enable bluetooth:
+
+```shell
+systemctl enable --now bluetooth.service
+```
+
+### 5.2 **Hardware**
+
+### 5.2.1 **SSD TRIM**
+
+```shell
+systemctl enable --now fstrim.timer
+```
+
+### 5.2.2 **Power optimization**
+
+```shell
+pacman -Sy tlp tlp-rdw
+systemctl enable --now tlp.service
+systemctl enable --now NetworkManager-dispatcher.service
+
+# tlp settings: https://linrunner.de/tlp/settings/index.html
+nano /etc/tlp.conf
+systemctl restart tlp.service
+```
+
+### 5.2.3 **Disable hardware speaker**
+
+```shell
+echo "blacklist pcspkr" | tee /etc/modprobe.d/nobeep.conf
+```
+
+### 5.2.4 **Nvidia**
+
+TODO:
+
+### 5.3 **Users and groups**
+
+A new installation leaves you with only the [superuser](https://en.wikipedia.org/wiki/Superuser) account, better known as "root". Logging in as root for prolonged periods of time, possibly even exposing it via [SSH](https://wiki.archlinux.org/title/SSH) on a server, [is insecure](https://apple.stackexchange.com/questions/192365/is-it-ok-to-use-the-root-user-as-a-normal-user/192422#192422). Instead, you should create and use unprivileged user account(s) for most tasks, only using the root account for system administration. See [Users and groups#User management](https://wiki.archlinux.org/title/Users_and_groups#User_management) for details.
+
+Users and groups are a mechanism for *access control*; administrators may fine-tune group membership and ownership to grant or deny users and services access to system resources. Read the [Users and groups](https://wiki.archlinux.org/title/Users_and_groups) article for details and potential security risks. 
+
+To add a new user, use the `useradd` command: 
+
+```shell
+useradd -m -G sys,rfkill,wheel -s /bin/bash your_username
+```
+
+Set password for the user with [passwd](https://man.archlinux.org/man/passwd.1) command:
+
+```
+passwd your_username
+```
+
+### 5.4 **Security**
+
+Read [Security](https://wiki.archlinux.org/title/Security) for recommendations and best practices on hardening the system.
+
+For a list of applications to allow running commands or starting an interactive shell as another user (e.g. root), see [List of applications/Security#Privilege elevation](https://wiki.archlinux.org/title/List_of_applications/Security#Privilege_elevation).
+
+Install the [sudo](https://archlinux.org/packages/?name=sudo) package.
+
+```shell
+pacman -S sudo
+```
+
+To allow members of group [wheel](https://wiki.archlinux.org/title/Wheel) sudo access, create `/etc/sudoers.d/wheel` file as followed: 
+
+```shell
+EDITOR=nano visudo -f /etc/sudoers.d/wheel 
+```
+
+Contents of `/etc/sudoers.d/wheel` file:
+
+```
+%wheel   ALL=(ALL:ALL) ALL
+```
+
+> **Tip:** When creating new administrators, it is often desirable to enable sudo access for the `wheel` group and [add the user to it](https://wiki.archlinux.org/title/Users_and_groups#Group_management), since by default [Polkit](https://wiki.archlinux.org/title/Polkit#Administrator_identities) treats the members of the `wheel` group as administrators. If the user is not a member of `wheel`, software using Polkit may ask to authenticate using the root password instead of the user password.
+
+### 5.5 **User settings**
 
 See [README.md](README.md).

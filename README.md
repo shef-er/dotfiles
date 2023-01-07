@@ -10,8 +10,8 @@ sudo pacman -Syu \
   htop
 chsh -s /bin/zsh
 
-git config --global user.name "Ernest Shefer"
-git config --global user.email "<my email>"
+git config --global user.name "<your name>"
+git config --global user.email "<your email>"
 git config --global core.editor nano
 git config --global core.autocrlf input
 git config --global core.safecrlf true
@@ -21,38 +21,10 @@ git config --global pull.rebase false
 git config --global init.defaultBranch master
 ```
 
-## 🧠 hardware
-
-### ssd trim
-
-```shell
-sudo systemctl enable --now fstrim.timer
-```
-
-### power optimization
-
-```shell
-sudo pacman -Sy tlp tlp-rdw
-sudo systemctl enable --now tlp.service
-sudo systemctl enable --now NetworkManager-dispatcher.service
-
-# tlp settings: https://linrunner.de/tlp/settings/index.html
-sudo nano /etc/tlp.conf
-sudo systemctl restart tlp.service
-```
-
-### disable hw speaker
-
-```shell
-echo "blacklist pcspkr" | sudo tee /etc/modprobe.d/nobeep.conf
-```
-
 ## 💅 gnome shell
 
-### packages
-
 ```shell
-sudo pacman -Sy \
+sudo pacman -Syu \
   baobab \
   celluloid \
   dconf-editor \
@@ -109,19 +81,6 @@ sudo pacman -Sy \
 flatpak install flathub \
   io.bassi.Amberol \
   md.obsidian.Obsidian
-```
-
-### endeavourOS unwanted defaults
-
-```shell
-sudo pacman -Rs \
-  xterm \
-  pavucontrol \
-  firewalld \
-  stoken \
-  openconnect \
-  arc-gtk-theme-eos \
-  eos-qogit-icons
 ```
 
 ### settings
