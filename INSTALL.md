@@ -485,6 +485,15 @@ Contents of `/etc/sudoers.d/wheel`:
 
 Arch is a rolling release system and has rapid package turnover, so users have to take some time to do [system maintenance](https://wiki.archlinux.org/title/System_maintenance). 
 
-### 5.6 **User preferences and GUI**
+
+### 5.6 **Graphical user interface**
+
+### 5.6.1 Gnome shell
+
+```shell
+pacman -Sy gnome gnome-firmware gnome-passwordsafe gnome-shell-extensions gnome-shell-extension-appindicator gnome-tweaks pipewire-pulse dconf-editor celluloid fragments firefox firefox-i18n-ru
+```
+
+### 6. **User preferences**
 
 See [README.md](README.md).
