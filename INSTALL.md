@@ -109,10 +109,10 @@ See also [Partitioning#Example layouts](https://wiki.archlinux.org/title/Partiti
 Once the partitions have been created, each newly created partition must be formatted with an appropriate [file system](https://wiki.archlinux.org/title/File_system).
 See [File systems#Create a file system](https://wiki.archlinux.org/title/File_systems#Create_a_file_system) for details.
 
-For example, to create an Ext4 file system on `/dev/root_partition`, run:
+For example, to create an Ext4 file system labeled `ARCH_OS` on `/dev/root_partition`, use [mkfs.ext4](https://man.archlinux.org/man/mkfs.ext4.8):
 
 ```shell
-mkfs.ext4 /dev/root_partition
+mkfs.ext4 -L ARCH_OS /dev/root_partition
 ```
 
 If you created a partition for [swap](https://wiki.archlinux.org/title/Swap), initialize it with [mkswap(8)](https://man.archlinux.org/man/mkswap.8):
@@ -157,8 +157,6 @@ swapon /dev/swap_partition
 
 
 ## 2. **Installation**
-
-### 2.2 **Install essential packages**
 
 Use the [pacstrap(8)](https://man.archlinux.org/man/pacstrap.8) script to install the [base](https://archlinux.org/packages/?name=base) package, Linux [kernel](https://wiki.archlinux.org/title/Kernel) and firmware for common hardware:
 
@@ -307,6 +305,66 @@ pacman -S intel-ucode
 ### 3.9 **Boot loader**
 
 Choose and install a Linux-capable [boot loader](https://wiki.archlinux.org/title/Boot_loader). For example [systemd-boot](https://wiki.archlinux.org/title/Systemd-boot).
+
+### 3.9.1 systemd-boot
+
+Use [bootctl(1)](https://man.archlinux.org/man/bootctl.1) to install systemd-boot to the [ESP mountpoint](https://wiki.archlinux.org/title/EFI_system_partition#Typical_mount_points) (e.g. `/efi` or `/boot`):
+
+```
+bootctl install
+```
+
+This will copy the *systemd-boot* EFI boot manager to the ESP: on an x64 architecture system `/usr/lib/systemd/boot/efi/systemd-bootx64.efi` will be copied to `esp/EFI/systemd/systemd-bootx64.efi` and `esp/EFI/BOOT/BOOTX64.EFI`, and *systemd-boot* will be set as the default EFI application. 
+
+> **Note:**
+> * When running `bootctl install`, `systemd-boot` will try to locate the ESP at `/efi`, `/boot`, and `/boot/efi`. Setting `esp` to a different location requires passing the `--esp-path=esp` option. (See [bootctl(1) § OPTIONS](https://man.archlinux.org/man/bootctl.1#OPTIONS) for details.)
+> * Installing *systemd-boot* will overwrite any existing `esp/EFI/BOOT/BOOTX64.EFI`, e.g. Microsoft's version of the file.
+
+The loader configuration is stored in the file `esp/loader/loader.conf`. See [loader.conf(5) § OPTIONS](https://man.archlinux.org/man/loader.conf.5#OPTIONS) for details.
+
+> **Note:**
+> If `options` is present in a boot entry and [Secure Boot](https://wiki.archlinux.org/title/Secure_Boot) is disabled, the value of `options` will override any `.cmdline` string embedded in the EFI image that is specified by `efi` or `linux` (see [Unified kernel image#Preparing a unified kernel image](https://wiki.archlinux.org/title/Unified_kernel_image#Preparing_a_unified_kernel_image)).
+> With Secure Boot, however, `options` (and any edits made to the kernel command line in the bootloader UI) will be ignored, and only the embedded `.cmdline` will be used. 
+
+An example of loader files launching Arch from a volume [labeled](https://wiki.archlinux.org/title/Persistent_block_device_naming#by-label) `ARCH_OS` and loading AMD CPU microcode is provided below.
+
+Contents of `esp/loader/loader.conf`:
+
+```
+default arch.conf
+timeout 3
+editor no
+#console-mode keep
+```
+
+Contents of `esp/loader/entries/arch.conf`:
+
+```
+title   Arch Linux
+linux   /vmlinuz-linux
+initrd  /amd-ucode.img
+initrd  /initramfs-linux.img
+options root="LABEL=ARCH_OS" rw
+```
+
+Contents of `esp/loader/entries/arch-fallback.conf`:
+
+```
+title   Arch Linux Fallback
+linux   /vmlinuz-linux
+initrd  /amd-ucode.img
+initrd  /initramfs-linux-fallback.img
+options root="LABEL=ARCH_OS" rw
+```
+
+Use the `initrd` option to load the microcode, before the initial ramdisk. If not compiled into the kernel, microcode must be loaded by the early loader. It can be passed to the loader as part of a [unified kernel image](https://wiki.archlinux.org/title/Unified_kernel_image), or as an initrd image.
+
+The latest microcode `cpu_manufacturer-ucode.img` must be available at boot time in your ESP. The ESP must be mounted as `/boot` in order to have the microcode updated every time [amd-ucode](https://archlinux.org/packages/?name=amd-ucode) or [intel-ucode](https://archlinux.org/packages/?name=intel-ucode) is updated.
+
+> **Tip:**
+> * The available boot entries which have been configured can be listed with the command `bootctl list`.
+> * An example entry file is located at `/usr/share/systemd/bootctl/arch.conf`.
+> * The [kernel parameters](https://wiki.archlinux.org/title/Kernel_parameters) for scenarios such as [LVM](https://wiki.archlinux.org/title/LVM), [LUKS](https://wiki.archlinux.org/title/LUKS) or [dm-crypt](https://wiki.archlinux.org/title/Dm-crypt) can be found on the relevant pages.
 
 ## 4. **Reboot**
 
