@@ -81,7 +81,7 @@ The following [partitions](https://wiki.archlinux.org/title/Partition) are **req
 
 If you want to create any stacked block devices for [LVM](https://wiki.archlinux.org/title/LVM), [system encryption](https://wiki.archlinux.org/title/Dm-crypt) or [RAID](https://wiki.archlinux.org/title/RAID), do it now.
 
-Use [fdisk](https://wiki.archlinux.org/title/Fdisk) or [parted](https://wiki.archlinux.org/title/Parted) to modify partition tables. For example:
+Use [fdisk](https://wiki.archlinux.org/title/Fdisk) or [gdisk](https://wiki.archlinux.org/title/GPT_fdisk) to modify partition tables. For example:
 
 ```shell
 fdisk /dev/the_disk_to_be_partitioned
@@ -97,7 +97,7 @@ fdisk /dev/the_disk_to_be_partitioned
 ```
 Mount point     Partition                   Partition type          Suggested size
 
-/mnt/boot       /dev/efi_system_partition   EFI system partition    At least 300 MiB
+/mnt/boot       /dev/efi_system_partition   EFI system partition    At least 550 MiB
 [SWAP]          /dev/swap_partition         Linux swap 	            More than 512 MiB
 /mnt            /dev/root_partition         Linux x86-64 root (/)   Remainder of the device 
 ```
@@ -109,7 +109,7 @@ See also [Partitioning#Example layouts](https://wiki.archlinux.org/title/Partiti
 Once the partitions have been created, each newly created partition must be formatted with an appropriate [file system](https://wiki.archlinux.org/title/File_system).
 See [File systems#Create a file system](https://wiki.archlinux.org/title/File_systems#Create_a_file_system) for details.
 
-For example, to create an Ext4 file system labeled `ARCH_OS` on `/dev/root_partition`, use [mkfs.ext4](https://man.archlinux.org/man/mkfs.ext4.8):
+For example, to create an [Ext4](https://wiki.archlinux.org/title/Ext4) file system labeled `ARCH_OS` on `/dev/root_partition`, use [mkfs.ext4](https://man.archlinux.org/man/mkfs.ext4.8):
 
 ```shell
 mkfs.ext4 -L ARCH_OS /dev/root_partition
