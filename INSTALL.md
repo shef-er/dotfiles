@@ -258,6 +258,20 @@ Create `/etc/vconsole.conf` with following content:
 KEYMAP=ru
 ```
 
+Add FONT variable according to your display density. For HiDPI displays:
+
+```shell
+KEYMAP=ru
+FONT=latarcyrheb-sun32
+```
+
+For low DPI displays:
+
+```shell
+KEYMAP=ru
+FONT=latarcyrheb-sun16
+```
+
 ### 3.6 **Network configuration**
 
 [Create](https://wiki.archlinux.org/title/Create) the [`/etc/hostname`](https://wiki.archlinux.org/title/Hostname) file:
