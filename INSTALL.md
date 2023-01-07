@@ -521,7 +521,11 @@ pacman -Sy \
     celluloid \
     fragments \
     firefox \
-    firefox-i18n-ru
+    firefox-i18n-ru \
+    noto-fonts \
+    noto-fonts-cjk \
+    noto-fonts-emoji \
+    noto-fonts-extra
 ```
 
 ### 6. **User preferences**

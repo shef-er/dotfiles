@@ -29,6 +29,15 @@ sudo pacman -Sy \
   gimp inkscape \
   picard
 
+sudo pacman -Rs \
+  gnome-photos \
+  gnome-user-docs \
+  yelp \
+  totem \
+  epiphany \
+  cheese \
+  gnome-video-effects
+
 flatpak install flathub \
   io.bassi.Amberol \
   md.obsidian.Obsidian
