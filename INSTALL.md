@@ -209,7 +209,7 @@ Example set of essential packages:
 
 ```shell
 pacman -Sy \
-    fwupd linux-firmware-qcom linux-firmware-qlogic linux-firmware-whence alsa-firmware sof-firmware \
+    linux-firmware-qcom linux-firmware-qlogic linux-firmware-whence alsa-firmware sof-firmware \
     networkmanager bluez-utils \
     nano \
     man-db man-pages texinfo
