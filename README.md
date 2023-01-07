@@ -1,14 +1,16 @@
 ## 💊 essentials
 
 ```shell
-sudo pacman -Syu \
-  git \
-  git-lfs \
-  zsh \
-  zsh-autosuggestions \
-  zsh-completions \
-  htop
+sudo pacman -Syu
+```
+
+```shell
+sudo pacman -Sy zsh zsh-autosuggestions zsh-completions
 chsh -s /bin/zsh
+```
+
+```shell
+sudo pacman -Sy git git-lfs
 
 git config --global user.name "<your name>"
 git config --global user.email "<your email>"
@@ -21,69 +23,18 @@ git config --global pull.rebase false
 git config --global init.defaultBranch master
 ```
 
-## 💅 gnome shell
-
 ```shell
-sudo pacman -Syu \
-  baobab \
-  celluloid \
-  dconf-editor \
-  eog \
-  evince \
-  file-roller \
-  flatpak \
-  fragments \
-  gdm \
-  gnome-backgrounds \
-  gnome-calculator \
-  gnome-calendar \
-  gnome-characters \
-  gnome-clocks \
-  gnome-color-manager \
-  gnome-console \
-  gnome-control-center \
-  gnome-disk-utility \
-  gnome-epub-thumbnailer \
-  gnome-firmware \
-  gnome-font-viewer \
-  gnome-keyring \
-  gnome-logs \
-  gnome-passwordsafe \
-  gnome-remote-desktop \
-  gnome-session \
-  gnome-settings-daemon \
-  gnome-shell \
-  gnome-shell-extensions \
-  gnome-shell-extension-appindicator \
-  gnome-software \
-  gnome-system-monitor \
-  gnome-text-editor \
-  gnome-tweaks \
-  gnome-user-share \
-  gnome-weather \
-  grilo-plugins \
-  gvfs \
-  gvfs-goa \
-  gvfs-gphoto2 \
-  gvfs-mtp \
-  gvfs-nfs \
-  nautilus \
-  sushi \
-  xdg-user-dirs-gtk
-
-# some tools
 sudo pacman -Sy \
-  gimp \
-  inkscape \
+  htop \
+  gimp inkscape \
   picard
 
-# daily driver
 flatpak install flathub \
   io.bassi.Amberol \
   md.obsidian.Obsidian
 ```
 
-### settings
+## 💅 gnome shell settings
 
 ```shell
 # tap to click
