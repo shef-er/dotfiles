@@ -64,7 +64,7 @@ Use [timedatectl(1)](https://man.archlinux.org/man/timedatectl.1) to ensure the 
 timedatectl status
 ```
 
-### 1.5 **Partition the disks**
+### 1.5 **Partition the disks** (TODO: Add home partion instructions)
 
 When recognized by the live system, disks are assigned to a [block device](https://wiki.archlinux.org/title/Block_device) such as `/dev/sda`, `/dev/nvme0n1` or `/dev/mmcblk0`. To identify these devices, use [lsblk](https://wiki.archlinux.org/title/Lsblk) or [fdisk](https://wiki.archlinux.org/title/Fdisk).
 
@@ -95,11 +95,11 @@ fdisk /dev/the_disk_to_be_partitioned
 ### 1.5.1 **Example layout: UEFI with [GPT](https://wiki.archlinux.org/title/GPT)**
 
 ```
-Mount point 	Partition 	                Partition type 	        Suggested size
+Mount point     Partition                   Partition type          Suggested size
 
-/mnt/boot 	    /dev/efi_system_partition 	EFI system partition 	At least 300 MiB
-[SWAP] 	        /dev/swap_partition 	    Linux swap 	            More than 512 MiB
-/mnt 	        /dev/root_partition 	    Linux x86-64 root (/) 	Remainder of the device 
+/mnt/boot       /dev/efi_system_partition   EFI system partition    At least 300 MiB
+[SWAP]          /dev/swap_partition         Linux swap 	            More than 512 MiB
+/mnt            /dev/root_partition         Linux x86-64 root (/)   Remainder of the device 
 ```
 
 See also [Partitioning#Example layouts](https://wiki.archlinux.org/title/Partitioning#Example_layouts). 
@@ -137,7 +137,7 @@ mkfs.fat -F 32 /dev/efi_system_partition
 mount /dev/root_partition /mnt
 ```
 
-Create any remaining mount points (such as `/mnt/efi`) and mount their corresponding volumes. 
+Create any remaining mount points (such as `/mnt/home`) and mount their corresponding volumes. 
 
 > **Tip:** Run [mount(8)](https://man.archlinux.org/man/mount.8) with the `--mkdir` option to create the specified mount point. Alternatively, create it using [mkdir(1)](https://man.archlinux.org/man/mkdir.1) beforehand.
 
@@ -305,7 +305,7 @@ pacman -S intel-ucode
 
 Choose and install a Linux-capable [boot loader](https://wiki.archlinux.org/title/Boot_loader). For example [systemd-boot](https://wiki.archlinux.org/title/Systemd-boot).
 
-### 3.9.1 **systemd-boot**
+### 3.9.1 **systemd-boot** (TODO: explictly denote ESP as `/boot` )
 
 Use [bootctl(1)](https://man.archlinux.org/man/bootctl.1) to install systemd-boot to the [ESP mountpoint](https://wiki.archlinux.org/title/EFI_system_partition#Typical_mount_points) (e.g. `/efi` or `/boot`):
 
@@ -389,7 +389,7 @@ If you installed [bluez-utils](https://archlinux.org/packages/?name=bluez-utils)
 systemctl enable --now bluetooth.service
 ```
 
-### 5.2 **Hardware**
+### 5.2 **Hardware** (TODO: more info)
 
 ### 5.2.1 **SSD TRIM**
 
@@ -415,9 +415,8 @@ systemctl restart tlp.service
 echo "blacklist pcspkr" | tee /etc/modprobe.d/nobeep.conf
 ```
 
-### 5.2.4 **Nvidia**
+### 5.2.4 **Nvidia** (TODO: driver install and modeprobe options)
 
-TODO:
 
 ### 5.3 **Users and groups**
 
@@ -463,6 +462,6 @@ Contents of `/etc/sudoers.d/wheel` file:
 
 > **Tip:** When creating new administrators, it is often desirable to enable sudo access for the `wheel` group and [add the user to it](https://wiki.archlinux.org/title/Users_and_groups#Group_management), since by default [Polkit](https://wiki.archlinux.org/title/Polkit#Administrator_identities) treats the members of the `wheel` group as administrators. If the user is not a member of `wheel`, software using Polkit may ask to authenticate using the root password instead of the user password.
 
-### 5.5 **User settings**
+### 5.5 **User preferences and GUI**
 
 See [README.md](README.md).
