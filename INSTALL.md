@@ -431,7 +431,7 @@ To add a new user, use the `useradd` command:
 useradd -m -G sys,rfkill,wheel -s /bin/bash your_username
 ```
 
-Set password for the user with [passwd](https://man.archlinux.org/man/passwd.1) command:
+Set password for this user with [passwd](https://man.archlinux.org/man/passwd.1) command:
 
 ```
 passwd your_username
