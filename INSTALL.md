@@ -375,6 +375,10 @@ Finally, restart the machine by typing `reboot`: any partitions still mounted wi
 
 ## 5. **Post-intallation**
 
+See [General recommendations](https://wiki.archlinux.org/title/General_recommendations) for system management directions and post-installation tutorials (like creating unprivileged user accounts, setting up a graphical user interface, sound or a touchpad).
+
+For a list of applications that may be of interest, see [List of applications](https://wiki.archlinux.org/title/List_of_applications). 
+
 ### 5.1 **Setup network connection**
 
 Connect to internet using `nmtui`
@@ -460,8 +464,12 @@ Contents of `/etc/sudoers.d/wheel` file:
 %wheel   ALL=(ALL:ALL) ALL
 ```
 
+### 5.5 **System maintenance**
+
+Arch is a rolling release system and has rapid package turnover, so users have to take some time to do [system maintenance](https://wiki.archlinux.org/title/System_maintenance). 
+
 > **Tip:** When creating new administrators, it is often desirable to enable sudo access for the `wheel` group and [add the user to it](https://wiki.archlinux.org/title/Users_and_groups#Group_management), since by default [Polkit](https://wiki.archlinux.org/title/Polkit#Administrator_identities) treats the members of the `wheel` group as administrators. If the user is not a member of `wheel`, software using Polkit may ask to authenticate using the root password instead of the user password.
 
-### 5.5 **User preferences and GUI**
+### 5.x **User preferences and GUI**
 
 See [README.md](README.md).
