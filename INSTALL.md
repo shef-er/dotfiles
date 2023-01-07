@@ -490,6 +490,8 @@ Arch is a rolling release system and has rapid package turnover, so users have t
 
 ### 5.6.1 Gnome shell
 
+On prompts, choose these options: `pipewire-jack`, `wireplumber`, `xdg-desktop-portal-gnome`.
+
 ```shell
 pacman -Sy gnome gnome-firmware gnome-passwordsafe gnome-shell-extensions gnome-shell-extension-appindicator gnome-tweaks pipewire-pulse dconf-editor celluloid fragments firefox firefox-i18n-ru
 ```
