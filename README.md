@@ -21,67 +21,31 @@ git config --global pull.rebase false
 git config --global init.defaultBranch master
 ```
 
-## ⏰ lang & time
+## 🧠 hardware
+
+### ssd trim
 
 ```shell
-localectl
-timedatectl
+sudo systemctl enable --now fstrim.timer
 ```
 
-## 🧠 hardware
+### power optimization
+
+```shell
+sudo pacman -Sy tlp tlp-rdw
+sudo systemctl enable --now tlp.service
+sudo systemctl enable --now NetworkManager-dispatcher.service
+
+# tlp settings: https://linrunner.de/tlp/settings/index.html
+sudo nano /etc/tlp.conf
+sudo systemctl restart tlp.service
+```
 
 ### disable hw speaker
 
 ```shell
 echo "blacklist pcspkr" | sudo tee /etc/modprobe.d/nobeep.conf
 ```
-
-### power optimization
-
-```shell
-# tlp
-sudo pacman -Sy tlp tlp-rdw
-sudo systemctl enable --now tlp.service
-sudo systemctl enable --now NetworkManager-dispatcher.service
-
-# set tlp settings: https://linrunner.de/tlp/settings/index.html
-nano /etc/tlp.conf
-sudo systemctl restart tlp.service
-```
-
-### ssd
-
-```shell
-sudo systemctl enable --now fstrim.timer
-```
-
-extending ssd lifespan: `sudo nano /etc/fstab`:
-* add btrfs options: `ssd,noatime`
-* add ext4 options: `noatime`
-
-### bluetooth
-
-```shell
-sudo pacman -Sy bluez-utils
-sudo systemctl enable --now bluetooth.service
-```
-
-### cpu microcode
-
-#### intel
-
-```shell
-sudo pacman -Sy intel-ucode
-sudo grub-mkconfig -o /boot/grub/grub.cfg
-```
-
-#### amd
-
-```shell
-sudo pacman -Sy linux-firmware
-sudo grub-mkconfig -o /boot/grub/grub.cfg
-```
-
 
 ## 💅 gnome shell
 

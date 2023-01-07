@@ -1,6 +1,6 @@
 # Personal Arch Linux install guide
 
-## 1. **Prepare installation**
+## 1. **Pre-installation**
 
 ### 1.1 **Set the console keyboard layout**
 
@@ -204,7 +204,7 @@ Generate an [fstab](https://wiki.archlinux.org/title/Fstab) file (use `-U` or `-
 genfstab -U /mnt >> /mnt/etc/fstab
 ```
 
-Check the resulting `/mnt/etc/fstab` file, and [edit](https://wiki.archlinux.org/title/Textedit) it in case of errors. 
+Check the resulting `/mnt/etc/fstab` file, and [edit](https://wiki.archlinux.org/title/Textedit) it in case of errors. Also, you can add [corresponding](https://wiki.archlinux.org/title/Solid_state_drive#TRIM) mount options to extend your ssd lifespan.
 
 ### 3.2 **Chroot**
 
@@ -267,6 +267,12 @@ myhostname
 
 Complete the [network configuration](https://wiki.archlinux.org/title/Network_configuration) for the newly installed environment.
 That may include installing suitable [network management](https://wiki.archlinux.org/title/Network_management) software.
+
+For example, if you installed [bluez-utils](https://archlinux.org/packages/?name=bluez-utils), you can enable bluetooth:
+
+```
+systemctl enable --now bluetooth.service
+```
 
 ### 3.6 **Root password**
 
@@ -376,3 +382,4 @@ Finally, restart the machine by typing `reboot`: any partitions still mounted wi
 
 ## 5. **Post-intallation**
 
+See [README.md](README.md).
