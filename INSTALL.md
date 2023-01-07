@@ -305,21 +305,21 @@ pacman -S intel-ucode
 
 Choose and install a Linux-capable [boot loader](https://wiki.archlinux.org/title/Boot_loader). For example [systemd-boot](https://wiki.archlinux.org/title/Systemd-boot).
 
-### 3.9.1 **systemd-boot** (TODO: explictly denote ESP as `/boot` )
+### 3.9.1 **systemd-boot**
 
-Use [bootctl(1)](https://man.archlinux.org/man/bootctl.1) to install systemd-boot to the [ESP mountpoint](https://wiki.archlinux.org/title/EFI_system_partition#Typical_mount_points) (e.g. `/efi` or `/boot`):
+Use [bootctl(1)](https://man.archlinux.org/man/bootctl.1) to install systemd-boot to the [ESP mountpoint](https://wiki.archlinux.org/title/EFI_system_partition#Typical_mount_points), e.g. `/boot`:
 
 ```shell
 bootctl install
 ```
 
-This will copy the *systemd-boot* EFI boot manager to the ESP: on an x64 architecture system `/usr/lib/systemd/boot/efi/systemd-bootx64.efi` will be copied to `esp/EFI/systemd/systemd-bootx64.efi` and `esp/EFI/BOOT/BOOTX64.EFI`, and *systemd-boot* will be set as the default EFI application. 
+This will copy the *systemd-boot* EFI boot manager to the ESP: on an x64 architecture system `/usr/lib/systemd/boot/efi/systemd-bootx64.efi` will be copied to `/boot/EFI/systemd/systemd-bootx64.efi` and `/boot/EFI/BOOT/BOOTX64.EFI`, and *systemd-boot* will be set as the default EFI application. 
 
 > **Note:**
 > * When running `bootctl install`, `systemd-boot` will try to locate the ESP at `/efi`, `/boot`, and `/boot/efi`. Setting `esp` to a different location requires passing the `--esp-path=esp` option. (See [bootctl(1) § OPTIONS](https://man.archlinux.org/man/bootctl.1#OPTIONS) for details.)
 > * Installing *systemd-boot* will overwrite any existing `esp/EFI/BOOT/BOOTX64.EFI`, e.g. Microsoft's version of the file.
 
-The loader configuration is stored in the file `esp/loader/loader.conf`. See [loader.conf(5) § OPTIONS](https://man.archlinux.org/man/loader.conf.5#OPTIONS) for details.
+The loader configuration is stored in the file `/boot/loader/loader.conf`. See [loader.conf(5) § OPTIONS](https://man.archlinux.org/man/loader.conf.5#OPTIONS) for details.
 
 > **Note:**
 > If `options` is present in a boot entry and [Secure Boot](https://wiki.archlinux.org/title/Secure_Boot) is disabled, the value of `options` will override any `.cmdline` string embedded in the EFI image that is specified by `efi` or `linux` (see [Unified kernel image#Preparing a unified kernel image](https://wiki.archlinux.org/title/Unified_kernel_image#Preparing_a_unified_kernel_image)).
@@ -327,7 +327,7 @@ The loader configuration is stored in the file `esp/loader/loader.conf`. See [lo
 
 An example of loader files launching Arch from a volume [labeled](https://wiki.archlinux.org/title/Persistent_block_device_naming#by-label) `ARCH_OS` and loading AMD CPU microcode is provided below.
 
-Contents of `esp/loader/loader.conf`:
+Contents of `/boot/loader/loader.conf`:
 
 ```
 default arch.conf
@@ -336,7 +336,7 @@ editor no
 #console-mode keep
 ```
 
-Contents of `esp/loader/entries/arch.conf`:
+Contents of `/boot/loader/entries/arch.conf`:
 
 ```
 title   Arch Linux
@@ -346,7 +346,7 @@ initrd  /initramfs-linux.img
 options root="LABEL=ARCH_OS" rw
 ```
 
-Contents of `esp/loader/entries/arch-fallback.conf`:
+Contents of `/boot/loader/entries/arch-fallback.conf`:
 
 ```
 title   Arch Linux Fallback
