@@ -183,16 +183,6 @@ To [install](https://wiki.archlinux.org/title/Install) other packages or package
 
 For comparison, packages available in the live system can be found in [pkglist.x86_64.txt](https://geo.mirror.pkgbuild.com/iso/latest/arch/pkglist.x86_64.txt).
 
-Example set of essential packages:
-
-```shell
-pacman -S \
-    fwupd linux-firmware-qcom linux-firmware-qlogic linux-firmware-whence alsa-firmware sof-firmware \
-    networkmanager bluez-utils \
-    tree nano vim \
-    man-db man-pages texinfo
-```
-
 ## 3. **Configure the system**
 
 ### 3.1 **Fstab**
@@ -213,7 +203,19 @@ Check the resulting `/mnt/etc/fstab` file, and [edit](https://wiki.archlinux.org
 arch-chroot /mnt
 ```
 
-### 3.3 **Time zone**
+### 3.3 **Essential packages**
+
+Example set of essential packages:
+
+```shell
+pacman -Sy \
+    fwupd linux-firmware-qcom linux-firmware-qlogic linux-firmware-whence alsa-firmware sof-firmware \
+    networkmanager bluez-utils \
+    nano \
+    man-db man-pages texinfo
+```
+
+### 3.4 **Time zone**
 
 Set the [time zone](https://wiki.archlinux.org/title/Time_zone): 
 
@@ -229,7 +231,7 @@ hwclock --systohc
 
 This command assumes the hardware clock is set to [UTC](https://en.wikipedia.org/wiki/UTC). See [System time#Time standard](https://wiki.archlinux.org/title/System_time#Time_standard) for details.
 
-### 3.4 **Localization**
+### 3.5 **Localization**
 
 
 [Edit](https://wiki.archlinux.org/title/Textedit) `/etc/locale.gen` and uncomment `en_US.UTF-8 UTF-8`, `ru_RU.UTF-8 UTF-8` and other needed [locales](https://wiki.archlinux.org/title/Locale).
@@ -256,7 +258,7 @@ Create `/etc/vconsole.conf` with following content:
 KEYMAP=ru
 ```
 
-### 3.5 **Network configuration**
+### 3.6 **Network configuration**
 
 [Create](https://wiki.archlinux.org/title/Create) the [`/etc/hostname`](https://wiki.archlinux.org/title/Hostname) file:
 
@@ -267,7 +269,7 @@ myhostname
 Complete the [network configuration](https://wiki.archlinux.org/title/Network_configuration) for the newly installed environment.
 That may include installing suitable [network management](https://wiki.archlinux.org/title/Network_management) software.
 
-### 3.6 **Root password**
+### 3.7 **Root password**
 
 Set the root password:
 
@@ -275,7 +277,7 @@ Set the root password:
 passwd
 ```
 
-### 3.7 **Initramfs**
+### 3.8 **Initramfs**
 
 Creating a new *initramfs* is usually not required, because [mkinitcpio](https://wiki.archlinux.org/title/Mkinitcpio) was run on installation of the [kernel](https://wiki.archlinux.org/title/Kernel) package with *pacstrap*.
 
@@ -285,7 +287,7 @@ For [LVM](https://wiki.archlinux.org/title/Install_Arch_Linux_on_LVM#Adding_mkin
 mkinitcpio -P
 ```
 
-### 3.8 **Install microcode**
+### 3.9 **Install microcode**
 
 If you have an Intel or AMD CPU, enable [microcode](https://wiki.archlinux.org/title/Microcode) updates.
 
@@ -381,7 +383,13 @@ For a list of applications that may be of interest, see [List of applications](h
 
 ### 5.1 **Setup network connection**
 
-Connect to internet using `nmtui`
+Enable NetworkManager:
+
+```shell
+systemctl enable --now NetworkManager.service
+```
+
+Connect to the network using `nmtui`
 
 ```shell
 nmtui
@@ -465,10 +473,10 @@ To allow members of group [wheel](https://wiki.archlinux.org/title/Wheel) sudo a
 EDITOR=nano visudo -f /etc/sudoers.d/wheel 
 ```
 
-Contents of `/etc/sudoers.d/wheel` file:
+Contents of `/etc/sudoers.d/wheel`:
 
 ```
-%wheel   ALL=(ALL:ALL) ALL
+%wheel ALL=(ALL:ALL) ALL
 ```
 
 > **Tip:** When creating new administrators, it is often desirable to enable sudo access for the `wheel` group and [add the user to it](https://wiki.archlinux.org/title/Users_and_groups#Group_management), since by default [Polkit](https://wiki.archlinux.org/title/Polkit#Administrator_identities) treats the members of the `wheel` group as administrators. If the user is not a member of `wheel`, software using Polkit may ask to authenticate using the root password instead of the user password.
