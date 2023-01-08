@@ -1,4 +1,4 @@
-# Arch system maintenance
+# Personal Arch Linux maintenance guide
 
 Before updating a system that has not been updated for more than a month, first of all update keyring
 
