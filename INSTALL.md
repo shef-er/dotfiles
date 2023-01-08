@@ -519,6 +519,7 @@ pacman -Sy \
     pipewire-alsa \
     pipewire-pulse \
     xdg-desktop-portal-gnome \
+    fuse \
     dconf-editor \
     celluloid \
     foliate \
