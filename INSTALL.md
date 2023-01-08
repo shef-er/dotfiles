@@ -496,9 +496,7 @@ Contents of `/etc/sudoers.d/wheel`:
 
 ### 5.5 **System maintenance**
 
-Arch is a rolling release system and has rapid package turnover, so users have to take some time to do [system maintenance](https://wiki.archlinux.org/title/System_maintenance). 
-
-Also, see [MAINTENANCE.md](MAINTENANCE.md)
+See [MAINTENANCE.md](MAINTENANCE.md)
 
 ### 5.6 **Graphical user interface**
 
