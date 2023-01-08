@@ -498,11 +498,23 @@ Contents of `/etc/sudoers.d/wheel`:
 
 See [MAINTENANCE.md](MAINTENANCE.md)
 
-### 5.6 **Graphical user interface**
+### 5.6 **User interface**
 
-### 5.6.1 Gnome shell
+### 5.6.1 **Audio and video**
 
-On prompts, choose these options: `pipewire-jack`, `wireplumber`, `xdg-desktop-portal-gnome`.
+Wireplumber should be installed with `pipewire-alsa`, `pipewire-jack` and `pipewire-pulse` packages because it ships configuration that prompt media-session to activate PipeWire's audio features.
+
+https://archlinux.org/news/undone-replacement-of-pipewire-media-session-with-wireplumber/
+
+```shell
+pacman -Sy \
+    wireplumber \
+    pipewire-jack \
+    pipewire-alsa \
+    pipewire-pulse
+```
+
+### 5.6.2 **Gnome shell**
 
 ```shell
 pacman -Sy \
@@ -512,15 +524,11 @@ pacman -Sy \
     gnome-shell-extensions \
     gnome-shell-extension-appindicator \
     gnome-tweaks \
-    wireplumber \
-    pipewire-jack \
-    pipewire-alsa \
-    pipewire-pulse \
     xdg-desktop-portal-gnome \
-    fuse \
     dconf-editor \
     celluloid \
     foliate \
+    gnome-epub-thumbnailer \
     fragments \
     firefox \
     firefox-i18n-ru \
@@ -529,6 +537,20 @@ pacman -Sy \
     noto-fonts-cjk \
     noto-fonts-emoji \
     noto-fonts-extra
+```
+
+If you want `gnome-software` to support PackageKit
+
+```shell
+pacman -Sy gnome-software-packagekit-plugin
+```
+
+### 5.6.3 **AppImage support**
+
+[Fuse](https://wiki.archlinux.org/title/FUSE) should be installed if you plan to use AppImage apps
+
+```shell
+pacman -Sy fuse
 ```
 
 ### 6. **User preferences**
