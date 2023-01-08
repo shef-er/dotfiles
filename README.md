@@ -44,10 +44,36 @@ flatpak install flathub \
   md.obsidian.Obsidian
 ```
 
+
+## 🦊 firefox tweaks
+
+### disable pocket
+
+`about:config > extensions.pocket.enabled`
+
+
+## 🧰 development
+
+```shell
+# docker
+sudo pacman -Sy docker docker-compose
+sudo systemctl enable --now docker.service
+sudo usermod -aG docker "$USER"
+docker run hello-world
+
+# neovim
+sudo pacman -Sy neovim wl-clipboard
+git clone git@github.com:shef-er/nvim.git ~/.config/nvim
+
+# code-oss
+sudo pacman -Sy code
+git clone git@github.com:shef-er/code.git "~/.config/Code - OSS"
+```
+
+
 ## 💅 gnome shell settings
 
 ```shell
-# tap to click
 gsettings set org.gnome.desktop.peripherals.touchpad tap-to-click true
 
 # caps lock to switch keyboard layout
@@ -56,7 +82,9 @@ gsettings set org.gnome.desktop.input-sources xkb-options "['grp:caps_toggle']"
 # disable ibus hotkeys
 gsettings set org.freedesktop.ibus.panel.emoji hotkey "@as []"
 gsettings set org.freedesktop.ibus.panel.emoji unicode-hotkey "@as []"
+```
 
+```shell
 # wise gnome tracker search index size 
 gsettings set org.freedesktop.Tracker3.Extract max-bytes 10000
 
@@ -91,29 +119,3 @@ exit
 # restart system or apply changes with
 sudo systemctl restart gdm
 ```
-
-
-## 🧰 development
-
-```shell
-# docker
-sudo pacman -Sy docker docker-compose
-sudo systemctl enable --now docker.service
-sudo usermod -aG docker "$USER"
-docker run hello-world
-
-# neovim
-sudo pacman -Sy neovim wl-clipboard
-git clone git@github.com:shef-er/nvim.git ~/.config/nvim
-
-# code-oss
-sudo pacman -Sy code
-git clone git@github.com:shef-er/code.git "~/.config/Code - OSS"
-```
-
-
-## 🦊 firefox tweaks
-
-### disable pocket
-
-`about:config > extensions.pocket.enabled`
