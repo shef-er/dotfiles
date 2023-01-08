@@ -498,6 +498,7 @@ Contents of `/etc/sudoers.d/wheel`:
 
 Arch is a rolling release system and has rapid package turnover, so users have to take some time to do [system maintenance](https://wiki.archlinux.org/title/System_maintenance). 
 
+Also, see [MAINTENANCE.md](MAINTENANCE.md)
 
 ### 5.6 **Graphical user interface**
 
@@ -524,6 +525,7 @@ pacman -Sy \
     fragments \
     firefox \
     firefox-i18n-ru \
+    libreoffice-fresh \
     noto-fonts \
     noto-fonts-cjk \
     noto-fonts-emoji \
