@@ -388,7 +388,7 @@ Optionally manually unmount all the partitions with `umount -R /mnt`: this allow
 
 Finally, restart the machine by typing `reboot`: any partitions still mounted will be automatically unmounted by *systemd*. Remember to remove the installation medium and then login into the new system with the root account.
 
-## 5. **Post-intallation**
+## 5. **Post-installation**
 
 See [General recommendations](https://wiki.archlinux.org/title/General_recommendations) for system management directions and post-installation tutorials (like creating unprivileged user accounts, setting up a graphical user interface, sound or a touchpad).
 
