@@ -510,7 +510,7 @@ See [Category:Firewalls](https://wiki.archlinux.org/title/Category:Firewalls) fo
 
 Pacman 6.0 introduced the option to download packages in parallel. `ParallelDownloads` under `[options]` needs to be set to a positive integer in `/etc/pacman.conf` to use this feature (e.g., `5`). Packages will otherwise be downloaded sequentially if this option is unset.
 
-#### 5.5.2 **Cleaning the package cache**
+### 5.5.2 **Cleaning the package cache**
 
 Pacman stores its downloaded packages in `/var/cache/pacman/pkg/` and does not remove the old or uninstalled versions automatically.
 This has some advantages:
