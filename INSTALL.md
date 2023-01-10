@@ -575,6 +575,7 @@ pacman -Sy \
     gnome-shell-extensions \
     gnome-shell-extension-appindicator \
     gnome-tweaks \
+    gst-plugin-pipewire \
     xdg-desktop-portal-gnome \
     dconf-editor \
     celluloid \
