@@ -425,7 +425,7 @@ systemctl enable --now fstrim.timer
 ### 5.2.2 **Power optimization**
 
 ```shell
-pacman -Sy tlp tlp-rdw
+pacman -Sy tlp tlp-rdw ethtool smartmontools
 systemctl enable --now tlp.service
 systemctl enable --now NetworkManager-dispatcher.service
 
