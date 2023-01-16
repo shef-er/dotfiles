@@ -7,7 +7,7 @@
 Install dependencies:
 
 ```shell
-pacman -Sy usbutils cups sane imagescan
+sudo pacman -Sy usbutils cups sane imagescan
 ```
 
 Enable [CUPS](https://wiki.archlinux.org/title/CUPS) service:
