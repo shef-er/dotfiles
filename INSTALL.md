@@ -161,7 +161,7 @@ swapon /dev/swap_partition
 Use the [pacstrap(8)](https://man.archlinux.org/man/pacstrap.8) script to install the [base](https://archlinux.org/packages/?name=base) package, Linux [kernel](https://wiki.archlinux.org/title/Kernel) and firmware for common hardware:
 
 ```shell
-pacstrap -K /mnt base linux linux-firmware linux-firmware-qcom sof-firmware alsa-firmware
+pacstrap -K /mnt base base-devel linux linux-firmware linux-firmware-qcom sof-firmware alsa-firmware
 ```
 
 > **Tip:**
@@ -609,6 +609,10 @@ pacman -Sy fuse
 
 See [MAINTENANCE.md](MAINTENANCE.md)
 
-### 7. **User preferences**
+### 7. **Devices setup**
+
+See [DEVICES.md](DEVICES.md)
+
+### 8. **User preferences**
 
 See [README.md](README.md).
