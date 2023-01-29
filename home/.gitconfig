@@ -24,7 +24,7 @@
 [alias]
 	g = log --graph --abbrev-commit --all \
 	    --date=format:'%d.%m.%Y %H:%I' \
-		--pretty='%<|(21)%C(yellow)%h%C(reset) %<(72,trunc)%C(bold)%s%C(reset) %<(24,trunc)%C(bold blue)%an%C(reset) %C(bold green)(%ad)%C(reset)%d'
+		--pretty='%C(yellow)%h%C(reset) %<(20,trunc)%C(bold blue)%an%C(reset) %C(bold green)(%ad)%C(reset) %<(72,trunc)%C(bold)%s%C(reset) %d'
 
 	graph = log --graph --abbrev-commit --decorate --all \
 	    --date=format:'%d.%m.%Y %H:%I:%S %z' \
