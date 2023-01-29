@@ -14,13 +14,6 @@ sudo pacman -Sy git git-lfs
 
 git config --global user.name "<your name>"
 git config --global user.email "<your email>"
-git config --global core.editor nano
-git config --global core.autocrlf input
-git config --global core.safecrlf true
-git config --global core.filemode false
-git config --global credential.helper cache
-git config --global pull.rebase false
-git config --global init.defaultBranch master
 ```
 
 ```shell
