@@ -22,10 +22,10 @@
 	defaultBranch = master
 
 [alias]
-	g = log --graph --abbrev-commit --all \
-	    --date=format:'%d.%m.%Y %H:%I' \
-		--pretty='%C(yellow)%h%C(reset) %<(20,trunc)%C(bold blue)%an%C(reset) %C(bold green)(%ad)%C(reset) %<(72,trunc)%C(bold)%s%C(reset) %d'
+    graph = !git log --graph --date-order --abbrev-commit --date=format:'%d.%m.%Y %H:%I:%S %z' "$(git symbolic-ref --short HEAD)"
 
-	graph = log --graph --abbrev-commit --decorate --all \
-	    --date=format:'%d.%m.%Y %H:%I:%S %z' \
-		--pretty='%C(yellow)%h%C(bold)%d%C(reset)%n    %C(blue)%an%C(reset) %C(cyan)<%ce>%C(reset) %C(green)%ad%C(reset)%n    %s%n'
+    # just lke in IntellijIDEA git view
+    g = !git log --graph --date-order \
+        --date=format:'%d.%m.%Y %H:%I:%S %z' \
+        --pretty='%>|(21)%C(yellow)%h%C(reset) %<|(72,trunc)%C(bold)%s%C(reset) %C(bold)%an%C(reset) %C(dim)%ad%C(reset)%C(bold yellow)%d%C(reset)' \
+        "$(git symbolic-ref --short HEAD)"
