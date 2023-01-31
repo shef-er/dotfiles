@@ -506,7 +506,7 @@ See [Category:Firewalls](https://wiki.archlinux.org/title/Category:Firewalls) fo
 
 ### 5.5. **Packages**
 
-Set up timer to refresh existing PGP keys of archlinux-keyring regularly:
+Set up timer to refresh existing [PGP keys](https://wiki.archlinux.org/title/Pacman/Package_signing) of [archlinux-keyring](https://archlinux.org/packages/?name=archlinux-keyring) regularly:
 
 ```shell
 systemctl enable archlinux-keyring-wkd-sync.timer
