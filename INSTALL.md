@@ -506,6 +506,12 @@ See [Category:Firewalls](https://wiki.archlinux.org/title/Category:Firewalls) fo
 
 ### 5.5. **Packages**
 
+Set up timer to refresh existing PGP keys of archlinux-keyring regularly:
+
+```shell
+systemctl enable archlinux-keyring-wkd-sync.timer
+```
+
 ### 5.5.1 **Enabling parallel downloads**
 
 Pacman 6.0 introduced the option to download packages in parallel. `ParallelDownloads` under `[options]` needs to be set to a positive integer in `/etc/pacman.conf` to use this feature (e.g., `5`). Packages will otherwise be downloaded sequentially if this option is unset.
