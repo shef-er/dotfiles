@@ -11,6 +11,7 @@
 	autocrlf = input
 	filemode = false
 	editor = nano
+	pager = less -S
 
 [credential]
 	helper = cache
@@ -21,11 +22,16 @@
 [init]
 	defaultBranch = master
 
+[log]
+	abbrevCommit = true
+	date = format:%d.%m.%Y %H:%I:%S %z
+
 [alias]
-    graph = !git log --graph --date-order --abbrev-commit --date=format:'%d.%m.%Y %H:%I:%S %z' "$(git symbolic-ref --short HEAD)"
+    b = branch -a
+
+    graph = log --graph --date-order HEAD
 
     # just lke in IntellijIDEA git view
-    g = !git log --graph --date-order \
-        --date=format:'%d.%m.%Y %H:%I:%S %z' \
+    g = log --graph --date-order \
         --pretty='%>|(21)%C(yellow)%h%C(reset) %<|(72,trunc)%C(bold)%s%C(reset) %C(bold)%an%C(reset) %C(dim)%ad%C(reset)%C(bold yellow)%d%C(reset)' \
-        "$(git symbolic-ref --short HEAD)"
+        HEAD
