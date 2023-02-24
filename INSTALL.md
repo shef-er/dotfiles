@@ -141,7 +141,8 @@ mount /dev/root_partition /mnt
 
 Create any remaining mount points (such as `/mnt/home`) and mount their corresponding volumes. 
 
-> **Tip:** Run [mount(8)](https://man.archlinux.org/man/mount.8) with the `--mkdir` option to create the specified mount point. Alternatively, create it using [mkdir(1)](https://man.archlinux.org/man/mkdir.1) beforehand.
+> **Tip**  
+> Run [mount(8)](https://man.archlinux.org/man/mount.8) with the `--mkdir` option to create the specified mount point. Alternatively, create it using [mkdir(1)](https://man.archlinux.org/man/mkdir.1) beforehand.
 
 For UEFI systems, mount the EFI system partition:
 
@@ -166,7 +167,7 @@ Use the [pacstrap(8)](https://man.archlinux.org/man/pacstrap.8) script to instal
 pacstrap -K /mnt base base-devel linux linux-firmware linux-firmware-qcom sof-firmware alsa-firmware
 ```
 
-> **Tip:**
+> **Tip**  
 > * You can substitute [linux](https://archlinux.org/packages/?name=linux) for a [kernel](https://wiki.archlinux.org/title/Kernel) package of your choice, or you could omit it entirely when installing in a [container](https://en.wikipedia.org/wiki/Container_(virtualization)).
 > * You could omit the installation of the firmware package when installing in a virtual machine or container.
 
@@ -377,7 +378,7 @@ initrd  /initramfs-linux-fallback.img
 options root="LABEL=ARCH_OS" rw
 ```
 
-> **Tip:**
+> **Tip**  
 > * The available boot entries which have been configured can be listed with the command `bootctl list`.
 > * An example entry file is located at `/usr/share/systemd/bootctl/arch.conf`.
 > * The [kernel parameters](https://wiki.archlinux.org/title/Kernel_parameters) for scenarios such as [LVM](https://wiki.archlinux.org/title/LVM), [LUKS](https://wiki.archlinux.org/title/LUKS) or [dm-crypt](https://wiki.archlinux.org/title/Dm-crypt) can be found on the relevant pages.
@@ -498,7 +499,8 @@ Contents of `/etc/sudoers.d/wheel`:
 %wheel ALL=(ALL:ALL) ALL
 ```
 
-> **Tip:** When creating new administrators, it is often desirable to enable sudo access for the `wheel` group and [add the user to it](https://wiki.archlinux.org/title/Users_and_groups#Group_management), since by default [Polkit](https://wiki.archlinux.org/title/Polkit#Administrator_identities) treats the members of the `wheel` group as administrators. If the user is not a member of `wheel`, software using Polkit may ask to authenticate using the root password instead of the user password.
+> **Tip**  
+> When creating new administrators, it is often desirable to enable sudo access for the `wheel` group and [add the user to it](https://wiki.archlinux.org/title/Users_and_groups#Group_management), since by default [Polkit](https://wiki.archlinux.org/title/Polkit#Administrator_identities) treats the members of the `wheel` group as administrators. If the user is not a member of `wheel`, software using Polkit may ask to authenticate using the root password instead of the user password.
 
 ### 5.4.1 **Firewall**
 
