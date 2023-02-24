@@ -15,9 +15,6 @@ alias .....='cd ../../../..'
 alias ......='cd ../../../../..'
 
 alias h='fc -l'
-alias j=jobs
-alias m=less
-alias g='egrep -i'
 alias ls='ls --group-directories-first'
 alias l='ls -aF'
 alias ll='ls -lthF'
@@ -34,9 +31,3 @@ alias tarbz2='tar -jxvf'
 alias cp='cp -ip'
 alias mv='mv -i'
 alias rm='rm -i'
-
-# global aliases
-#alias -g N='2>/dev/null'
-#alias -g L='|less'
-#alias -g G='|grep'
-#alias -g W='|wc -m'

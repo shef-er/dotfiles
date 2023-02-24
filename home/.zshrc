@@ -5,9 +5,4 @@
 #  _ / /\__ \ | | | | | (__
 # (_)___|___/_| |_|_|  \___|
 
-for file in ~/.zsh.d/*.zsh; do
-  source "$file"
-done
-
-ttyctl -f
-
+source ~/.config/zsh/rc.zsh
