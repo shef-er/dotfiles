@@ -16,11 +16,11 @@
 [credential]
 	helper = cache
 
+[init]
+	defaultBranch = main
+
 [pull]
 	rebase = false
-
-[init]
-	defaultBranch = master
 
 [log]
 	abbrevCommit = true

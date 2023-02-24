@@ -5,7 +5,18 @@
 #  _ / /\__ \ | | |  __/ | | \ V /
 # (_)___|___/_| |_|\___|_| |_|\_/
 
-if ! [[ "$PATH" =~ "$HOME/.local/bin:" ]] ; then
+
+if ! [[ "$GOPATH" =~ "$HOME/.local/go" ]] ; then
+  export GOPATH="$HOME/.local/go"
+fi
+
+if ! [[ "$PATH" =~ "$HOME/.local/go/bin" ]] ; then
+  export PATH="$HOME/.local/go/bin:$PATH"
+fi
+
+GOTELEMETRY=off
+
+if ! [[ "$PATH" =~ "$HOME/.local/bin" ]] ; then
   export PATH="$HOME/.local/bin:$PATH"
 fi
 

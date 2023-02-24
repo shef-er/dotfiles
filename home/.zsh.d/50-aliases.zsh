@@ -35,18 +35,8 @@ alias cp='cp -ip'
 alias mv='mv -i'
 alias rm='rm -i'
 
-# use neovim everywhere
-alias vim='nvim'
-alias vi='nvim'
-
 # global aliases
-alias -g N='2>/dev/null'
-alias -g L='|less'
-alias -g G='|grep'
-alias -g W='|wc -m'
-
-## aliases for extensions
-#alias -s {avi,mpeg,mpg,mov,m2v,webm,flv,mkv,mp4}=gnome-mpv
-#alias -s {odt,doc,sxw,rtf}=libreoffice
-#alias -s {txt,xml,html,c,h,cpp,hpp}=$EDITOR
-
+#alias -g N='2>/dev/null'
+#alias -g L='|less'
+#alias -g G='|grep'
+#alias -g W='|wc -m'
