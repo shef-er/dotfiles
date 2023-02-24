@@ -52,8 +52,7 @@ ip link
 ping archlinux.org
 ```
 
-> **Note**
->
+> **Note**  
 > In the installation image, [systemd-networkd](https://wiki.archlinux.org/title/Systemd-networkd), [systemd-resolved](https://wiki.archlinux.org/title/Systemd-resolved), [iwd](https://wiki.archlinux.org/title/Iwd) and [ModemManager](https://wiki.archlinux.org/title/ModemManager) are preconfigured and enabled by default. That will not be the case for the installed system.
 
 ### 1.4 **Update the system clock**
@@ -89,8 +88,7 @@ Use [fdisk](https://wiki.archlinux.org/title/Fdisk) or [gdisk](https://wiki.arch
 fdisk /dev/the_disk_to_be_partitioned
 ```
 
-> **Note**
->
+> **Note**  
 > * If the disk does not show up, [make sure the disk controller is not in RAID mode](https://wiki.archlinux.org/title/Partitioning#Drives_are_not_visible_when_firmware_RAID_is_enabled).
 > * If the disk from which you want to boot [already has an EFI system partition](https://wiki.archlinux.org/title/EFI_system_partition#Check_for_an_existing_partition), do not create another one, but use the existing partition instead.
 > * [Swap](https://wiki.archlinux.org/title/Swap) space can be set on a [swap file](https://wiki.archlinux.org/title/Swap_file) for file systems supporting it.
@@ -126,7 +124,7 @@ mkswap /dev/swap_partition
 
 If you created an EFI system partition, [format it](https://wiki.archlinux.org/title/EFI_system_partition#Format_the_partition) to FAT32 using [mkfs.fat(8)](https://man.archlinux.org/man/mkfs.fat.8).
 
-> **Warning**
+> **Warning**  
 > Only format the EFI system partition if you created it during the partitioning step. If there already was an EFI system partition on disk beforehand, reformatting it can destroy the boot loaders of other installed operating systems.
 
 ```shell
@@ -334,15 +332,13 @@ bootctl install
 
 This will copy the *systemd-boot* EFI boot manager to the ESP: on an x64 architecture system `/usr/lib/systemd/boot/efi/systemd-bootx64.efi` will be copied to `/boot/EFI/systemd/systemd-bootx64.efi` and `/boot/EFI/BOOT/BOOTX64.EFI`, and *systemd-boot* will be set as the default EFI application. 
 
-> **Note**
->
+> **Note**  
 > * When running `bootctl install`, `systemd-boot` will try to locate the ESP at `/efi`, `/boot`, and `/boot/efi`. Setting `esp` to a different location requires passing the `--esp-path=esp` option. (See [bootctl(1) § OPTIONS](https://man.archlinux.org/man/bootctl.1#OPTIONS) for details.)
 > * Installing *systemd-boot* will overwrite any existing `esp/EFI/BOOT/BOOTX64.EFI`, e.g. Microsoft's version of the file.
 
 The loader configuration is stored in the file `/boot/loader/loader.conf`. See [loader.conf(5) § OPTIONS](https://man.archlinux.org/man/loader.conf.5#OPTIONS) for details.
 
-> **Note**
->
+> **Note**  
 > If `options` is present in a boot entry and [Secure Boot](https://wiki.archlinux.org/title/Secure_Boot) is disabled, the value of `options` will override any `.cmdline` string embedded in the EFI image that is specified by `efi` or `linux` (see [Unified kernel image#Preparing a unified kernel image](https://wiki.archlinux.org/title/Unified_kernel_image#Preparing_a_unified_kernel_image)).
 > With Secure Boot, however, `options` (and any edits made to the kernel command line in the bootloader UI) will be ignored, and only the embedded `.cmdline` will be used. 
 
