@@ -332,7 +332,7 @@ bootctl install
 
 This will copy the *systemd-boot* EFI boot manager to the ESP: on an x64 architecture system `/usr/lib/systemd/boot/efi/systemd-bootx64.efi` will be copied to `/boot/EFI/systemd/systemd-bootx64.efi` and `/boot/EFI/BOOT/BOOTX64.EFI`, and *systemd-boot* will be set as the default EFI application. 
 
-> **Note**  
+> **Note**
 > * When running `bootctl install`, `systemd-boot` will try to locate the ESP at `/efi`, `/boot`, and `/boot/efi`. Setting `esp` to a different location requires passing the `--esp-path=esp` option. (See [bootctl(1) § OPTIONS](https://man.archlinux.org/man/bootctl.1#OPTIONS) for details.)
 > * Installing *systemd-boot* will overwrite any existing `esp/EFI/BOOT/BOOTX64.EFI`, e.g. Microsoft's version of the file.
 
