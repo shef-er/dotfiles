@@ -17,11 +17,7 @@ git config --global user.email "<your email>"
 ```
 
 ```shell
-sudo pacman -Sy \
-  htop \
-  gimp inkscape \
-  picard
-
+# remove
 sudo pacman -Rs \
   gnome-music \
   gnome-photos \
@@ -32,39 +28,18 @@ sudo pacman -Rs \
   cheese \
   gnome-video-effects
 
+# install
+sudo pacman -Sy \
+  htop \
+  gimp inkscape \
+  picard
+
 flatpak install flathub \
-  io.bassi.Amberol \
   md.obsidian.Obsidian
 ```
 
 
-## 🦊 firefox tweaks
-
-### disable pocket
-
-`about:config > extensions.pocket.enabled`
-
-
-## 🧰 development
-
-```shell
-# docker
-sudo pacman -Sy docker docker-compose
-sudo systemctl enable --now docker.service
-sudo usermod -aG docker "$USER"
-docker run hello-world
-
-# neovim
-sudo pacman -Sy neovim wl-clipboard
-git clone git@github.com:shef-er/nvim.git ~/.config/nvim
-
-# code-oss
-sudo pacman -Sy code
-git clone git@github.com:shef-er/code.git "~/.config/Code - OSS"
-```
-
-
-## 💅 gnome shell settings
+## 💅 gnome shell
 
 ```shell
 gsettings set org.gnome.desktop.peripherals.touchpad tap-to-click true
@@ -78,7 +53,7 @@ gsettings set org.freedesktop.ibus.panel.emoji unicode-hotkey "@as []"
 ```
 
 ```shell
-# wise gnome tracker search index size 
+# wise gnome tracker search index size
 gsettings set org.freedesktop.Tracker3.Extract max-bytes 10000
 
 # permamently disable tracker-miner-fs and free cache
@@ -111,4 +86,21 @@ exit
 
 # restart system or apply changes with
 sudo systemctl restart gdm
+```
+
+
+## 🦊 firefox
+
+### disable pocket
+
+`about:config > extensions.pocket.enabled`
+
+
+## 🐋 docker
+
+```shell
+sudo pacman -Sy docker docker-compose
+sudo systemctl enable --now docker.service
+sudo usermod -aG docker "$USER"
+docker run hello-world
 ```

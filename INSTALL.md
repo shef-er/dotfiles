@@ -589,6 +589,7 @@ pacman -Sy \
     xdg-desktop-portal-gnome \
     dconf-editor \
     celluloid \
+    rhythmbox \
     foliate \
     gnome-epub-thumbnailer \
     fragments \
