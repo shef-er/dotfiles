@@ -19,6 +19,8 @@
 # %s        - reset color swapping
 # %b        - reset bright color
 
+unsetopt beep
+
 setopt prompt_subst
 
 # VCS Info
