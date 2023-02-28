@@ -1,3 +1,4 @@
-if ! [[ "$PATH" =~ "$HOME/.local/bin" ]] ; then
-  export PATH="$HOME/.local/bin:$PATH"
+BINDIR="$HOME/.local/bin"
+if ! [[ "$PATH" =~ "$BINDIR" ]] ; then
+  export PATH="$BINDIR:$PATH"
 fi

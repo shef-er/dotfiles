@@ -4,8 +4,8 @@
 # | (_| | | | (__| | | | |\ V /  __/\__ \
 #  \__,_|_|  \___|_| |_|_| \_/ \___||___/
 
-# usage: extract <filename>
-extract () {
+# usage: unpack <filename>
+unpack () {
   if [ -f "${1}" ] ; then
     case "${1}" in
       *.tar.bz2)    tar -xjf $1 ;;
@@ -58,4 +58,3 @@ pack-dirs () {
     fi
   done
 }
-

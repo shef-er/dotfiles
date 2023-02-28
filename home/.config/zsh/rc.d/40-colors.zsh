@@ -53,4 +53,3 @@ man() {
   LESS_TERMCAP_us=$'\e[4;96m' \
   man "$@"
 }
-

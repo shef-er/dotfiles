@@ -37,4 +37,3 @@ function flac-img-to-tracks {
     echo "Make sure you have installed: cuebreakpoints, shnsplit, cuetag."
   fi
 }
-

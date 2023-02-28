@@ -4,7 +4,6 @@
 # | (_| | (_) | | (_| | | | | (_| |
 #  \__, |\___/|_|\__,_|_| |_|\__, |
 #  |___/                     |___/ 
-#
 #          ,_---~~~~~----._         
 #   _,,_,*^____      _____``*g*\"*, 
 #  / __/ /'     ^.  /      \ ^@q   f 
@@ -17,12 +16,12 @@
 #   |                            |   
 #    |                           |   
 
-if ! [[ "$GOPATH" =~ "$HOME/.local/go" ]] ; then
-  export GOPATH="$HOME/.local/go"
+GODIR="$HOME/.local/lib/go"
+if [[ "$GOPATH" != "$GODIR" ]] ; then
+  export GOPATH="$GODIR"
 fi
 
-if ! [[ "$PATH" =~ "$HOME/.local/go/bin" ]] ; then
-  export PATH="$HOME/.local/go/bin:$PATH"
+GOBINDIR="$GOPATH/bin"
+if ! [[ "$PATH" =~ "$GOBINDIR" ]] ; then
+  export PATH="$PATH:$GOBINDIR"
 fi
-
-GOTELEMETRY=off

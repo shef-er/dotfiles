@@ -7,6 +7,6 @@
 
 setopt appendhistory histignoredups histignorespace
 
-export HISTFILE=~/.local/state/zsh_history
+export HISTFILE="$HOME/.local/state/zsh_history"
 export HISTSIZE=1000
 export SAVEHIST=10000

@@ -11,4 +11,3 @@ grepf () {
     grep -rnw "./" -e "$1"
   fi
 }
-

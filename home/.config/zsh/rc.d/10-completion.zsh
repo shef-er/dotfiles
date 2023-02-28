@@ -5,21 +5,23 @@
 #  \___\___/|_| |_| |_| .__/|_|\___|\__|_|\___/|_| |_|
 #                     |_|
 
-## zsh-autosuggestions plugin
-if [[ -f /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh ]]; then
-  source /usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+ZSH_AUTOSUGGESTIONS="/usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh"
+if [[ -f "$ZSH_AUTOSUGGESTIONS" ]]; then
+  source "$ZSH_AUTOSUGGESTIONS"
 fi
+
+setopt completealiases
+setopt autocd 
+# setopt extendedglob
 
 autoload -Uz compinit
 _comp_options+=( globdots )
 
-mkdir -p "$HOME/.cache/zsh"
-compinit -d "$HOME/.cache/zsh/zcompdump-$ZSH_VERSION"
+ZSH_CACHE="$HOME/.cache/zsh"
+mkdir -p "$ZSH_CACHE"
+compinit -d "$ZSH_CACHE/zcompdump-$ZSH_VERSION"
 
-setopt completealiases
-setopt autocd extendedglob
-
-zstyle ':compinstall'                   filename '${HOME}/.zshrc'
+zstyle ':compinstall'                   filename "$HOME/.config/zsh/rc.zsh"
 
 zstyle ':completion:*'                  rehash true
 zstyle ':completion:*'                  menu select
@@ -33,5 +35,4 @@ zstyle ':completion:*:*:kill:*'         menu yes select
 zstyle ':completion:*:killall:*'        force-list always
 zstyle ':completion:*:*:killall:*'      menu yes select
 
-zstyle ':completion:*:processes-names'  command  'ps c -u ${USER} -o command | uniq'
-
+zstyle ':completion:*:processes-names'  command  "ps c -u $USER -o command | uniq"

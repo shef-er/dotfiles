@@ -119,4 +119,3 @@ bindkey "^[[B"    down-line-or-beginning-search
 function exit_zsh { exit }
 zle -N            exit_zsh
 bindkey '^D'      exit_zsh
-
