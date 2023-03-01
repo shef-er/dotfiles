@@ -591,7 +591,7 @@ pacman -Sy \
     celluloid \
     foliate \
     gnome-epub-thumbnailer \
-    fragments \
+    transmission-gtk \
     firefox \
     firefox-i18n-ru \
     libreoffice-fresh \
