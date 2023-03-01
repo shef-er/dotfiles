@@ -43,6 +43,7 @@ flatpak install flathub \
 
 ```shell
 gsettings set org.gnome.desktop.peripherals.touchpad tap-to-click true
+gsettings set org.gnome.desktop.interface gtk-enable-primary-paste false
 
 # caps lock to switch keyboard layout
 gsettings set org.gnome.desktop.input-sources xkb-options "['grp:caps_toggle']"
