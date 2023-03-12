@@ -6,42 +6,7 @@ Refresh pacman database
 sudo pacman -Syu
 ```
 
-### 1.1 **Audio and video**
-
-Wireplumber should be installed with `pipewire-alsa`, `pipewire-jack` and `pipewire-pulse` packages because it ships configuration that prompt media-session to activate PipeWire's audio features.
-
-https://archlinux.org/news/undone-replacement-of-pipewire-media-session-with-wireplumber/
-
-```shell
-pacman -Sy \
-    wireplumber \
-    pipewire-jack \
-    pipewire-alsa \
-    pipewire-pulse
-```
-
-### 1.2 **Gnome shell**
-
-```shell
-pacman -Sy \
-    gnome \
-    gst-plugin-pipewire \
-    xdg-desktop-portal-gnome \
-    power-profiles-daemon \
-    dconf-editor \
-    gnome-firmware \
-    gnome-shell-extensions \
-    gnome-shell-extension-appindicator \
-    gnome-tweaks
-```
-
-If you want `gnome-software` to support PackageKit
-
-```shell
-pacman -Sy gnome-software-packagekit-plugin
-```
-
-### 1.2.1 **Gnome shell settings**
+### 1.1 **Gnome shell settings**
 
 ```shell
 gsettings set org.gnome.desktop.peripherals.touchpad tap-to-click true
@@ -67,7 +32,7 @@ gsettings set org.gnome.desktop.interface font-antialiasing 'grayscale'
 gsettings set org.gnome.desktop.interface font-hinting 'full'
 ```
 
-### 1.2.2 **GDM settings**
+### 1.1.1 **GDM settings**
 
 Enable "Tap to click" in GDM
 
@@ -84,7 +49,7 @@ exit
 sudo systemctl restart gdm
 ```
 
-### 1.2.3 **Tracker settings**
+### 1.1.2 **Tracker settings**
 
 ```shell
 # wise gnome tracker search index size
@@ -96,7 +61,7 @@ gsettings set org.freedesktop.Tracker3.Miner.Files enable-monitors false
 tracker3 reset --filesystem
 ```
 
-### 1.3 **Shell**
+### 1.2 **Shell**
 
 Install [zsh](https://wiki.archlinux.org/title/zsh) and make it your default shell 
 
@@ -105,7 +70,7 @@ sudo pacman -Sy zsh zsh-autosuggestions zsh-completions
 chsh -s /bin/zsh
 ```
 
-### 1.4 **Git**
+### 1.3 **Git**
 
 ```shell
 sudo pacman -Sy git git-lfs

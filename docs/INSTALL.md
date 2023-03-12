@@ -567,14 +567,51 @@ pacman -Scc
 
 Visit the [Mirrors](https://wiki.archlinux.org/title/Mirrors) article for steps on taking full advantage of using the fastest and most up to date mirrors of the official repositories. As explained in the article, a particularly good advice is to routinely check the [Mirror Status](https://archlinux.org/mirrors/status/) page for a list of mirrors that have been recently synced. This can be automated with [Reflector](https://wiki.archlinux.org/title/Reflector). 
 
-### 5.6 **User preferences**
+### 5.6 **GUI**
+
+### 5.6.1 **Audio and video**
+
+Wireplumber should be installed with `pipewire-alsa`, `pipewire-jack` and `pipewire-pulse` packages because it ships configuration that prompt media-session to activate PipeWire's audio features.
+
+https://archlinux.org/news/undone-replacement-of-pipewire-media-session-with-wireplumber/
+
+```shell
+pacman -Sy \
+    wireplumber \
+    pipewire-jack \
+    pipewire-alsa \
+    pipewire-pulse
+```
+
+### 5.6.2 **Gnome shell**
+
+```shell
+pacman -Sy \
+    gnome \
+    gst-plugin-pipewire \
+    xdg-desktop-portal-gnome \
+    power-profiles-daemon \
+    dconf-editor \
+    gnome-firmware \
+    gnome-shell-extensions \
+    gnome-shell-extension-appindicator \
+    gnome-tweaks
+```
+
+Install PackageKit plugin if you want to manage pacman packages using [gnome-software](https://archlinux.org/packages/?name=gnome-software)
+
+```shell
+pacman -Sy gnome-software-packagekit-plugin
+```
+
+### 6. **User preferences**
 
 See [USER.md](USER.md)
 
-### 6. **System maintenance**
+### 7. **System maintenance**
 
 See [MAINTENANCE.md](MAINTENANCE.md)
 
-### 7. **External devices setup**
+### 8. **External devices setup**
 
 See [DEVICES.md](DEVICES.md)
