@@ -417,7 +417,7 @@ If you installed [bluez-utils](https://archlinux.org/packages/?name=bluez-utils)
 systemctl enable --now bluetooth.service
 ```
 
-### 5.2 **Hardware** (TODO: more info)
+### 5.2 **Hardware** (TODO: add more info)
 
 ### 5.2.1 **SSD TRIM**
 
@@ -425,10 +425,18 @@ systemctl enable --now bluetooth.service
 systemctl enable --now fstrim.timer
 ```
 
-### 5.2.2 **Power optimization**
+Also you can install [smartctl](https://wiki.archlinux.org/title/S.M.A.R.T.#smartctl) tool
 
 ```shell
-pacman -Sy tlp tlp-rdw ethtool smartmontools
+pacman -Sy smartmontools
+```
+
+### 5.2.2 **Power optimization**
+
+You can install [tlp](https://wiki.archlinux.org/title/TLP) package if you don't want to use [power-profiles-daemon](https://wiki.archlinux.org/title/CPU_frequency_scaling#gnome-shell-extension-cpupower).
+
+```shell
+pacman -Sy tlp tlp-rdw
 systemctl enable --now tlp.service
 systemctl enable --now NetworkManager-dispatcher.service
 
@@ -587,6 +595,7 @@ pacman -Sy \
     gnome-tweaks \
     gst-plugin-pipewire \
     xdg-desktop-portal-gnome \
+    power-profiles-daemon \
     dconf-editor \
     celluloid \
     foliate \
@@ -619,7 +628,7 @@ pacman -Sy fuse
 
 See [MAINTENANCE.md](MAINTENANCE.md)
 
-### 7. **Devices setup**
+### 7. **External devices setup**
 
 See [DEVICES.md](DEVICES.md)
 
