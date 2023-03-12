@@ -208,13 +208,13 @@ arch-chroot /mnt
 
 ### 3.3 **Essential packages**
 
-Example set of essential packages:
+Basic set of essential packages:
 
 ```shell
 pacman -Sy \
     networkmanager bluez-utils \
     nano nano-syntax-highlighting \
-    man-db man-pages texinfo
+    man-db man-pages
 ```
 
 ### 3.4 **Time zone**
@@ -419,7 +419,13 @@ systemctl enable --now bluetooth.service
 
 ### 5.2 **Hardware** (TODO: add more info)
 
-### 5.2.1 **SSD TRIM**
+### 5.2.1 **Disable hardware speaker**
+
+```shell
+echo "blacklist pcspkr" > /etc/modprobe.d/nobeep.conf
+```
+
+### 5.2.2 **Solid State Drive**
 
 ```shell
 systemctl enable --now fstrim.timer
@@ -431,7 +437,7 @@ Also you can install [smartctl](https://wiki.archlinux.org/title/S.M.A.R.T.#smar
 pacman -Sy smartmontools
 ```
 
-### 5.2.2 **Power optimization**
+### 5.2.3 **Power optimization**
 
 You can install [tlp](https://wiki.archlinux.org/title/TLP) package if you don't want to use [power-profiles-daemon](https://wiki.archlinux.org/title/CPU_frequency_scaling#gnome-shell-extension-cpupower).
 
@@ -445,13 +451,7 @@ nano /etc/tlp.conf
 systemctl restart tlp.service
 ```
 
-### 5.2.3 **Disable hardware speaker**
-
-```shell
-echo "blacklist pcspkr" > /etc/modprobe.d/nobeep.conf
-```
-
-### 5.2.4 **Nvidia** (TODO: more info)
+### 5.2.4 **Nvidia** (TODO: add more info)
 
 For the [Maxwell (NV110/GMXXX)](https://nouveau.freedesktop.org/CodeNames.html#NV110) series and newer, install the [nvidia](https://archlinux.org/packages/?name=nvidia) package (for use with the [linux](https://archlinux.org/packages/?name=linux) kernel) or [nvidia-lts](https://archlinux.org/packages/?name=nvidia-lts) (for use with the [linux-lts](https://archlinux.org/packages/?name=linux-lts) kernel) package. 
 
@@ -607,7 +607,8 @@ pacman -Sy \
     noto-fonts \
     noto-fonts-cjk \
     noto-fonts-emoji \
-    noto-fonts-extra
+    noto-fonts-extra \
+    qt5-wayland
 ```
 
 If you want `gnome-software` to support PackageKit
