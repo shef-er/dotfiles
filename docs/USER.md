@@ -129,11 +129,13 @@ flatpak install flathub \
 
 ### 2.3 **Preferences**
 
-### 2.3.1 🦊 firefox
+### 2.3.1 Firefox 🦊
 
 Disable pocket `about:config > extensions.pocket.enabled = 0`
 
-### 2.3.2 🐋 docker
+## 3. Development tools
+
+### 3.1 Docker
 
 ```shell
 sudo pacman -Sy docker docker-compose
