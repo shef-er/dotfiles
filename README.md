@@ -24,7 +24,6 @@ sudo pacman -Rs \
   gnome-user-docs \
   yelp \
   totem \
-  epiphany \
   cheese \
   gnome-video-effects
 
@@ -43,7 +42,6 @@ flatpak install flathub \
 
 ```shell
 gsettings set org.gnome.desktop.peripherals.touchpad tap-to-click true
-gsettings set org.gnome.desktop.interface gtk-enable-primary-paste false
 
 # caps lock to switch keyboard layout
 gsettings set org.gnome.desktop.input-sources xkb-options "['grp:caps_toggle']"
@@ -51,16 +49,9 @@ gsettings set org.gnome.desktop.input-sources xkb-options "['grp:caps_toggle']"
 # disable ibus hotkeys
 gsettings set org.freedesktop.ibus.panel.emoji hotkey "@as []"
 gsettings set org.freedesktop.ibus.panel.emoji unicode-hotkey "@as []"
-```
 
-```shell
-# wise gnome tracker search index size
-gsettings set org.freedesktop.Tracker3.Extract max-bytes 10000
-
-# permamently disable tracker-miner-fs and free cache
-gsettings set org.freedesktop.Tracker3.Miner.Files crawling-interval -2
-gsettings set org.freedesktop.Tracker3.Miner.Files enable-monitors false
-tracker3 reset --filesystem
+# (optional) To disable mouse middle click paste
+gsettings set org.gnome.desktop.interface gtk-enable-primary-paste false
 ```
 
 ### fonts
@@ -73,20 +64,32 @@ gsettings set org.gnome.desktop.interface font-antialiasing 'grayscale'
 gsettings set org.gnome.desktop.interface font-hinting 'full'
 ```
 
-### enable gdm tap-to-click
+### tap-to-click in gdm
 
 ```shell
 # switch to gdm user
-sudo su - gdm -s /bin/sh
+sudo machinectl shell gdm@ /bin/bash
 
-export $(dbus-launch)
-GSETTINGS_BACKEND=dconf gsettings set org.gnome.desktop.peripherals.touchpad tap-to-click true
+gsettings set org.gnome.desktop.peripherals.touchpad tap-to-click true
 
 # exit from the gdm user
 exit
 
 # restart system or apply changes with
 sudo systemctl restart gdm
+```
+
+
+## 🔍 tracker
+
+```shell
+# wise gnome tracker search index size
+gsettings set org.freedesktop.Tracker3.Extract max-bytes 10000
+
+# permamently disable tracker-miner-fs and free cache
+gsettings set org.freedesktop.Tracker3.Miner.Files crawling-interval -2
+gsettings set org.freedesktop.Tracker3.Miner.Files enable-monitors false
+tracker3 reset --filesystem
 ```
 
 
