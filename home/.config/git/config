@@ -6,7 +6,9 @@
 #  |___/       
 
 [user]
-
+	name = Ernest Shefer
+	email = shef-er@ya.ru
+	
 [core]
 	autocrlf = input
 	filemode = false
