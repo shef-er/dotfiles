@@ -74,9 +74,6 @@ chsh -s /bin/zsh
 
 ```shell
 sudo pacman -Sy git git-lfs
-
-git config --global user.name "<your name>"
-git config --global user.email "<your email>"
 ```
 
 ## 2. **Applications**
