@@ -16,7 +16,7 @@
 #   |                            |   
 #    |                           |   
 
-GODIR="$HOME/.local/lib/go"
+GODIR="$XDG_DATA_HOME/go"
 if [[ "$GOPATH" != "$GODIR" ]] ; then
   export GOPATH="$GODIR"
 fi
