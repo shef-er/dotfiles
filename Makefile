@@ -11,4 +11,4 @@ help: ## Show this help
 
 .PHONY: link
 link: ## Link dotfiles to $HOME
-	bash scripts/link.sh home $(HOME)
+	@bash scripts/link.sh home $(HOME)
