@@ -107,6 +107,7 @@ sudo pacman -Sy \
     firefox \
     firefox-i18n-ru \
     gnome-passwordsafe \
+    seahorse \
     noto-fonts \
     noto-fonts-cjk \
     noto-fonts-emoji \
@@ -116,7 +117,8 @@ sudo pacman -Sy \
     foliate \
     gnome-epub-thumbnailer \
     libreoffice-fresh \
-    gimp inkscape \
+    gimp \
+    inkscape \
     picard \
     qt5-wayland
 

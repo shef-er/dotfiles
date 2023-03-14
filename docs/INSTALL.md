@@ -439,6 +439,11 @@ pacman -Sy smartmontools
 
 ### 5.2.3 **Power optimization**
 
+```shell
+echo 'kernel.nmi_watchdog=0' > /etc/sysctl.d/nonmiwatchdog.conf
+echo "vm.dirty_writeback_centisecs = 6000" > /etc/sysctl.d/dirty.conf
+```
+
 You can install [tlp](https://wiki.archlinux.org/title/TLP) package if you don't want to use [power-profiles-daemon](https://wiki.archlinux.org/title/CPU_frequency_scaling#gnome-shell-extension-cpupower).
 
 ```shell
