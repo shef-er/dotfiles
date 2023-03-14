@@ -1,18 +1,45 @@
 ## 1. **User preferences**
 
-Refresh pacman database
+Refresh pacman database:
 
 ```shell
 sudo pacman -Syu
 ```
 
-### 1.1 **Gnome shell settings**
+Install [git](https://wiki.archlinux.org/title/git):
 
 ```shell
-gsettings set org.gnome.desktop.peripherals.touchpad tap-to-click true
+sudo pacman -Sy git git-lfs
+```
 
+And clone this repo to `~/.local/share/dotfiles`.
+
+After that link dotfiles to `$HOME` dir:
+
+```shell
+cd ~/.local/share/dotfiles
+make link
+```
+
+### 1.1 **Shell**
+
+Install [zsh](https://wiki.archlinux.org/title/zsh) and make it your default shell 
+
+```shell
+sudo pacman -Sy zsh zsh-autosuggestions zsh-completions
+chsh -s /bin/zsh
+```
+
+After that relogin into your user.
+
+### 1.2 **Gnome shell settings**
+
+```shell
 # caps lock to switch keyboard layout
 gsettings set org.gnome.desktop.input-sources xkb-options "['grp:caps_toggle']"
+
+# laptop-specific
+gsettings set org.gnome.desktop.peripherals.touchpad tap-to-click true
 
 # disable ibus hotkeys
 gsettings set org.freedesktop.ibus.panel.emoji hotkey "@as []"
@@ -22,7 +49,7 @@ gsettings set org.freedesktop.ibus.panel.emoji unicode-hotkey "@as []"
 gsettings set org.gnome.desktop.interface gtk-enable-primary-paste false
 ```
 
-Install the best monospace font
+Install [the best monospace font](https://www.jetbrains.com/lp/mono/)
 
 ```shell
 sudo pacman -Sy ttf-jetbrains-mono
@@ -32,7 +59,7 @@ gsettings set org.gnome.desktop.interface font-antialiasing 'grayscale'
 gsettings set org.gnome.desktop.interface font-hinting 'full'
 ```
 
-### 1.1.1 **GDM settings**
+### 1.2.1 **GDM settings**
 
 Enable "Tap to click" in GDM
 
@@ -49,7 +76,7 @@ exit
 sudo systemctl restart gdm
 ```
 
-### 1.1.2 **Tracker settings**
+### 1.2.2 **Tracker settings**
 
 ```shell
 # wise gnome tracker search index size
@@ -59,21 +86,6 @@ gsettings set org.freedesktop.Tracker3.Extract max-bytes 10000
 gsettings set org.freedesktop.Tracker3.Miner.Files crawling-interval -2
 gsettings set org.freedesktop.Tracker3.Miner.Files enable-monitors false
 tracker3 reset --filesystem
-```
-
-### 1.2 **Shell**
-
-Install [zsh](https://wiki.archlinux.org/title/zsh) and make it your default shell 
-
-```shell
-sudo pacman -Sy zsh zsh-autosuggestions zsh-completions
-chsh -s /bin/zsh
-```
-
-### 1.3 **Git**
-
-```shell
-sudo pacman -Sy git git-lfs
 ```
 
 ## 2. **Applications**
