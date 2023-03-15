@@ -6,22 +6,18 @@
 #                     |_|
 
 ZSH_AUTOSUGGESTIONS="/usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh"
-if [[ -f "$ZSH_AUTOSUGGESTIONS" ]]; then
-  source "$ZSH_AUTOSUGGESTIONS"
-fi
+[ -r "$ZSH_AUTOSUGGESTIONS" ] && source "$ZSH_AUTOSUGGESTIONS"
 
-setopt completealiases
-setopt autocd 
-# setopt extendedglob
+setopt autocd completealiases
 
 autoload -Uz compinit
 _comp_options+=( globdots )
 
-ZSH_CACHE="$HOME/.cache/zsh"
-mkdir -p "$ZSH_CACHE"
-compinit -d "$ZSH_CACHE/zcompdump-$ZSH_VERSION"
+ZSH_CACHE_DIR="$XDG_CACHE_HOME"/zsh
+mkdir -p "$ZSH_CACHE_DIR"
+compinit -d "$ZSH_CACHE_DIR/zcompdump-$ZSH_VERSION"
 
-zstyle ':compinstall'                   filename "$HOME/.config/zsh/rc.zsh"
+zstyle ':compinstall'                   filename "$XDG_CONFIG_HOME"/zsh/rc.zsh
 
 zstyle ':completion:*'                  rehash true
 zstyle ':completion:*'                  menu select
