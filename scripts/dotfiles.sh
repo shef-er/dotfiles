@@ -18,14 +18,14 @@ unlink() {
 
     for link in $links; do
         if [ -e "$link" ] && [ ! -L "$link" ]; then
-            echo "Cannot remove symbolic link '$link': File is not link"
+            echo "Cannot remove link '$link': File is not link"
             echo 'Aborting...'
             exit 1
         fi
     done
 
     for link in $links; do
-        rm -f "$link" && echo "Unlink $link"
+        rm -f "$link" && echo "Removed link '$link'"
     done
 
     rm -f "$STATE_FILE"
@@ -43,7 +43,7 @@ link() {
         link="$destination_dir${target#"$target_dir"}"
 
         if [ -e "$link" ]; then
-            echo "Cannot create symbolic link '$link': File already exists"
+            echo "Cannot create link '$link': File already exists"
             echo 'Aborting...'
             exit 1
         fi
@@ -54,7 +54,8 @@ link() {
     for target in $targets; do
         link="$destination_dir${target#"$target_dir"}"
 
-        mkdir -p "$(dirname "$link")" && ln -vsT "$target" "$link"
+        mkdir -p "$(dirname "$link")" && ln -sT "$target" "$link" \
+            && echo "Created link '$link'"
 
         echo "$link" >> "$STATE_FILE"
     done
