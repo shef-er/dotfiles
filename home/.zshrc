@@ -5,4 +5,4 @@
 #  _ / /\__ \ | | | | | (__
 # (_)___|___/_| |_|_|  \___|
 
-source ~/.config/zsh/rc.zsh
+source ~/.config/zsh/rc

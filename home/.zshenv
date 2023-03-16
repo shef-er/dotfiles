@@ -5,4 +5,4 @@
 #  _ / /\__ \ | | |  __/ | | \ V /
 # (_)___|___/_| |_|\___|_| |_|\_/
 
-source ~/.config/zsh/env.zsh
+source ~/.config/zsh/env

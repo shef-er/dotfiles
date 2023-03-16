@@ -5,19 +5,17 @@
 #  \___\___/|_| |_| |_| .__/|_|\___|\__|_|\___/|_| |_|
 #                     |_|
 
-ZSH_AUTOSUGGESTIONS="/usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh"
-[ -r "$ZSH_AUTOSUGGESTIONS" ] && source "$ZSH_AUTOSUGGESTIONS"
+AUTOSUGGESTIONS="/usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh"
+[ -r "$AUTOSUGGESTIONS" ] && source "$AUTOSUGGESTIONS"
 
 setopt autocd completealiases
 
 autoload -Uz compinit
 _comp_options+=( globdots )
 
-ZSH_CACHE_DIR="$XDG_CACHE_HOME"/zsh
-mkdir -p "$ZSH_CACHE_DIR"
-compinit -d "$ZSH_CACHE_DIR/zcompdump-$ZSH_VERSION"
+compinit -d "$XDG_CACHE_HOME"/zshcompdump
 
-zstyle ':compinstall'                   filename "$XDG_CONFIG_HOME"/zsh/rc.zsh
+zstyle ':compinstall'                   filename "$XDG_CONFIG_HOME"/zsh/rc
 
 zstyle ':completion:*'                  rehash true
 zstyle ':completion:*'                  menu select
