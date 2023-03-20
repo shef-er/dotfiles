@@ -2,6 +2,7 @@
 
 readonly STATE_FILE="$HOME"/.local/state/dotfiles
 
+## Yes, I know about GNU Stow, just want to use my own solution
 usage() {
     echo
     echo "Usage: $0 [COMMAND]"
@@ -11,6 +12,23 @@ usage() {
     echo "  unlink                            Remove symbolic links to dotfiles"
 }
 
+exit_with_error() {
+    echo -en '\e[31mERROR:\e[0m '
+    echo "${1:-}"
+    echo 'Aborting...'
+    exit 1
+}
+
+echo_unlink() {
+    echo -en '\e[33mUNLINK:\e[0m '
+    echo "$1"
+}
+
+echo_link() {
+    echo -en '\e[32mLINK:\e[0m '
+    echo "$1"
+}
+
 unlink() {
     [ -r "$STATE_FILE" ] || exit 0
 
@@ -18,14 +36,12 @@ unlink() {
 
     for link in $links; do
         if [ -e "$link" ] && [ ! -L "$link" ]; then
-            echo "Cannot remove link '$link': File is not link"
-            echo 'Aborting...'
-            exit 1
+            exit_with_error "Cannot remove link '$link': File is not a link"
         fi
     done
 
     for link in $links; do
-        rm -f "$link" && echo "Removed link '$link'"
+        rm -f "$link" && echo_unlink "'$link'"
     done
 
     rm -f "$STATE_FILE"
@@ -43,9 +59,7 @@ link() {
         link="$destination_dir${target#"$target_dir"}"
 
         if [ -e "$link" ]; then
-            echo "Cannot create link '$link': File already exists"
-            echo 'Aborting...'
-            exit 1
+            exit_with_error "Cannot create link '$link': File already exists"
         fi
     done
 
@@ -54,8 +68,9 @@ link() {
     for target in $targets; do
         link="$destination_dir${target#"$target_dir"}"
 
-        mkdir -p "$(dirname "$link")" && ln -sT "$target" "$link" \
-            && echo "Created link '$link'"
+        mkdir -p "$(dirname "$link")" \
+            && ln -sT "$target" "$link" \
+            && echo_link "'$link' -> '$target'"
 
         echo "$link" >> "$STATE_FILE"
     done
