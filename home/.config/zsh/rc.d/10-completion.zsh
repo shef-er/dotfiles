@@ -13,7 +13,7 @@ setopt autocd completealiases
 autoload -Uz compinit
 _comp_options+=( globdots )
 
-compinit -d "$XDG_CACHE_HOME"/zshcompdump
+compinit -d "$XDG_CACHE_HOME"/zcompdump
 
 zstyle ':compinstall'                   filename "$XDG_CONFIG_HOME"/zsh/rc
 
