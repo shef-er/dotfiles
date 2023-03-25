@@ -79,6 +79,9 @@ sudo systemctl restart gdm
 ### 1.2.2 **Tracker settings**
 
 ```shell
+# save battery life
+gsettings set org.freedesktop.Tracker3.Miner.Files index-on-battery true
+
 # wise gnome tracker search index size
 gsettings set org.freedesktop.Tracker3.Extract max-bytes 10000
 
@@ -105,8 +108,10 @@ pacman -Sy fuse
 ```shell
 # remove
 sudo pacman -Rs \
+    gnome-logs \
     gnome-music \
     gnome-photos \
+    gnome-software \
     gnome-user-docs \
     yelp \
     totem \
