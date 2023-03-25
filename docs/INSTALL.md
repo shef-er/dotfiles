@@ -597,10 +597,8 @@ pacman -Sy \
     xdg-desktop-portal-gnome \
     power-profiles-daemon \
     dconf-editor \
-    gnome-firmware \
     gnome-shell-extensions \
-    gnome-shell-extension-appindicator \
-    gnome-tweaks
+    gnome-shell-extension-appindicator
 ```
 
 Install PackageKit plugin if you want to manage pacman packages using [gnome-software](https://archlinux.org/packages/?name=gnome-software)
