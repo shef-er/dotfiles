@@ -140,7 +140,9 @@ sudo pacman -Sy \
     qt5-wayland
 
 flatpak install flathub \
-    md.obsidian.Obsidian
+    com.github.unrud.VideoDownloader \
+    md.obsidian.Obsidian \
+    org.gaphor.Gaphor
 ```
 
 ### 2.3 **Preferences**
