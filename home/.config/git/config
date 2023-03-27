@@ -34,5 +34,5 @@
     graph = log --graph --date-order HEAD
 
     # similar to IntellijIDEA git view
-	log-pretty = log --pretty='%>|(21)%C(yellow)%h%C(reset) %<|(72,trunc)%s %an %C(dim)%ad%C(reset)%C(yellow)%d%C(reset)'
+	log-pretty = log --pretty='%>|(21)%C(yellow)%h%C(reset) %<|(72,trunc)%s %<(20,trunc)%an %C(dim)%ad%C(reset)%C(yellow)%d%C(reset)'
     g = log-pretty --graph --date-order HEAD
