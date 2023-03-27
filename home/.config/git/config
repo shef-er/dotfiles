@@ -26,14 +26,13 @@
 
 [log]
 	abbrevCommit = true
-	date = format:%d.%m.%Y %H:%I:%S %z
+	date = format-local:%d.%m.%Y, %H:%M
 
 [alias]
     b = branch -a
 
     graph = log --graph --date-order HEAD
 
-    # just lke in IntellijIDEA git view
-    g = log --graph --date-order \
-        --pretty='%>|(21)%C(yellow)%h%C(reset) %<|(72,trunc)%C(bold)%s%C(reset) %C(bold)%an%C(reset) %C(dim)%ad%C(reset)%C(bold yellow)%d%C(reset)' \
-        HEAD
+    # similar to IntellijIDEA git view
+	log-pretty = log --pretty='%>|(21)%C(yellow)%h%C(reset) %<|(72,trunc)%s %an %C(dim)%ad%C(reset)%C(yellow)%d%C(reset)'
+    g = log-pretty --graph --date-order HEAD
