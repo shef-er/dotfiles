@@ -30,9 +30,5 @@
 
 [alias]
     b = branch -a
-
-    graph = log --graph --date-order HEAD
-
-    # similar to IntellijIDEA git view
-	log-pretty = log --pretty='%>|(21)%C(yellow)%h%C(reset) %<|(72,trunc)%s %<(20,trunc)%an %C(dim)%ad%C(reset)%C(auto)%d%C(reset)'
-    g = log-pretty --graph --date-order HEAD
+    graph = log HEAD --graph --date-order
+	g = graph --pretty='%C(dim)%an [%ad]%C(reset) %C(yellow)%h %C(auto)%D%C(reset)''%+s'
