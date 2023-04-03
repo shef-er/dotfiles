@@ -30,5 +30,5 @@
 
 [alias]
     b = branch -a
-    graph = log HEAD --graph --date-order
+    graph = log --graph --date-order
 	g = graph --pretty='%C(dim)%an [%ad]%C(reset) %C(yellow)%h %C(auto)%D%C(reset)%n''%C(bold)%s%C(reset)'
