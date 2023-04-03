@@ -8,11 +8,17 @@ alias sudo='sudo '
 
 alias pacman='sudo pacman'
 
-alias ..='cd ..'
-alias ...='cd ../..'
-alias ....='cd ../../..'
-alias .....='cd ../../../..'
-alias ......='cd ../../../../..'
+alias ls='ls --group-directories-first --color'
+alias l='ls -lAhF'
+
+# im paranoid
+alias cp='cp -ip'
+alias mv='mv -i'
+alias rm='rm -i'
+
+alias tarx='tar -v -xf'
+alias targzx='tar -v -xzf'
+alias tarbz2x='tar -v -xjf'
 
 alias dmesg='dmesg --color=auto'
 alias grep='grep --color=auto'
@@ -20,19 +26,3 @@ alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
 alias gcc='gcc -fdiagnostics-color=auto'
 alias dir='dir --color=auto'
-
-alias ls='ls --group-directories-first --color'
-alias l='ls -aF'
-alias ll='ls -lthF'
-alias la='ls -lathF'
-alias df='df -h'
-
-# tar aliases
-alias tarx='tar -xvf'
-alias targz='tar -zxvf'
-alias tarbz2='tar -jxvf'
-
-# im paranoid
-alias cp='cp -ip'
-alias mv='mv -i'
-alias rm='rm -i'
