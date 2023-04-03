@@ -20,92 +20,43 @@
 # %b        - reset bright color
 
 unsetopt beep
-
 setopt prompt_subst
 
-# VCS Info
-autoload -Uz vcs_info
-precmd_functions+=( vcs_info )
+function load_git_info() {
+  git --version &>/dev/null || exit 0
 
-zstyle ':vcs_info:*'                    enable git
-# Format the vcs_info_msg_0_
-zstyle ':vcs_info:git:*'                formats '%b'
-#zstyle ':vcs_info:git:*'                formats ' ⎇ %b '
-#zstyle ':vcs_info:git:*'                formats ' branch:%b '
-#zstyle ':vcs_info:git:*'                formats '[%b]'
+  local _git_branch="$(git branch --show-current 2> /dev/null)"
+  local _git_head="$(git rev-parse --short HEAD 2> /dev/null)"
 
+  if [ "$_git_branch" ]; then
+   export git_info_head="$_git_branch"
+  else
+   export git_info_head="$_git_head"
+  fi
+}
 
-# Precommand (launches before each prompt)
 function precmd {
+  load_git_info
+
   print -Pn "\e]0;%2~ %(1j,%j job%(2j|s|); ,)\a"
+
+  PROMPT=""
+  PROMPT+="%B"
+  PROMPT+="%F{blue}%2~%f "
+
+  if [ "$git_info_head" ]; then
+    PROMPT+="%F{cyan}$git_info_head%f "
+  else
+    PROMPT+=""
+  fi
+
+  if [ "$(id -u)" -eq 0 ]; then
+    PROMPT+="%F{red}#%f "
+  else
+    PROMPT+="%F{green}%%%f "
+  fi
+
+  PROMPT+="%k%f%s%b"
+
+  export PROMPT
 }
-
-
-# function custom_prompt {
-
-#   case `id -u` in
-#     0)
-#       local PROMPT=" %F{red}#%k%f%s"
-#       ;;
-#     *)
-#       local PROMPT=" %F{green}→%k%f%s"
-#       ;;
-#   esac
-
-#   local PROMPT_PATH=" %F{blue}%2~%k%f%s"
-#   #local PROMPT_VCS=" %F{blue}${vcs_info_msg_0_}%k%f%s"
-
-#   #local VCS="${vcs_info_msg_0_}"
-#   #vcs_info
-#   #[[ -n "$VCS" ]] && echo 'test'
-
-
-#   echo "${PROMPT_VCS}${PROMPT_PATH}${PROMPT}%k%f%s "
-# }
-
-function custom_prompt {
-  echo -n "%B"
-
-  function prompt_sign {
-    case $(id -u) in
-      0)
-        echo -n "%F{red}"
-        echo -n "#"
-        ;;
-      *)
-        echo -n "%F{green}"
-        echo -n "→"
-        ;;
-    esac
-    echo -n "%k%f%s"
-    echo -n " "
-  }
-
-  function prompt_path {
-    echo -n "%F{blue}"
-    echo -n "%2~"
-    echo -n "%k%f%s"
-    echo -n " "
-  }
-
-  function prompt_vcs {
-    if [[ ! -n $vcs_info_msg_0_ ]]; then
-      exit
-    fi
-
-    echo -n "%F{blue}"
-    echo -n "$vcs_info_msg_0_"
-    echo -n "%k%f%s"
-    echo -n " "
-  }
-
-  echo -n " "
-  echo -n "$(prompt_path)"
-  echo -n "$(prompt_sign)"
-
-  echo -n "%b"
-}
-
-export PROMPT=$(custom_prompt)
-
-unfunction custom_prompt
