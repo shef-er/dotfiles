@@ -14,14 +14,20 @@ alias ....='cd ../../..'
 alias .....='cd ../../../..'
 alias ......='cd ../../../../..'
 
-alias ls='ls --color --group-directories-first'
+alias dmesg='dmesg --color=auto'
+alias grep='grep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
+alias gcc='gcc -fdiagnostics-color=auto'
+alias dir='dir --color=auto'
+
+alias ls='ls --group-directories-first --color'
 alias l='ls -aF'
 alias ll='ls -lthF'
 alias la='ls -lathF'
 alias df='df -h'
 
 # tar aliases
-alias tarzip='unzip'
 alias tarx='tar -xvf'
 alias targz='tar -zxvf'
 alias tarbz2='tar -jxvf'
