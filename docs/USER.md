@@ -123,6 +123,7 @@ sudo pacman -Sy \
     htop \
     firefox \
     firefox-i18n-ru \
+    obsidian \
     gnome-passwordsafe \
     seahorse \
     noto-fonts \
@@ -141,7 +142,6 @@ sudo pacman -Sy \
 
 flatpak install flathub \
     com.github.unrud.VideoDownloader \
-    md.obsidian.Obsidian \
     org.gaphor.Gaphor
 ```
 
