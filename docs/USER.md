@@ -123,6 +123,7 @@ sudo pacman -Sy \
     htop \
     firefox \
     firefox-i18n-ru \
+    telegram-desktop \
     obsidian \
     gnome-passwordsafe \
     seahorse \
