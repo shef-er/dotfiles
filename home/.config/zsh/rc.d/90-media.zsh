@@ -37,3 +37,7 @@ function flac-img-to-tracks {
     echo "Make sure you have installed: cuebreakpoints, shnsplit, cuetag."
   fi
 }
+
+function webp2png {
+  dwebp "$1" -o "${1%'.webp'}".png
+}
