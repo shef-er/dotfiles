@@ -1,13 +1,8 @@
-#                                  _
-#  _ __  _ __ ___  _ __ ___  _ __ | |_
-# | '_ \| '__/ _ \| '_ ` _ \| '_ \| __|
-# | |_) | | | (_) | | | | | | |_) | |_
-# | .__/|_|  \___/|_| |_| |_| .__/ \__|
-# |_|                       |_|
-#
-# Colors:
-#   0:black, 1:red, 2:green, 3:yellow,
-#   4:blue, 5:magent, 6:cyan, 7:white
+#      _
+#   __| | ___  ___ ___  _ __
+#  / _` |/ _ \/ __/ _ \| '__|
+# | (_| |  __/ (_| (_) | |
+#  \__,_|\___|\___\___/|_|
 #
 # %F{color} - fg color
 # %K{color} - bg color
@@ -18,8 +13,11 @@
 # %k        - reset bg color
 # %s        - reset color swapping
 # %b        - reset bright color
+#
+# Colors:
+#   0:black, 1:red, 2:green, 3:yellow,
+#   4:blue, 5:magent, 6:cyan, 7:white
 
-unsetopt beep
 setopt prompt_subst
 
 autoload -Uz colors && colors

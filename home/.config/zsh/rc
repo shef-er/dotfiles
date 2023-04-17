@@ -1,7 +1,11 @@
 #!/usr/bin/env zsh
 
+function _source_if_file_exists {
+    [ -r "$1" ] && source "$1"
+}
+
 for file in "$XDG_CONFIG_HOME"/zsh/rc.d/*.zsh; do
-  [ -r "$file" ] && source "$file"
+  _source_if_file_exists "$file"
 done
 
 ttyctl -f

@@ -5,19 +5,20 @@
 #  \___\___/|_| |_| |_| .__/|_|\___|\__|_|\___/|_| |_|
 #                     |_|
 
-export HISTFILE="$XDG_STATE_HOME"/zsh_history
-export HISTSIZE=1000
-export SAVEHIST=10000
+HISTFILE="$XDG_STATE_HOME"/zsh_history
+HISTSIZE=50000
+SAVEHIST=50000
 
-AUTOSUGGESTIONS="/usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh"
-[ -r "$AUTOSUGGESTIONS" ] && source "$AUTOSUGGESTIONS"
-unset AUTOSUGGESTIONS
+unsetopt BEEP
+setopt AUTO_CD
+setopt COMPLETE_ALIASES
+setopt APPEND_HISTORY
+setopt HIST_IGNORE_DUPS
+setopt HIST_IGNORE_SPACE
 
-setopt autocd completealiases
-setopt appendhistory histignoredups histignorespace
+_comp_options+=(globdots)
 
 autoload -Uz compinit && compinit -d "$XDG_CACHE_HOME"/zcompdump
-_comp_options+=( globdots )
 
 zstyle ':compinstall'                   filename "$XDG_CONFIG_HOME"/zsh/rc
 
