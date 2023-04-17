@@ -95,6 +95,8 @@
 # Ctrl + 7      ^_ = Undo
 # Ctrl + 8      ^? = Backward-delete-char
 
+unsetopt BEEP
+
 bindkey -e
 
 bindkey "^[[H"    beginning-of-line

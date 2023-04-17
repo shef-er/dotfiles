@@ -5,18 +5,9 @@
 #  \___\___/|_| |_| |_| .__/|_|\___|\__|_|\___/|_| |_|
 #                     |_|
 
-HISTFILE="$XDG_STATE_HOME"/zsh_history
-HISTSIZE=50000
-SAVEHIST=50000
-
-unsetopt BEEP
-setopt AUTO_CD
+setopt GLOB_DOTS
 setopt COMPLETE_ALIASES
-setopt APPEND_HISTORY
-setopt HIST_IGNORE_DUPS
-setopt HIST_IGNORE_SPACE
-
-_comp_options+=(globdots)
+setopt AUTO_CD
 
 autoload -Uz compinit && compinit -d "$XDG_CACHE_HOME"/zcompdump
 
