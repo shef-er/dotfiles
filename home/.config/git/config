@@ -1,9 +1,9 @@
-#        _ _   
-#   __ _(_) |_ 
+#        _ _
+#   __ _(_) |_
 #  / _` | | __|
-# | (_| | | |_ 
+# | (_| | | |_
 #  \__, |_|\__|
-#  |___/       
+#  |___/
 
 [user]
 	name = Ernest Shefer
@@ -32,3 +32,4 @@
     b = branch -a
     graph = log --graph --date-order
 	g = graph --pretty='%C(dim)%an [%ad]%C(reset) %C(yellow)%h %C(auto)%D%C(reset)%n''%C(bold)%s%C(reset)'
+	gg = g --first-parent
