@@ -4,14 +4,15 @@
 # | (_| | | | (_| \__ \  __/\__ \
 #  \__,_|_|_|\__,_|___/\___||___/
 
+# A trailing space causes the next word to be checked for alias substitution 
+# when the alias is expanded
 alias sudo='sudo '
 
+# i use arch, btw
 alias pacman='sudo pacman'
 
-alias ls='ls --group-directories-first --color'
-alias l='ls -lAhF'
-
-# im paranoid
+# shell is my file manager
+alias ls='ls -lAhF --group-directories-first --color=auto'
 alias cp='cp -ip'
 alias mv='mv -i'
 alias rm='rm -i'
