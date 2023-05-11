@@ -32,60 +32,85 @@ chsh -s /bin/zsh
 
 After that relogin into your user.
 
-### 1.2 **Gnome shell settings**
+### 1.2 **Gnome settings**
+
+Make CapsLock key to switch keyboard layout:
 
 ```shell
-# caps lock to switch keyboard layout
 gsettings set org.gnome.desktop.input-sources xkb-options "['grp:caps_toggle']"
+```
 
-# laptop-specific
-gsettings set org.gnome.desktop.peripherals.touchpad tap-to-click true
+Disable IBus hotkeys:
 
-# disable ibus hotkeys
+```shell
 gsettings set org.freedesktop.ibus.panel.emoji hotkey "@as []"
 gsettings set org.freedesktop.ibus.panel.emoji unicode-hotkey "@as []"
+```
 
-# (optional) To disable mouse middle click paste
+If you want, you can disable mouse middle click paste:
+
+```shell
 gsettings set org.gnome.desktop.interface gtk-enable-primary-paste false
 ```
 
-Install [the best monospace font](https://www.jetbrains.com/lp/mono/)
+Apply some font settings:
 
 ```shell
-sudo pacman -Sy ttf-jetbrains-mono
-gsettings set org.gnome.desktop.interface monospace-font-name 'JetBrains Mono 13'
-
 gsettings set org.gnome.desktop.interface font-antialiasing 'grayscale'
 gsettings set org.gnome.desktop.interface font-hinting 'full'
 ```
 
-### 1.2.1 **GDM settings**
-
-Enable "Tap to click" in GDM
+Install [JetBrains Mono](https://www.jetbrains.com/lp/mono/) and set as default monospace font:
 
 ```shell
-# switch to gdm user
-sudo machinectl shell gdm@ /bin/bash
+sudo pacman -Sy ttf-jetbrains-mono
+gsettings set org.gnome.desktop.interface monospace-font-name 'JetBrains Mono 13'
+```
 
+### 1.2.1 **Enabling tap to click on laptop**
+
+Enable tap to click for your current user:
+
+```shell
 gsettings set org.gnome.desktop.peripherals.touchpad tap-to-click true
+```
 
-# exit from the gdm user
+After that login into shell as gdm user:
+
+```shell
+sudo machinectl shell gdm@ /bin/bash
+```
+
+Enable tap to click for gdm user:
+
+```shell
+gsettings set org.gnome.desktop.peripherals.touchpad tap-to-click true
+```
+
+Exit from the gdm user and apply GDM changes:
+
+```shell
 exit
-
-# restart system or apply changes with
 sudo systemctl restart gdm
 ```
 
 ### 1.2.2 **Tracker settings**
 
+Disable file indexing when running on battery:
+
 ```shell
-# save battery life
-gsettings set org.freedesktop.Tracker3.Miner.Files index-on-battery true
+gsettings set org.freedesktop.Tracker3.Miner.Files index-on-battery false
+```
 
-# wise gnome tracker search index size
+Reduce maximum number of UTF-8 bytes to extract:
+
+```shell
 gsettings set org.freedesktop.Tracker3.Extract max-bytes 10000
+```
 
-# permamently disable tracker-miner-fs and free cache
+You can completely disable tracker file monitoring and reset tracker index:
+
+```shell
 gsettings set org.freedesktop.Tracker3.Miner.Files crawling-interval -2
 gsettings set org.freedesktop.Tracker3.Miner.Files enable-monitors false
 tracker3 reset --filesystem
@@ -93,17 +118,7 @@ tracker3 reset --filesystem
 
 ## 2. **Applications**
 
-### 2.1 **Important dependencies**
-
-### 2.1.1 **AppImage support**
-
-[Fuse](https://wiki.archlinux.org/title/FUSE) should be installed if you plan to use AppImage apps
-
-```shell
-pacman -Sy fuse
-```
-
-### 2.2 **Essentials**
+### 2.1 **Essentials**
 
 ```shell
 # remove
@@ -146,11 +161,13 @@ flatpak install flathub \
     org.gaphor.Gaphor
 ```
 
-### 2.3 **Preferences**
+### 2.2 **AppImage support**
 
-### 2.3.1 Firefox 🦊
+AppImages require [FUSE](https://wiki.archlinux.org/title/FUSE) version 2 to run. Filesystem in Userspace (FUSE) is a system that lets non-root users mount filesystems.
 
-Disable pocket `about:config > extensions.pocket.enabled = 0`
+```shell
+pacman -Sy fuse
+```
 
 ## 3. Development tools
 
