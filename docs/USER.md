@@ -38,13 +38,13 @@ After that relogin into your session.
 
 ### 1.2 **Gnome settings**
 
-Make CapsLock key to switch keyboard layout:
+Set CapsLock key to switch keyboard layout:
 
 ```shell
 gsettings set org.gnome.desktop.input-sources xkb-options "['grp:caps_toggle']"
 ```
 
-Disable IBus hotkeys:
+Disable [IBus](https://wiki.archlinux.org/title/IBus) hotkeys:
 
 ```shell
 gsettings set org.freedesktop.ibus.panel.emoji hotkey "@as []"
