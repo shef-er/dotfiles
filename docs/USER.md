@@ -44,13 +44,6 @@ Set CapsLock key to switch keyboard layout:
 gsettings set org.gnome.desktop.input-sources xkb-options "['grp:caps_toggle']"
 ```
 
-Disable [IBus](https://wiki.archlinux.org/title/IBus) hotkeys:
-
-```shell
-gsettings set org.freedesktop.ibus.panel.emoji hotkey "@as []"
-gsettings set org.freedesktop.ibus.panel.emoji unicode-hotkey "@as []"
-```
-
 If you want, you can disable mouse middle click paste:
 
 ```shell
@@ -106,6 +99,21 @@ You can completely disable tracker file monitoring and reset tracker index:
 gsettings set org.freedesktop.Tracker3.Miner.Files crawling-interval -2
 gsettings set org.freedesktop.Tracker3.Miner.Files enable-monitors false
 tracker3 reset --filesystem
+```
+
+### 1.2.3 **IBus settings (optional and questionable)**
+
+Install the [ibus](https://archlinux.org/packages/?name=ibus) package.
+
+```shell
+pacman -Sy ibus
+```
+
+Disable [IBus](https://wiki.archlinux.org/title/IBus) emoji hotkeys:
+
+```shell
+gsettings set org.freedesktop.ibus.panel.emoji hotkey "@as []"
+gsettings set org.freedesktop.ibus.panel.emoji unicode-hotkey "@as []"
 ```
 
 ## 2. **Applications**
