@@ -60,7 +60,7 @@ gsettings set org.gnome.desktop.interface font-antialiasing 'grayscale'
 gsettings set org.gnome.desktop.interface font-hinting 'full'
 ```
 
-Install [JetBrains Mono](https://www.jetbrains.com/lp/mono/) and set as default monospace font:
+Install [JetBrains Mono](https://www.jetbrains.com/lp/mono/) and set it as default monospace font:
 
 ```shell
 sudo pacman -Sy ttf-jetbrains-mono
@@ -75,22 +75,9 @@ Enable tap to click for your current user:
 gsettings set org.gnome.desktop.peripherals.touchpad tap-to-click true
 ```
 
-After that login into shell as gdm user:
-
+After that enable tap to click for gdm user and restart GDM
 ```shell
-sudo machinectl shell gdm@ /bin/bash
-```
-
-Enable tap to click for gdm user:
-
-```shell
-gsettings set org.gnome.desktop.peripherals.touchpad tap-to-click true
-```
-
-Exit from the gdm user and apply GDM changes:
-
-```shell
-exit
+sudo machinectl shell gdm@ /bin/bash -c 'gsettings set org.gnome.desktop.peripherals.touchpad tap-to-click true'
 sudo systemctl restart gdm
 ```
 
