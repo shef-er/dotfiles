@@ -38,23 +38,18 @@ After that relogin into your session.
 
 ### 1.2 **Gnome settings**
 
-Set CapsLock key to switch keyboard layout:
+Set CapsLock key to switch keyboard layout and disable default layout switch keybindings:
 
 ```shell
 gsettings set org.gnome.desktop.input-sources xkb-options "['grp:caps_toggle']"
+gsettings set org.gnome.desktop.wm.keybindings switch-input-source "@as []"
+gsettings set org.gnome.desktop.wm.keybindings switch-input-source-backward "@as []"
 ```
 
 If you want, you can disable mouse middle click paste:
 
 ```shell
 gsettings set org.gnome.desktop.interface gtk-enable-primary-paste false
-```
-
-Apply some font settings:
-
-```shell
-gsettings set org.gnome.desktop.interface font-antialiasing 'grayscale'
-gsettings set org.gnome.desktop.interface font-hinting 'full'
 ```
 
 Install [JetBrains Mono](https://www.jetbrains.com/lp/mono/) and set it as default monospace font:
