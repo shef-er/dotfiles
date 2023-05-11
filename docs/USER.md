@@ -12,9 +12,13 @@ Install [git](https://wiki.archlinux.org/title/git):
 sudo pacman -Sy git git-lfs
 ```
 
-And clone this repo to `~/.local/share/dotfiles`.
+Clone this repo to `~/.local/share/dotfiles`:
 
-After that link dotfiles to `$HOME` dir:
+```shell
+git clone '<this-repo-url>' ~/.local/share/dotfiles
+```
+
+Open dotfiles directory and link configs to `$HOME`:
 
 ```shell
 cd ~/.local/share/dotfiles
@@ -30,7 +34,7 @@ sudo pacman -Sy zsh zsh-autosuggestions zsh-completions
 chsh -s /bin/zsh
 ```
 
-After that relogin into your user.
+After that relogin into your session.
 
 ### 1.2 **Gnome settings**
 
@@ -67,7 +71,7 @@ sudo pacman -Sy ttf-jetbrains-mono
 gsettings set org.gnome.desktop.interface monospace-font-name 'JetBrains Mono 13'
 ```
 
-### 1.2.1 **Enabling tap to click on laptop**
+### 1.2.1 **Tap to click**
 
 Enable tap to click for your current user:
 
@@ -75,7 +79,8 @@ Enable tap to click for your current user:
 gsettings set org.gnome.desktop.peripherals.touchpad tap-to-click true
 ```
 
-After that enable tap to click for gdm user and restart GDM
+Enable tap to click for gdm user and restart GDM:
+
 ```shell
 sudo machinectl shell gdm@ /bin/bash -c 'gsettings set org.gnome.desktop.peripherals.touchpad tap-to-click true'
 sudo systemctl restart gdm
@@ -107,20 +112,9 @@ tracker3 reset --filesystem
 
 ### 2.1 **Essentials**
 
-```shell
-# remove
-sudo pacman -Rs \
-    gnome-logs \
-    gnome-music \
-    gnome-photos \
-    gnome-software \
-    gnome-user-docs \
-    yelp \
-    totem \
-    cheese \
-    gnome-video-effects
+Packages to install:
 
-# install
+```shell
 sudo pacman -Sy \
     htop \
     firefox \
@@ -148,7 +142,22 @@ flatpak install flathub \
     org.gaphor.Gaphor
 ```
 
-### 2.2 **AppImage support**
+Packages to remove:
+
+```shell
+sudo pacman -Rs \
+    gnome-logs \
+    gnome-music \
+    gnome-photos \
+    gnome-software \
+    gnome-user-docs \
+    yelp \
+    totem \
+    cheese \
+    gnome-video-effects
+```
+
+### 2.2 **AppImage**
 
 AppImages require [FUSE](https://wiki.archlinux.org/title/FUSE) version 2 to run. Filesystem in Userspace (FUSE) is a system that lets non-root users mount filesystems.
 
