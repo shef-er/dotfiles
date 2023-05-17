@@ -38,27 +38,6 @@ After that relogin into your session.
 
 ### 1.2 **Gnome settings**
 
-Set CapsLock key to switch keyboard layout and disable default layout switch keybindings:
-
-```shell
-gsettings set org.gnome.desktop.input-sources xkb-options "['grp:caps_toggle']"
-gsettings set org.gnome.desktop.wm.keybindings switch-input-source "@as []"
-gsettings set org.gnome.desktop.wm.keybindings switch-input-source-backward "@as []"
-```
-
-If you want, you can disable mouse middle click paste:
-
-```shell
-gsettings set org.gnome.desktop.interface gtk-enable-primary-paste false
-```
-
-Install [JetBrains Mono](https://www.jetbrains.com/lp/mono/) and set it as default monospace font:
-
-```shell
-sudo pacman -Sy ttf-jetbrains-mono
-gsettings set org.gnome.desktop.interface monospace-font-name 'JetBrains Mono 13'
-```
-
 ### 1.2.1 **Tap to click**
 
 Enable tap to click for your current user:
@@ -74,7 +53,22 @@ sudo machinectl shell gdm@ /bin/bash -c 'gsettings set org.gnome.desktop.periphe
 sudo systemctl restart gdm
 ```
 
-### 1.2.2 **Tracker settings**
+### 1.2.2 **Use CapsLock as Compose key**
+
+```shell
+gsettings set org.gnome.desktop.input-sources xkb-options "['compose:caps']"
+```
+
+### 1.2.3 **Monospace font**
+
+Install [JetBrains Mono](https://www.jetbrains.com/lp/mono/) and set it as default monospace font:
+
+```shell
+sudo pacman -Sy ttf-jetbrains-mono
+gsettings set org.gnome.desktop.interface monospace-font-name 'JetBrains Mono 13'
+```
+
+### 1.2.4 **Tracker settings**
 
 Disable file indexing when running on battery:
 
@@ -96,7 +90,7 @@ gsettings set org.freedesktop.Tracker3.Miner.Files enable-monitors false
 tracker3 reset --filesystem
 ```
 
-### 1.2.3 **IBus settings (optional and questionable)**
+### 1.2.5 **IBus settings (optional and questionable)**
 
 Install the [ibus](https://archlinux.org/packages/?name=ibus) package.
 
