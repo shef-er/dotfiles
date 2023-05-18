@@ -53,10 +53,10 @@ sudo machinectl shell gdm@ /bin/bash -c 'gsettings set org.gnome.desktop.periphe
 sudo systemctl restart gdm
 ```
 
-### 1.2.2 **Use CapsLock as Compose or Ctrl key**
+### 1.2.2 **Use CapsLock as Ctrl key**
 
 ```shell
-gsettings set org.gnome.desktop.input-sources xkb-options "['caps:ctrl_modifier', 'compose:caps']"
+gsettings set org.gnome.desktop.input-sources xkb-options "['caps:ctrl_modifier']"
 ```
 
 ### 1.2.3 **Monospace font**
