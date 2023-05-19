@@ -1,16 +1,5 @@
 # dotfiles
 
-## Other docs:
-
-- [Base Arch system installation](docs/INSTALL.md)
-- User preferences (**THIS**)
-- [System maintenance instructions](docs/MAINTENANCE.md)
-- [Various external devices setup](docs/DEVICES.md)
-
----
-
-## User preferences
-
 Refresh pacman database:
 
 ```shell
@@ -183,3 +172,11 @@ sudo systemctl enable --now docker.service
 sudo usermod -aG docker "$USER"
 docker run hello-world
 ```
+
+---
+
+## Other docs:
+
+- [Base system installation](docs/INSTALL.md)
+- [System maintenance](docs/MAINTENANCE.md)
+- [Devices](docs/DEVICES.md)

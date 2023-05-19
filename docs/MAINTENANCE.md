@@ -1,4 +1,4 @@
-# Personal Arch Linux maintenance guide
+# System maintenance
 
 Arch is a rolling release system and has rapid package turnover, so users have to take some time to do [system maintenance](https://wiki.archlinux.org/title/System_maintenance).
 

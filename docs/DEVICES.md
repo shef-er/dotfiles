@@ -1,4 +1,4 @@
-# Devices setup
+# Devices
 
 ## Epson
 

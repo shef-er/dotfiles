@@ -1,4 +1,4 @@
-# Personal Arch Linux install guide
+# Base system installation
 
 ## 1. **Pre-installation**
 
@@ -164,7 +164,7 @@ swapon /dev/swap_partition
 Use the [pacstrap(8)](https://man.archlinux.org/man/pacstrap.8) script to install the [base](https://archlinux.org/packages/?name=base) package, Linux [kernel](https://wiki.archlinux.org/title/Kernel) and firmware for common hardware:
 
 ```shell
-pacstrap -K /mnt base base-devel linux linux-firmware linux-firmware-qcom sof-firmware alsa-firmware
+pacstrap -K /mnt base base-devel linux linux-firmware sof-firmware alsa-firmware
 ```
 
 > **Tip**  
@@ -607,14 +607,10 @@ Install PackageKit plugin if you want to manage pacman packages using [gnome-sof
 pacman -Sy gnome-software-packagekit-plugin
 ```
 
-### 6. **User preferences**
-
-See [USER.md](USER.md)
-
-### 7. **System maintenance**
+### 6. **System maintenance**
 
 See [MAINTENANCE.md](MAINTENANCE.md)
 
-### 8. **External devices setup**
+### 7. **Devices**
 
 See [DEVICES.md](DEVICES.md)
