@@ -12,7 +12,7 @@ alias sudo='sudo '
 alias pacman='sudo pacman'
 
 # shell is my file manager
-alias ls='ls -lAhF --group-directories-first --color=auto'
+alias ls='ls -lAhF --group-directories-first --color=auto --time-style=long-iso'
 alias cp='cp -ip'
 alias mv='mv -i'
 alias rm='rm -i'
