@@ -8,7 +8,6 @@
 function git-xclone {
     URI="$1"
     FRAG="${URI#*://}"
-    FRAG="${FRAG#*git\@}"
     FRAG="${FRAG%.git}"
 
     if [[ "$URI" =~ ^[A-Za-z]+:// ]] ; then
