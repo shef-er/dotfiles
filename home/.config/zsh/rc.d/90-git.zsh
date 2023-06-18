@@ -5,11 +5,19 @@
 #  \__, |_|\__|
 #  |___/
 
-function git-clone-hierarchical {
+function git-xclone {
     URI="$1"
-    URI_LOC="${URI#*git\@}"
-    URI_HOST="${URI_LOC%\:*}"
-    URI_PATH="${${URI_LOC#*\:}%.git}"
+    FRAG="${URI#*://}"
+    FRAG="${FRAG#*git\@}"
+    FRAG="${FRAG%.git}"
+
+    if [[ "$URI" =~ ^[A-Za-z]+:// ]] ; then
+        URI_HOST="${FRAG%%/*}"
+        URI_PATH="${FRAG#*/}"
+    else
+        URI_HOST="${FRAG%%\:*}"
+        URI_PATH="${FRAG#*\:}"
+    fi
 
     git clone "$URI" "$URI_HOST/$URI_PATH"
 }
