@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+URI="$1"
+FRAG="${URI#*://}"
+FRAG="${FRAG%.git}"
+
+if [[ "$URI" =~ ^[A-Za-z]+:// ]] ; then
+    URI_HOST="${FRAG%%/*}"
+    URI_PATH="${FRAG#*/}"
+else
+    URI_HOST="${FRAG%%\:*}"
+    URI_PATH="${FRAG#*\:}"
+fi
+
+git clone "$URI" "$HOME/${GIT_CLONES_DIR:-Clones}/$URI_HOST/$URI_PATH"
