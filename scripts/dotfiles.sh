@@ -52,7 +52,7 @@ link() {
 
     target_dir="$(realpath "$1")"
     destination_dir="$(realpath $2)"
-    
+
     targets="$(find "$target_dir" -mindepth 1 -type f)"
 
     for target in $targets; do
