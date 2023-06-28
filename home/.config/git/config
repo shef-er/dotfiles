@@ -8,12 +8,15 @@
 [user]
 	name = Ernest Shefer
 	email = shef-er@ya.ru
-	
+
 [core]
 	autocrlf = input
 	filemode = false
 	editor = nano
 	pager = less -S
+
+[help]
+	autocorrect = 1
 
 [credential]
 	helper = cache
