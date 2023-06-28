@@ -125,18 +125,17 @@ sudo pacman -Sy \
     noto-fonts-emoji \
     noto-fonts-extra \
     transmission-gtk \
-    celluloid \
     foliate \
     gnome-epub-thumbnailer \
     libreoffice-fresh \
     gimp \
     inkscape \
-    picard \
-    qt5-wayland
+    qt5-wayland \
+    picard
 
 flatpak install flathub \
-    com.github.unrud.VideoDownloader \
-    org.gaphor.Gaphor
+    com.github.rafostar.Clapper \
+    com.github.unrud.VideoDownloader
 ```
 
 Packages to remove:
