@@ -39,7 +39,7 @@ function precmd {
 
   print -Pn "\e]0;%2~ %(1j,%j job%(2j|s|); ,)\a"
 
-  PROMPT=""
+  PROMPT=$'\n'
   PROMPT+="%B%F{blue}%2~%f%b "
 
   if [ "$git_info_head" ]; then
