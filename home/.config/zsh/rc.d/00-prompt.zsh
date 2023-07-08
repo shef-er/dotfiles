@@ -22,7 +22,7 @@ setopt PROMPT_SUBST
 autoload -Uz colors && colors
 
 function load_git_info {
-  git --version &>/dev/null || exit 0
+  git --version &>/dev/null || return 0
 
   local _git_branch="$(git branch --show-current 2> /dev/null)"
   local _git_head="$(git rev-parse --short HEAD 2> /dev/null)"
