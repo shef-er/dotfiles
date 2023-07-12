@@ -4,10 +4,14 @@ URI="$1"
 FRAG="${URI#*://}"
 FRAG="${FRAG%.git}"
 
+# check if url begins with scema section like ssh://
 if [[ "$URI" =~ ^[A-Za-z]+:// ]] ; then
+    # for URI-like urls
     URI_HOST="${FRAG%%/*}"
+    URI_HOST="${URI_HOST%%\:*}"
     URI_PATH="${FRAG#*/}"
 else
+    # for scp-like urls
     URI_HOST="${FRAG%%\:*}"
     URI_PATH="${FRAG#*\:}"
 fi
