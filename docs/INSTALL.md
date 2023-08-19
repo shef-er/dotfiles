@@ -403,6 +403,7 @@ Enable NetworkManager:
 
 ```shell
 systemctl enable --now NetworkManager.service
+systemctl enable --now systemd-resolved.service
 ```
 
 Connect to the network using `nmtui`
