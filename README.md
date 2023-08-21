@@ -116,6 +116,7 @@ sudo pacman -Sy \
     htop \
     firefox \
     firefox-i18n-ru \
+    flatpak \
     telegram-desktop \
     obsidian \
     gnome-passwordsafe \
@@ -125,6 +126,7 @@ sudo pacman -Sy \
     noto-fonts-emoji \
     noto-fonts-extra \
     transmission-gtk \
+    vlc \
     foliate \
     gnome-epub-thumbnailer \
     libreoffice-fresh \
@@ -133,9 +135,11 @@ sudo pacman -Sy \
     qt5-wayland \
     picard
 
-flatpak install flathub \
-    com.github.rafostar.Clapper \
-    com.github.unrud.VideoDownloader
+flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+
+flatpak install -u flathub \
+    com.github.unrud.VideoDownloader \
+    org.gnome.Loupe
 ```
 
 Packages to remove:
