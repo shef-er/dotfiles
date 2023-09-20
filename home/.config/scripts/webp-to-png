@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+if hash dwebp 2>/dev/null; then
+    dwebp "$1" -o "${1%'.webp'}".png
+else
+    echo "dwebp: Command not found..."
+fi

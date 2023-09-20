@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+
+[ -z "$1" ] && echo "Usage: $0 FILENAME" && return 1
+
+[ ! -f "$1" ] && echo "Invalid file: '$1'" && return 1
+
+case "$1" in
+    *.tar)
+        tar -v -xf "$1" ;;
+    *.tar.gz|*.tgz)
+        tar -v -xzf "$1" ;;
+    *.tar.bz2|.tar.bzip2|*.tbz2|.tb2|*.tar.bz|*.tbz)
+        tar -v -xjf "$1"  ;;
+    *.tar.xz)
+        tar -v -xJf "$1" ;;
+    *.gz)
+        gunzip "$1" ;;
+    *.bz2|*.bz)
+        bunzip2 "$1" ;;
+    *.zip|*.cbz)
+        unzip "$1" ;;
+    *.rar|*.cbr)
+        unrar x "$1" ;;
+    *.7z)
+        7z x "$1" ;;
+    *)
+        echo "Unknown file type: '$1'" && return 1 ;;
+esac
