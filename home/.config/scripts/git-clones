@@ -2,6 +2,7 @@
 
 URI="$1"
 FRAG="${URI#*://}"
+FRAG="${FRAG#*@}"
 FRAG="${FRAG%.git}"
 
 # check if url begins with scema section like ssh://
