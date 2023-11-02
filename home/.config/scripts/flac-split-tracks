@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 
-if hash cuebreakpoints 2>/dev/null \
-    && hash shnsplit 2>/dev/null \
-    && hash cuetag 2>/dev/null
+if command -v cuebreakpoints &> /dev/null \
+    && command -v shnsplit &> /dev/null \
+    && command -v cuetag.sh &> /dev/null
 then
     cuebreakpoints *.cue | shnsplit -o flac *.flac
-    cuetag *.cue split-track*.flac
+    cuetag.sh *.cue split-track*.flac
 else
-    echo "Make sure you have installed: cuebreakpoints, shnsplit, cuetag."
+    echo "Make sure you have installed: cuebreakpoints, shnsplit, cuetag.sh."
 fi
