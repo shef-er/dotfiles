@@ -21,41 +21,45 @@ setopt PROMPT_SUBST
 
 autoload -Uz colors && colors
 
-export _first_prompt=1
-
-function load_git_info {
-  git --version &>/dev/null || return 1
-
-  local _git_branch="$(git branch --show-current 2> /dev/null)"
-  local _git_head="$(git rev-parse --short HEAD 2> /dev/null)"
-
-  if [ "$_git_branch" ]; then
-   export git_info_head="$_git_branch"
-  else
-   export git_info_head="$_git_head"
-  fi
-}
+export _ZSH_IS_FIRST_PROMPT=1
 
 function precmd {
-  load_git_info
+  # retrieve git info
+  if command -v git &>/dev/null; then
 
+    local _git_branch="$(git branch --show-current 2> /dev/null)"
+    local _git_head="$(git rev-parse --short HEAD 2> /dev/null)"
+
+    if [ "$_git_branch" ]; then
+      local _git_info="$_git_branch"
+    else
+      local _git_info="$_git_head"
+    fi
+  fi
+
+  # terminal title
   print -Pn "\e]0;%2~ %(1j,%j job%(2j|s|); ,)\a"
 
-  if [ "$_first_prompt" -eq 1 ]; then
-    export _first_prompt=0
+  # prompt initalization
+  if [ "$_ZSH_IS_FIRST_PROMPT" -eq 1 ]; then
     PROMPT=""
   else
     PROMPT=$'\n'
   fi
 
+  # show current working directory
   PROMPT+="%B%F{blue}%2~%f%b "
 
-  if [ "$git_info_head" ]; then
-    PROMPT+="%B%F{cyan}$git_info_head%f%b "
+  # show git info
+  if [ "$_git_info" ]; then
+    PROMPT+="%B%F{cyan}$_git_info%f%b "
   else
     PROMPT+=""
   fi
 
+  # show prompt sign
   PROMPT+="%B%(!.%F{red}#.%F{green}%%)%f%b "
+
   export PROMPT
+  export _ZSH_IS_FIRST_PROMPT=0
 }
