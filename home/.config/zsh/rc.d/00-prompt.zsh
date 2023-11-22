@@ -21,6 +21,8 @@ setopt PROMPT_SUBST
 
 autoload -Uz colors && colors
 
+export _first_prompt=1
+
 function load_git_info {
   git --version &>/dev/null || return 1
 
@@ -39,7 +41,13 @@ function precmd {
 
   print -Pn "\e]0;%2~ %(1j,%j job%(2j|s|); ,)\a"
 
-  PROMPT=$'\n'
+  if [ "$_first_prompt" -eq 1 ]; then
+    export _first_prompt=0
+    PROMPT=""
+  else
+    PROMPT=$'\n'
+  fi
+
   PROMPT+="%B%F{blue}%2~%f%b "
 
   if [ "$git_info_head" ]; then
