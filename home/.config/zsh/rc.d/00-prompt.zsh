@@ -26,7 +26,6 @@ export _ZSH_IS_FIRST_PROMPT=1
 function precmd {
   # retrieve git info
   if command -v git &>/dev/null; then
-
     local _git_branch="$(git branch --show-current 2> /dev/null)"
     local _git_head="$(git rev-parse --short HEAD 2> /dev/null)"
 
