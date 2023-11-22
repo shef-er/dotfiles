@@ -36,4 +36,6 @@
     graph = log --graph --date-order
 	g = graph --format='%C(dim)%an [%ad]%C(reset) %C(yellow)%h%C(auto)%(decorate)%C(reset)%n''%C(bold)%s%C(reset)'
 	gg = g --first-parent
+
+	# Custom scripts
 	clones = clones
