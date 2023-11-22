@@ -12,7 +12,7 @@
 [core]
 	autocrlf = input
 	filemode = false
-	editor = nano
+	editor = nvim
 	pager = less -S
 
 [help]
@@ -34,6 +34,6 @@
 [alias]
     b = branch -a
     graph = log --graph --date-order
-	g = graph --pretty='%C(dim)%an [%ad]%C(reset) %C(yellow)%h %C(auto)%D%C(reset)%n''%C(bold)%s%C(reset)'
+	g = graph --format='%C(dim)%an [%ad]%C(reset) %C(yellow)%h%C(auto)%(decorate)%C(reset)%n''%C(bold)%s%C(reset)'
 	gg = g --first-parent
 	clones = clones
