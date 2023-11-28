@@ -56,6 +56,9 @@ function precmd {
     PROMPT+=""
   fi
 
+  # new line
+  PROMPT+=$'\n'
+
   # show prompt sign
   PROMPT+="%B%(!.%F{red}#.%F{green}%%)%f%b "
 
