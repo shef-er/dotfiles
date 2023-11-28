@@ -39,7 +39,7 @@ function precmd {
   # terminal title
   print -Pn "\e]0;%2~ %(1j,%j job%(2j|s|); ,)\a"
 
-  # prompt initalization
+  # prompt initialization
   if [ "$_ZSH_IS_FIRST_PROMPT" -eq 1 ]; then
     PROMPT=""
   else
