@@ -26,48 +26,45 @@ export _ZSH_IS_FIRST_PROMPT=1
 function precmd {
   # retrieve git info
   if command -v git &>/dev/null; then
-    local _git_info=""
+    local _git_status=""
+
     local _git_head="$(command git rev-parse --short HEAD 2> /dev/null)"
     local _git_branch="$(command git branch --show-current 2> /dev/null)"
 
     if [ "$_git_branch" ]; then
-      _git_info+="$_git_branch"
+      _git_status+="$_git_branch"
     else
-      _git_info+="$_git_head"
+      _git_status+="$_git_head"
     fi
 
-    # local _git_status=""
-    # local _git_index="$(command git status --porcelain -b 2> /dev/null)"
+    local _git_index="$(command git status --porcelain -b 2> /dev/null)"
 
-    # # Check for untracked files
-    # if
-    #   echo "$_git_index" | command grep -E '^\?\? ' &> /dev/null || \
-    #   echo "$_git_index" | command grep '^U[UDA] ' &> /dev/null || \
-    #   echo "$_git_index" | command grep '^AA ' &> /dev/null || \
-    #   echo "$_git_index" | command grep '^DD ' &> /dev/null || \
-    #   echo "$_git_index" | command grep '^ M ' &> /dev/null || \
-    #   echo "$_git_index" | command grep '^[DA]U ' &> /dev/null
-    # then
-    #   _git_status+="*"
-    # fi
+    # has work tree changes
+    if
+      echo "$_git_index" | command grep -E '^\?\? ' &> /dev/null || \
+      echo "$_git_index" | command grep '^ [AMDRC] ' &> /dev/null || \
+      echo "$_git_index" | command grep '^[ MTARC][MTD] ' &> /dev/null
+    then
+      _git_status+="*"
+    fi
+    # has indexed changes
+    if
+      echo "$_git_index" | command grep '^[MTARC][ MTD] ' &> /dev/null || \
+      echo "$_git_index" | command grep '^D  ' &> /dev/null
+    then
+      _git_status+="+"
+    fi
 
+    local _git_revs_ahead=$(command git rev-list --count ${_git_branch}@{upstream}..HEAD 2>/dev/null)
+    local _git_revs_behind=$(command git rev-list --count HEAD..${_git_branch}@{upstream} 2>/dev/null)
 
-    # # Check for staged files
-    # if
-    #   echo "$_git_index" | command grep '^A[ MDAU] ' &> /dev/null || \
-    #   echo "$_git_index" | command grep '^M[ MD] ' &> /dev/null || \
-    #   # echo "$_git_index" | command grep '^UA' &> /dev/null || \
-    #   echo "$_git_index" | command grep '^[MARC]M ' &> /dev/null || \
-    #   echo "$_git_index" | command grep '^R[ MD] ' &> /dev/null || \
-    #   echo "$_git_index" | command grep '^[MARCDU ]D ' &> /dev/null || \
-    #   echo "$_git_index" | command grep '^D[ UM] ' &> /dev/null
-    # then
-    #   _git_status+="+"
-    # fi
-
-    # if [ "$_git_status" ]; then
-    #   _git_info+=" $_git_status"
-    # fi
+    if (( $_git_revs_ahead )) && (( $_git_revs_behind )); then
+      _git_status+=" %F{magent}<->"
+    elif (( $_git_revs_ahead )); then
+      _git_status+=" %F{magent}->"
+    elif (( $_git_revs_behind )); then
+      _git_status+=" %F{magent}<-"
+    fi
   fi
 
   # terminal title
@@ -84,10 +81,8 @@ function precmd {
   PROMPT+="%B%F{blue}%2~%f%b "
 
   # show git info
-  if [ "$_git_info" ]; then
-    PROMPT+="%B%F{cyan}$_git_info%f%b "
-  else
-    PROMPT+=""
+  if [ "$_git_status" ]; then
+    PROMPT+="%B%F{cyan}$_git_status%f%b "
   fi
 
   # new line
