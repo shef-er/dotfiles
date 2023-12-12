@@ -26,7 +26,7 @@ export _ZSH_IS_FIRST_PROMPT=1
 function precmd {
   # retrieve git info
   if command -v git &>/dev/null; then
-    local _git_status=""
+    local _git_status="git:"
 
     local _git_head="$(command git rev-parse --short HEAD 2> /dev/null)"
     local _git_branch="$(command git branch --show-current 2> /dev/null)"
@@ -59,11 +59,11 @@ function precmd {
     local _git_revs_behind=$(command git rev-list --count HEAD..${_git_branch}@{upstream} 2>/dev/null)
 
     if (( $_git_revs_ahead )) && (( $_git_revs_behind )); then
-      _git_status+=" %F{magent}>< origin"
+      _git_status+="><origin"
     elif (( $_git_revs_ahead )); then
-      _git_status+=" %F{magent}-> origin"
+      _git_status+="->origin"
     elif (( $_git_revs_behind )); then
-      _git_status+=" %F{magent}<- origin"
+      _git_status+="<-origin"
     fi
   fi
 
