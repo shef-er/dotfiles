@@ -1,5 +1,0 @@
-#!/usr/bin/env bash
-
-# should be run as root
-rmmod btusb
-modprobe btusb
