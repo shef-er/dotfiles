@@ -419,6 +419,21 @@ If you installed [bluez-utils](https://archlinux.org/packages/?name=bluez-utils)
 systemctl enable --now bluetooth.service
 ```
 
+### 5.1.1 **Update timezone every time NetworkManager connects to a network**
+
+Create a NetworkManager dispatcher script: `/etc/NetworkManager/dispatcher.d/09-timezone`
+
+```
+#!/bin/sh
+
+case "$2" in
+    connectivity-change)
+        timedatectl set-timezone "$(curl --fail https://ipapi.co/timezone)"
+    ;;
+esac
+
+```
+
 ### 5.2 **Hardware** (TODO: add more info)
 
 ### 5.2.1 **Disable hardware speaker**
@@ -508,7 +523,7 @@ pacman -S sudo
 To allow members of group [wheel](https://wiki.archlinux.org/title/Wheel) sudo access, create `/etc/sudoers.d/wheel` file as followed: 
 
 ```shell
-EDITOR=nano visudo -f /etc/sudoers.d/wheel 
+EDITOR=nano visudo -f /etc/sudoers.d/wheel
 ```
 
 Contents of `/etc/sudoers.d/wheel`:
