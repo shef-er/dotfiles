@@ -12,7 +12,7 @@
 [core]
 	autocrlf = input
 	filemode = false
-	editor = nvim
+	editor = nano
 	pager = less -S
 
 [help]
