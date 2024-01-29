@@ -59,11 +59,11 @@ function precmd {
     local _git_revs_behind=$(command git rev-list --count HEAD..${_git_branch}@{upstream} 2>/dev/null)
 
     if (( $_git_revs_ahead )) && (( $_git_revs_behind )); then
-      _git_status+=" >< origin"
+      _git_status+=" ><"
     elif (( $_git_revs_ahead )); then
-      _git_status+=" -> origin"
+      _git_status+=" ->"
     elif (( $_git_revs_behind )); then
-      _git_status+=" <- origin"
+      _git_status+=" <-"
     fi
   fi
 
