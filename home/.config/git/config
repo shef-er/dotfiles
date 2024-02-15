@@ -8,12 +8,16 @@
 [user]
 	name = Ernest Shefer
 	email = shef-er@ya.ru
+	signingKey = ~/.ssh/id_ed25519.pub
+
+[gpg]
+	format = ssh
 
 [core]
 	autocrlf = input
 	filemode = false
 	editor = nano
-	pager = less -S
+	pager = perl /usr/share/git/diff-highlight/diff-highlight | less -S
 
 [help]
 	autocorrect = 1
@@ -29,13 +33,21 @@
 
 [log]
 	abbrevCommit = true
-	date = format-local:%d.%m.%Y, %H:%M
+	date = format-local:%d.%m.%Y %H:%M
+
+[branch]
+	sort = -committerdate
+
+[interactive]
+	diffFilter = diff-highlight
 
 [alias]
-    b = branch -a
-    graph = log --graph --date-order
-	g = graph --format='%C(dim)%an [%ad]%C(reset) %C(yellow)%h%C(auto)%(decorate)%C(reset)%n''%C(bold)%s%C(reset)'
-	gg = g --first-parent
+	blame = blame -w
+    branch = branch -a
+	diffw = diff --word-diff
+    log = log --graph --date-order
+	l = log --format='%C(dim)%an [%ad]%C(reset) %C(yellow)%h%C(auto)%(decorate)%C(reset)%n''%C(bold)%s%C(reset)'
+	ll = l --first-parent
 
 	# Custom scripts
 	clones = clones
