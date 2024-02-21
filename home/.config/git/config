@@ -19,9 +19,6 @@
 	editor = nano
 	pager = perl /usr/share/git/diff-highlight/diff-highlight | less -S
 
-[help]
-	autocorrect = 1
-
 [credential]
 	helper = cache
 
