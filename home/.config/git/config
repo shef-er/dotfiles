@@ -13,6 +13,9 @@
 [gpg]
 	format = ssh
 
+[commit]
+	gpgsign = true
+
 [core]
 	autocrlf = input
 	filemode = false
