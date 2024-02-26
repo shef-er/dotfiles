@@ -10,44 +10,84 @@
 	email = shef-er@ya.ru
 	signingKey = ~/.ssh/id_ed25519.pub
 
+[credential]
+	helper = cache
+
 [gpg]
 	format = ssh
 
-[commit]
-	gpgsign = true
+[help]
+	autoCorrect = prompt
 
 [core]
+	editor = nano
 	autocrlf = input
 	filemode = false
-	editor = nano
 	pager = perl /usr/share/git/diff-highlight/diff-highlight | less -S
-
-[credential]
-	helper = cache
 
 [init]
 	defaultBranch = main
 
-[pull]
-	rebase = false
+[status]
+	submoduleSummary = true
+
+[diff]
+	submodule = log
+	algorithm = histogram
+
+[commit]
+	gpgsign = true
+	verbose = true
+
+[branch]
+	sort = -committerdate
+
+[merge]
+	conflictstyle = zdiff3
 
 [log]
 	abbrevCommit = true
 	date = format-local:%d.%m.%Y %H:%M
 
-[branch]
-	sort = -committerdate
+[fetch]
+	fsckobjects = true
+
+[receive]
+	fsckobjects = true
+
+[transfer]
+	fsckobjects = true
+	credentialsInUrl = warn
+
+[pull]
+	rebase = false
+
+[push]
+	default = upstream
+	autoSetupRemote = true
+
+[rebase]
+	autoStash = true
+	autoSquash = true
+	missingCommitsCheck = error
 
 [interactive]
 	diffFilter = diff-highlight
 
 [alias]
-	blame = blame -w
-    branch = branch -a
-	diffw = diff --word-diff
-    log = log --graph --date-order
-	l = log --format='%C(dim)%an [%ad]%C(reset) %C(yellow)%h%C(auto)%(decorate)%C(reset)%n''%C(bold)%s%C(reset)'
-	ll = l --first-parent
+	graph = log --graph --author-date-order
+    fixup = commit --fixup
+    amend = commit --amend
+    revert = checkout --
+	fuckit = reset --hard
 
-	# Custom scripts
+    st = status
+    sts = status -s
+    stsi = status -s --ignored
+	g = log --graph --author-date-order --pretty=format:'%C(auto)%h%(decorate)%C(reset) %C(bold)%s%C(reset)'
+	gf = g --first-parent
+	gw = log --graph --author-date-order --pretty=format:'%C(dim)%an [%ad]%C(reset) %C(auto)%h%(decorate)%C(reset)%n''%C(bold)%s%C(reset)'
+	gwf = gw --first-parent
+
+	# Custom scripts aliases
 	clones = clones
