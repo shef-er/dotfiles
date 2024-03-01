@@ -18,7 +18,7 @@ To set a Russian keyboard layout:
 loadkeys ru
 ```
 
-[Console fonts](https://wiki.archlinux.org/title/Console_fonts) are located in `/usr/share/kbd/consolefonts/` and can likewise be set with [setfont(8)](https://man.archlinux.org/man/setfont.8). 
+[Console fonts](https://wiki.archlinux.org/title/Console_fonts) are located in `/usr/share/kbd/consolefonts/` and can likewise be set with [setfont(8)](https://man.archlinux.org/man/setfont.8).
 
 ### 1.2 **Verify the boot mode**
 
@@ -100,7 +100,7 @@ Mount point     Partition                   Partition type          Suggested si
 
 /mnt/boot       /dev/efi_system_partition   EFI system partition    At least 550 MiB
 [SWAP]          /dev/swap_partition         Linux swap 	            More than 512 MiB
-/mnt            /dev/root_partition         Linux x86-64 root (/)   Remainder of the device 
+/mnt            /dev/root_partition         Linux x86-64 root (/)   Remainder of the device
 ```
 
 See also [Partitioning#Example layouts](https://wiki.archlinux.org/title/Partitioning#Example_layouts). 
@@ -417,21 +417,6 @@ If you installed [bluez-utils](https://archlinux.org/packages/?name=bluez-utils)
 
 ```shell
 systemctl enable --now bluetooth.service
-```
-
-### 5.1.1 **Update timezone every time NetworkManager connects to a network**
-
-Create a NetworkManager dispatcher script: `/etc/NetworkManager/dispatcher.d/09-timezone`
-
-```
-#!/bin/sh
-
-case "$2" in
-    connectivity-change)
-        timedatectl set-timezone "$(curl --fail https://ipapi.co/timezone)"
-    ;;
-esac
-
 ```
 
 ### 5.2 **Hardware** (TODO: add more info)
