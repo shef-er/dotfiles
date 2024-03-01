@@ -72,7 +72,7 @@
 	missingCommitsCheck = error
 
 [interactive]
-	diffFilter = diff-highlight
+	diffFilter = perl /usr/share/git/diff-highlight/diff-highlight
 
 [alias]
 	graph = log --graph --author-date-order
