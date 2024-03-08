@@ -18,5 +18,5 @@ export USER_SCRIPTS_HOME="$XDG_CONFIG_HOME"/scripts
 [ ! -d "$USER_SCRIPTS_HOME" ] && mkdir -p "$USER_SCRIPTS_HOME"
 export PATH="$USER_SCRIPTS_HOME:$PATH"
 
-export VISUAL=nano
-export EDITOR=nano
+export VISUAL=nvim
+export EDITOR=nvim
