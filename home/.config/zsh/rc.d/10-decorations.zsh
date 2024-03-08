@@ -24,7 +24,7 @@ if [ "$TERM" = "linux" ]; then
   echo -en "\e]PE5fffff" # cyan
   echo -en "\e]PFFFFFFF" # white
 
-  clear #remove background artifacts
+  clear # remove background artifacts
 fi
 
 man() {
