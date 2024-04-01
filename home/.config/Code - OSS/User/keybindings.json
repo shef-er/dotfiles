@@ -1,0 +1,14 @@
+[
+  {
+    "key": "shift shift",
+    "command": "workbench.action.showCommands"
+  },
+  // {
+  //   "key": "alt alt",
+  //   "command": "workbench.action.showCommands"
+  // },
+  // {
+  //   "key": "ctrl ctrl",
+  //   "command": "workbench.action.toggleSidebarVisibility"
+  // },
+]

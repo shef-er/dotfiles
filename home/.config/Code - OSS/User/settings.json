@@ -1,0 +1,84 @@
+{
+  "editor.fontSize": 14,
+  "editor.fontFamily": "'JetBrains Mono', monospace",
+  "editor.fontLigatures": true,
+  "editor.formatOnPaste": true,
+  "editor.find.loop": false,
+  "editor.guides.bracketPairs": "active",
+  "editor.guides.indentation": true,
+  "editor.minimap.enabled": false,
+  "editor.multiCursorModifier": "ctrlCmd",
+  "editor.renderLineHighlight": "all",
+  "editor.renderWhitespace": "trailing",
+  "editor.quickSuggestions": {
+    "comments": true
+  },
+
+  "extensions.autoUpdate": "onlyEnabledExtensions",
+
+  "explorer.confirmDragAndDrop": false,
+
+  "files.associations": {
+    "*.blade.php": "html",
+    "*.twig": "html",
+    "*.gohtml": "html"
+  },
+  "files.autoSave": "onFocusChange",
+  "files.simpleDialog.enable": true,
+
+  "diffEditor.ignoreTrimWhitespace": false,
+  "git.branchProtection": ["main", "master"],
+  "git.confirmSync": false,
+  "git.inputValidationLength": 200,
+  "git.inputValidationSubjectLength": null,
+  "github.gitProtocol": "ssh",
+
+  "go.toolsManagement.autoUpdate": true,
+  "gopls": {
+    "ui.semanticTokens": true
+  },
+
+  "redhat.telemetry.enabled": false,
+
+  "scm.alwaysShowRepositories": true,
+  "scm.defaultViewMode": "tree",
+  "scm.repositories.sortOrder": "path",
+
+  "search.searchEditor.reusePriorSearchConfiguration": true,
+  "search.showLineNumbers": true,
+
+  "telemetry.telemetryLevel": "off",
+
+  "workbench.colorTheme": "Default Light Modern",
+  "workbench.editor.revealIfOpen": true,
+  "workbench.sideBar.location": "right",
+
+  "window.dialogStyle": "custom",
+  "window.title": "${dirty}${activeEditorShort}${separator}${rootName}",
+  "window.titleBarStyle": "custom",
+
+  // "zenMode.hideTabs": false,
+  "zenMode.hideLineNumbers": false,
+
+  "[css]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[dockercompose]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[go]": {
+    "editor.formatOnSave": true
+  },
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }
+}
