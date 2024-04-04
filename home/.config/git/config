@@ -74,6 +74,7 @@
 	diffFilter = perl /usr/share/git/diff-highlight/diff-highlight
 
 [alias]
+	patch = add --patch
 	graph = log --graph --author-date-order
     fixup = commit --fixup
     amend = commit --amend
