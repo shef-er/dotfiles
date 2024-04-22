@@ -5,8 +5,9 @@
 #   \_/\_/ \__,_|\__, |_|\__,_|_| |_|\__,_|
 #                |___/
 
-export QT_QPA_PLATFORM=wayland
-
 export MOZ_ENABLE_WAYLAND=1
 
-export ELECTRON_OZONE_PLATFORM_HINT=wayland
+# export QT_QPA_PLATFORM=wayland
+export QT_QPA_PLATFORM=xcb
+
+# export ELECTRON_OZONE_PLATFORM_HINT=wayland
