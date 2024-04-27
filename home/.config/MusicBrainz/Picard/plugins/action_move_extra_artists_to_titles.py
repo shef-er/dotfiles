@@ -6,6 +6,15 @@ PLUGIN_API_VERSIONS = ["2.0", "2.1", "2.2", "2.3"]
 PLUGIN_LICENSE = "GPL-3.0"
 PLUGIN_LICENSE_URL = "http://www.gnu.org/licenses/gpl-3.0.txt"
 
+TAG_ARTIST = 'artist'
+TAG_ARTISTSORT = 'artistsort'
+
+TAG_ALBUMARTIST = 'albumartist'
+TAG_ALBUMARTISTSORT = 'albumartistsort'
+
+TAG_ALBUM = 'album'
+TAG_TITLE = 'title'
+
 from picard.album import Album
 from picard.ui.itemviews import BaseAction, register_album_action
 import re
@@ -18,38 +27,43 @@ class MoveFeaturingArtistsToTrackTitles(BaseAction):
 
         for album in objs:
             if isinstance(album, Album):
-                metadata = album.metadata
-
-                match = _feat_re.match(metadata["albumartist"])
+                match = _feat_re.match(album.metadata[TAG_ALBUMARTIST])
                 if match:
                     # metadata["albumartist"] = match.group(1)
-                    album.metadata.set("albumartist", match.group(1).strip())
+                    album.metadata.set(
+                        TAG_ALBUMARTIST,
+                        match.group(1).strip()
+                    )
                     # metadata["album"] += " (feat.%s)" % match.group(3)
-                    album.metadata.set("album", album.metadata.get("album") + " (feat. %s)" % match.group(3).strip())
-                match = _feat_re.match(metadata["albumartistsort"])
+                    album.metadata.set(
+                        TAG_ALBUM,
+                        album.metadata.get(TAG_ALBUM) + " (feat. %s)" % match.group(3).strip()
+                    )
+                match = _feat_re.match(album.metadata[TAG_ALBUMARTISTSORT])
                 if match:
                     # metadata["albumartistsort"] = match.group(1)
-                    album.metadata.set("albumartistsort", match.group(1).strip())
+                    album.metadata.set(
+                        TAG_ALBUMARTISTSORT,
+                        match.group(1).strip()
+                    )
 
                 for track in album.tracks:
-                    metadata = track.metadata
+                    match = _feat_re.match(track.metadata[TAG_ALBUMARTIST])
+                    if match:
+                        track.metadata[TAG_ALBUMARTIST] = match.group(1).strip()
+                        track.metadata[TAG_ALBUM] += " (feat. %s)" % match.group(3).strip()
+                    match = _feat_re.match(track.metadata[TAG_ALBUMARTISTSORT])
+                    if match:
+                        track.metadata[TAG_ALBUMARTISTSORT] = match.group(1).strip()
 
-                    match = _feat_re.match(metadata["albumartist"])
+                    match = _feat_re.match(track.metadata[TAG_ARTIST])
                     if match:
-                        metadata["albumartist"] = match.group(1).strip()
-                        metadata["album"] += " (feat. %s)" % match.group(3).strip()
-                    match = _feat_re.match(metadata["albumartistsort"])
-                    if match:
-                        metadata["albumartistsort"] = match.group(1).strip()
+                        track.metadata[TAG_ARTIST] = match.group(1).strip()
+                        track.metadata[TAG_TITLE] += " (feat. %s)" % match.group(3).strip()
 
-                    match = _feat_re.match(metadata["artist"])
+                    match = _feat_re.match(track.metadata[TAG_ARTISTSORT])
                     if match:
-                        metadata["artist"] = match.group(1).strip()
-                        metadata["title"] += " (feat. %s)" % match.group(3).strip()
-
-                    match = _feat_re.match(metadata["artistsort"])
-                    if match:
-                        metadata["artistsort"] = match.group(1).strip()
+                        track.metadata[TAG_ARTISTSORT] = match.group(1).strip()
 
                     for files in track.linked_files:
                         track.update_file_metadata(files)
