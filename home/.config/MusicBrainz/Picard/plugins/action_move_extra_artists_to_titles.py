@@ -27,8 +27,7 @@ class MoveFeaturingArtistsToTrackTitles(BaseAction):
 
         for album in objs:
             if isinstance(album, Album):
-                match = _feat_re.match(album.metadata.get(TAG_ALBUMARTIST))
-                if match:
+                if match := _feat_re.match(album.metadata.get(TAG_ALBUMARTIST)):
                     album.metadata.set(
                         TAG_ALBUMARTIST,
                         match.group(1).strip()
@@ -37,16 +36,15 @@ class MoveFeaturingArtistsToTrackTitles(BaseAction):
                         TAG_ALBUM,
                         album.metadata.get(TAG_ALBUM) + " (feat. %s)" % match.group(3).strip()
                     )
-                match = _feat_re.match(album.metadata.get(TAG_ALBUMARTISTSORT))
-                if match:
+
+                if match := _feat_re.match(album.metadata.get(TAG_ALBUMARTISTSORT)):
                     album.metadata.set(
                         TAG_ALBUMARTISTSORT,
                         match.group(1).strip()
                     )
 
                 for track in album.tracks:
-                    match = _feat_re.match(track.metadata.get(TAG_ALBUMARTIST))
-                    if match:
+                    if match := _feat_re.match(track.metadata.get(TAG_ALBUMARTIST)):
                         track.metadata.set(
                             TAG_ALBUMARTIST,
                             match.group(1).strip()
@@ -56,15 +54,13 @@ class MoveFeaturingArtistsToTrackTitles(BaseAction):
                             track.metadata.get(TAG_ALBUM) + " (feat. %s)" % match.group(3).strip()
                         )
 
-                    match = _feat_re.match(track.metadata.get(TAG_ALBUMARTISTSORT))
-                    if match:
+                    if match := _feat_re.match(track.metadata.get(TAG_ALBUMARTISTSORT)):
                         track.metadata.set(
                             TAG_ALBUMARTISTSORT,
                             match.group(1).strip()
                         )
 
-                    match = _feat_re.match(track.metadata.get(TAG_ARTIST))
-                    if match:
+                    if match := _feat_re.match(track.metadata.get(TAG_ARTIST)):
                         track.metadata.set(
                             TAG_ARTIST,
                             match.group(1).strip()
@@ -74,8 +70,7 @@ class MoveFeaturingArtistsToTrackTitles(BaseAction):
                             track.metadata.get(TAG_TITLE) + " (feat. %s)" % match.group(3).strip()
                         )
 
-                    match = _feat_re.match(track.metadata.get(TAG_ARTISTSORT))
-                    if match:
+                    if match := _feat_re.match(track.metadata.get(TAG_ARTISTSORT)):
                         track.metadata.set(
                             TAG_ARTISTSORT,
                             match.group(1).strip()
