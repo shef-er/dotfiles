@@ -27,43 +27,59 @@ class MoveFeaturingArtistsToTrackTitles(BaseAction):
 
         for album in objs:
             if isinstance(album, Album):
-                match = _feat_re.match(album.metadata[TAG_ALBUMARTIST])
+                match = _feat_re.match(album.metadata.get(TAG_ALBUMARTIST))
                 if match:
-                    # metadata["albumartist"] = match.group(1)
                     album.metadata.set(
                         TAG_ALBUMARTIST,
                         match.group(1).strip()
                     )
-                    # metadata["album"] += " (feat.%s)" % match.group(3)
                     album.metadata.set(
                         TAG_ALBUM,
                         album.metadata.get(TAG_ALBUM) + " (feat. %s)" % match.group(3).strip()
                     )
-                match = _feat_re.match(album.metadata[TAG_ALBUMARTISTSORT])
+                match = _feat_re.match(album.metadata.get(TAG_ALBUMARTISTSORT))
                 if match:
-                    # metadata["albumartistsort"] = match.group(1)
                     album.metadata.set(
                         TAG_ALBUMARTISTSORT,
                         match.group(1).strip()
                     )
 
                 for track in album.tracks:
-                    match = _feat_re.match(track.metadata[TAG_ALBUMARTIST])
+                    match = _feat_re.match(track.metadata.get(TAG_ALBUMARTIST))
                     if match:
-                        track.metadata[TAG_ALBUMARTIST] = match.group(1).strip()
-                        track.metadata[TAG_ALBUM] += " (feat. %s)" % match.group(3).strip()
-                    match = _feat_re.match(track.metadata[TAG_ALBUMARTISTSORT])
-                    if match:
-                        track.metadata[TAG_ALBUMARTISTSORT] = match.group(1).strip()
+                        track.metadata.set(
+                            TAG_ALBUMARTIST,
+                            match.group(1).strip()
+                        )
+                        track.metadata.set(
+                            TAG_ALBUM,
+                            track.metadata.get(TAG_ALBUM) + " (feat. %s)" % match.group(3).strip()
+                        )
 
-                    match = _feat_re.match(track.metadata[TAG_ARTIST])
+                    match = _feat_re.match(track.metadata.get(TAG_ALBUMARTISTSORT))
                     if match:
-                        track.metadata[TAG_ARTIST] = match.group(1).strip()
-                        track.metadata[TAG_TITLE] += " (feat. %s)" % match.group(3).strip()
+                        track.metadata.set(
+                            TAG_ALBUMARTISTSORT,
+                            match.group(1).strip()
+                        )
 
-                    match = _feat_re.match(track.metadata[TAG_ARTISTSORT])
+                    match = _feat_re.match(track.metadata.get(TAG_ARTIST))
                     if match:
-                        track.metadata[TAG_ARTISTSORT] = match.group(1).strip()
+                        track.metadata.set(
+                            TAG_ARTIST,
+                            match.group(1).strip()
+                        )
+                        track.metadata.set(
+                            TAG_TITLE,
+                            track.metadata.get(TAG_TITLE) + " (feat. %s)" % match.group(3).strip()
+                        )
+
+                    match = _feat_re.match(track.metadata.get(TAG_ARTISTSORT))
+                    if match:
+                        track.metadata.set(
+                            TAG_ARTISTSORT,
+                            match.group(1).strip()
+                        )
 
                     for files in track.linked_files:
                         track.update_file_metadata(files)
