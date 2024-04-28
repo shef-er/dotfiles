@@ -1,8 +1,8 @@
-PLUGIN_NAME = u'Move featuring artists to track and album titles'
+PLUGIN_NAME = u'Move featuring artists'
 PLUGIN_AUTHOR = u'Ernest Shefer (shef-er)'
-PLUGIN_DESCRIPTION = u'''Context action to move all featuring artists that mentioned after words: feat., &, ×, +'''
+PLUGIN_DESCRIPTION = u'''Context action to move all featuring artists that mentioned after specific words'''
 PLUGIN_VERSION = '0.2.1'
-PLUGIN_API_VERSIONS = ["2.0", "2.1", "2.2", "2.3", "2.4", "2.5", "2.6", "2.7", "2.8", "2.9", "2.10", "2.11"]
+PLUGIN_API_VERSIONS = ["2.3", "2.4", "2.5", "2.6", "2.7", "2.8", "2.9", "2.10", "2.11"]
 PLUGIN_LICENSE = "GPL-3.0"
 PLUGIN_LICENSE_URL = "http://www.gnu.org/licenses/gpl-3.0.txt"
 
@@ -38,8 +38,8 @@ def strip_featuring_artists_from_sort(metadata, artist_sort_tag):
             match.group(1).strip()
         )
 
-class MoveFeaturingArtistsToTitles(BaseAction):
-    NAME = 'Move featuring artists to track and album titles'
+class MoveExtraArtists(BaseAction):
+    NAME = 'Move extra artists'
 
     def callback(self, objs):
 
@@ -60,4 +60,4 @@ class MoveFeaturingArtistsToTitles(BaseAction):
 
                 album.update()
 
-register_album_action(MoveFeaturingArtistsToTitles())
+register_album_action(MoveExtraArtists())
