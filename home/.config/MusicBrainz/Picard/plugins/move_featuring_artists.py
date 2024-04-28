@@ -1,6 +1,6 @@
 PLUGIN_NAME = u'Move featuring artists'
 PLUGIN_AUTHOR = u'Ernest Shefer (shef-er)'
-PLUGIN_DESCRIPTION = u'''Context action to move all featuring artists that mentioned after specific words'''
+PLUGIN_DESCRIPTION = u'''Metadata processors and context action to move all featuring artists that mentioned after specific words to track and album titles'''
 PLUGIN_VERSION = '0.4.1'
 PLUGIN_API_VERSIONS = ["2.3", "2.4", "2.5", "2.6", "2.7", "2.8", "2.9", "2.10", "2.11"]
 PLUGIN_LICENSE = "GPL-3.0"
@@ -27,13 +27,15 @@ def move_featuring_artists_to_title(metadata, artist_tag, artist_sort_tag, title
             match.group(1).strip()
         )
         metadata.set(
-            artist_sort_tag,
-            match.group(1).strip()
-        )
-        metadata.set(
             title_tag,
             metadata.get(title_tag) + " (feat. %s)" % match.group(4).strip()
         )
+    if match := pattern.match(metadata.get(artist_sort_tag)):
+        metadata.set(
+            artist_sort_tag,
+            match.group(1).strip()
+        )
+
 
 def move_album_featuring_artists_processor(tagger, metadata, release):
     move_featuring_artists_to_title(metadata, TAG_ALBUMARTIST, TAG_ALBUMARTISTSORT, TAG_ALBUM)
@@ -46,19 +48,22 @@ register_track_metadata_processor(move_track_featuring_artists_processor)
 
 
 def move_extra_artists_to_title(metadata, artist_tag, artist_sort_tag, title_tag):
-    artists = list(map(str.strip, re.split(r",|&|\+|×| x ", metadata.get(artist_tag))))
+    regex_pattern = r",|&|\+|×| x "
+    artists = list(map(str.strip, re.split(regex_pattern, metadata.get(artist_tag))))
     if len(artists) > 1 and artists[1] != '':
         metadata.set(
             artist_tag,
-            main_artist := artists.pop(0)
-        )
-        metadata.set(
-            artist_sort_tag,
-            main_artist
+            artists.pop(0)
         )
         metadata.set(
             title_tag,
             metadata.get(title_tag) + " (feat. %s)" % ', '.join(artists)
+        )
+    artists = list(map(str.strip, re.split(regex_pattern, metadata.get(artist_sort_tag))))
+    if len(artists) > 1 and artists[1] != '':
+        metadata.set(
+            artist_sort_tag,
+            artists.pop(0)
         )
 
 class MoveExtraArtists(BaseAction):
