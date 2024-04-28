@@ -6,13 +6,12 @@ PLUGIN_API_VERSIONS = ["2.0", "2.1", "2.2", "2.3", "2.4", "2.5", "2.6", "2.7", "
 PLUGIN_LICENSE = "GPL-3.0"
 PLUGIN_LICENSE_URL = "http://www.gnu.org/licenses/gpl-3.0.txt"
 
-TAG_ARTIST = 'artist'
-TAG_ARTISTSORT = 'artistsort'
-
 TAG_ALBUMARTIST = 'albumartist'
 TAG_ALBUMARTISTSORT = 'albumartistsort'
-
 TAG_ALBUM = 'album'
+
+TAG_ARTIST = 'artist'
+TAG_ARTISTSORT = 'artistsort'
 TAG_TITLE = 'title'
 
 from picard.album import Album
@@ -50,8 +49,8 @@ class MoveFeaturingArtistsToTitles(BaseAction):
                 strip_featuring_artists_from_sort(album.metadata, TAG_ALBUMARTISTSORT)
 
                 for track in album.tracks:
-                    move_featuring_artists_to_title(track.metadata, TAG_ALBUMARTIST, TAG_ALBUM)
-                    strip_featuring_artists_from_sort(track.metadata, TAG_ALBUMARTISTSORT)
+                    # move_featuring_artists_to_title(track.metadata, TAG_ALBUMARTIST, TAG_ALBUM)
+                    # strip_featuring_artists_from_sort(track.metadata, TAG_ALBUMARTISTSORT)
 
                     move_featuring_artists_to_title(track.metadata, TAG_ARTIST, TAG_TITLE)
                     strip_featuring_artists_from_sort(track.metadata, TAG_ARTISTSORT)
