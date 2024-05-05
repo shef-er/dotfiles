@@ -10,6 +10,6 @@ if [ "$GOPATH" != "$GODIR" ] ; then
 fi
 
 GOBINDIR="$GOPATH"/bin
-if ! [[ "$PATH" =~ "$GOBINDIR" ]] ; then
+if ! [[ "$PATH" == *"$GOBINDIR"* ]] ; then
   export PATH="$PATH:$GOBINDIR"
 fi
