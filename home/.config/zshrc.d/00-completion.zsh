@@ -11,7 +11,7 @@ setopt AUTO_CD
 
 autoload -Uz compinit && compinit -d "$XDG_CACHE_HOME"/zcompdump
 
-zstyle ':compinstall'                   filename "$XDG_CONFIG_HOME"/zsh/rc
+zstyle ':compinstall'                   filename "$HOME"/.zshrc
 
 zstyle ':completion:*'                  rehash true
 zstyle ':completion:*'                  menu select

@@ -6,8 +6,4 @@
 #                |___/
 
 export MOZ_ENABLE_WAYLAND=1
-
-# export QT_QPA_PLATFORM=wayland
-export QT_QPA_PLATFORM=xcb
-
-# export ELECTRON_OZONE_PLATFORM_HINT=wayland
+export QT_QPA_PLATFORM=wayland

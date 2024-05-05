@@ -1,2 +1,3 @@
-# vim: set syntax=zsh
-source ~/.config/zsh/env
+#!/usr/bin/env zsh
+
+emulate sh -c 'source "$HOME"/.profile'
