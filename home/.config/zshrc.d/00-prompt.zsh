@@ -21,7 +21,7 @@ setopt PROMPT_SUBST
 
 autoload -Uz colors && colors
 
-export _ZSH_IS_FIRST_PROMPT=1
+export IS_FIRST_PROMPT=1
 
 function precmd {
   # retrieve git info
@@ -71,8 +71,9 @@ function precmd {
   print -Pn "\e]0;%2~ %(1j,%j job%(2j|s|); ,)\a"
 
   # prompt initialization
-  if [ "$_ZSH_IS_FIRST_PROMPT" -eq 1 ]; then
+  if [ -n "$IS_FIRST_PROMPT" ]; then
     PROMPT=""
+    unset IS_FIRST_PROMPT
   else
     PROMPT=$'\n'
   fi
@@ -92,5 +93,4 @@ function precmd {
   PROMPT+="%B%(!.%F{red}#.%F{green}%%)%f%b "
 
   export PROMPT
-  export _ZSH_IS_FIRST_PROMPT=0
 }
