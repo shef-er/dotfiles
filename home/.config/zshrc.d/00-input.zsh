@@ -1,4 +1,72 @@
 #!/usr/bin/env zsh
+#  _                   _
+# (_)_ __  _ __  _   _| |_
+# | | '_ \| '_ \| | | | __|
+# | | | | | |_) | |_| | |_
+# |_|_| |_| .__/ \__,_|\__|
+#         |_|
+
+source_if_exists "/usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh"
+
+unsetopt BEEP
+
+# Do not require a leading ‘.’ in a filename to be matched explicitly.
+setopt GLOB_DOTS
+
+# Prevents aliases on the command line from being internally substituted
+# before completion is attempted. The effect is to make the alias a distinct
+# command for completion purposes.
+setopt COMPLETE_ALIASES
+
+# If a command is issued that can’t be executed as a normal command, and
+# the command is the name of a directory, perform the cd command to that directory.
+setopt AUTO_CD
+
+
+autoload -Uz compinit && compinit -d "$XDG_CACHE_HOME"/zcompdump
+
+zstyle ':compinstall'                   filename "$HOME"/.zshrc
+
+zstyle ':completion:*'                  rehash true
+zstyle ':completion:*'                  menu select
+
+zstyle ':completion:*:pacman:*'         force-list always
+zstyle ':completion:*:*:pacman:*'       menu yes select
+
+zstyle ':completion:*:kill:*'           force-list always
+zstyle ':completion:*:*:kill:*'         menu yes select
+
+zstyle ':completion:*:killall:*'        force-list always
+zstyle ':completion:*:*:killall:*'      menu yes select
+
+zstyle ':completion:*:processes-names'  command  "ps c -u $USER -o command | uniq"
+
+
+bindkey -e
+
+bindkey "^[[H"    beginning-of-line
+bindkey "^[[F"    end-of-line
+# bindkey "^[[2~"   overwrite-mode
+bindkey "^[[3~"   delete-char
+#bindkey "^[[A"    up-line-or-history
+#bindkey "^[[B"    down-line-or-history
+bindkey "^[[D"    backward-char
+bindkey "^[[C"    forward-char
+#bindkey "^[[5~"   history-beginning-search-backward
+#bindkey "^[[6~"   history-beginning-search-forward
+bindkey "^[[1;2A" history-beginning-search-backward
+bindkey "^[[1;2B" history-beginning-search-forward
+
+autoload -Uz up-line-or-beginning-search down-line-or-beginning-search
+zle -N            up-line-or-beginning-search
+zle -N            down-line-or-beginning-search
+bindkey "^[[A"    up-line-or-beginning-search
+bindkey "^[[B"    down-line-or-beginning-search
+
+function exit_zsh { exit }
+zle -N            exit_zsh
+bindkey '^D'      exit_zsh
+
 #  _
 # | | _____ _   _ ___
 # | |/ / _ \ | | / __|
@@ -86,30 +154,3 @@
 # Ctrl + 6      ^^
 # Ctrl + 7      ^_ = Undo
 # Ctrl + 8      ^? = Backward-delete-char
-
-unsetopt BEEP
-
-bindkey -e
-
-bindkey "^[[H"    beginning-of-line
-bindkey "^[[F"    end-of-line
-bindkey "^[[2~"   overwrite-mode
-bindkey "^[[3~"   delete-char
-#bindkey "^[[A"    up-line-or-history
-#bindkey "^[[B"    down-line-or-history
-bindkey "^[[D"    backward-char
-bindkey "^[[C"    forward-char
-#bindkey "^[[5~"   history-beginning-search-backward
-#bindkey "^[[6~"   history-beginning-search-forward
-bindkey "^[[1;2A" history-beginning-search-backward
-bindkey "^[[1;2B" history-beginning-search-forward
-
-autoload -Uz up-line-or-beginning-search down-line-or-beginning-search
-zle -N            up-line-or-beginning-search
-zle -N            down-line-or-beginning-search
-bindkey "^[[A"    up-line-or-beginning-search
-bindkey "^[[B"    down-line-or-beginning-search
-
-function exit_zsh { exit }
-zle -N            exit_zsh
-bindkey '^D'      exit_zsh
