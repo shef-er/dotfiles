@@ -1,0 +1,143 @@
+#!/usr/bin/env bash
+
+blk=''
+red=''
+grn=''
+ylw=''
+blu=''
+mgt=''
+cyn=''
+wht=''
+rst=''
+
+if test -x '/usr/bin/tput'; then
+    case "$CURRENT_SHELL" in
+        'bash')
+            bld="\[$(/usr/bin/tput bold)\]"
+            blk="\[$bld$(/usr/bin/tput setaf 0)\]"
+            red="\[$bld$(/usr/bin/tput setaf 1)\]"
+            grn="\[$bld$(/usr/bin/tput setaf 2)\]"
+            ylw="\[$bld$(/usr/bin/tput setaf 3)\]"
+            blu="\[$bld$(/usr/bin/tput setaf 4)\]"
+            mgt="\[$bld$(/usr/bin/tput setaf 5)\]"
+            cyn="\[$bld$(/usr/bin/tput setaf 6)\]"
+            wht="\[$bld$(/usr/bin/tput setaf 7)\]"
+            unset bld
+            rst="\[$(/usr/bin/tput sgr0)\]"
+            ;;
+        'zsh')
+            bld="$(/usr/bin/tput bold)"
+            blk="$bld$(/usr/bin/tput setaf 0)"
+            red="$bld$(/usr/bin/tput setaf 1)"
+            grn="$bld$(/usr/bin/tput setaf 2)"
+            ylw="$bld$(/usr/bin/tput setaf 3)"
+            blu="$bld$(/usr/bin/tput setaf 4)"
+            mgt="$bld$(/usr/bin/tput setaf 5)"
+            cyn="$bld$(/usr/bin/tput setaf 6)"
+            wht="$bld$(/usr/bin/tput setaf 7)"
+            unset bld
+            rst="$(/usr/bin/tput sgr0)"
+            ;;
+    esac
+fi
+
+function prompt::git {
+    local output
+    local git_head
+    local git_branch
+    local git_index
+    local git_revs_ahead
+    local git_revs_behind
+
+    if ! command -v git &> /dev/null; then
+        return 0
+    fi
+
+    git_head="$(command git rev-parse --short HEAD 2> /dev/null)"
+    git_branch="$(command git branch --show-current 2> /dev/null)"
+
+    if test -n "$git_branch"; then
+        output+="$git_branch"
+    else
+        output+="$git_head"
+    fi
+
+    git_index="$(command git status --porcelain -b 2> /dev/null)"
+
+    # has worktree changes
+    if
+        echo -n "$git_index" | command grep -E '^\?\? ' &> /dev/null || \
+        echo -n "$git_index" | command grep '^ [AMDRC] ' &> /dev/null || \
+        echo -n "$git_index" | command grep '^[ MTARC][MTD] ' &> /dev/null
+    then
+        output+="*"
+    fi
+ 
+    # has indexed changes
+    if
+        echo -n "$git_index" | command grep '^[MTARC][ MTD] ' &> /dev/null || \
+        echo -n "$git_index" | command grep '^D  ' &> /dev/null
+    then
+        output+="+"
+    fi
+
+    git_revs_ahead=$(command git rev-list --count "$git_branch@{upstream}..HEAD" 2>/dev/null)
+    git_revs_behind=$(command git rev-list --count "HEAD..$git_branch@{upstream}" 2>/dev/null)
+
+    if (( git_revs_ahead )) && (( git_revs_behind )); then
+        output+=" ><"
+    elif (( git_revs_ahead )); then
+        output+=" ->"
+    elif (( git_revs_behind )); then
+        output+=" <-"
+    fi
+
+    if test -z "$output"; then
+        return 0
+    fi
+
+    echo -n "$cyn$output$rst "
+}
+
+function prompt::pwd {
+    local output
+    local pwd
+
+    pwd="$(pwd)"
+    case "$pwd" in
+        "$HOME")
+            output='~'
+            ;;
+        "$HOME"/*/*)
+            output="${pwd#"${pwd%/*/*}/"}"
+            ;;
+        "$HOME"/*)
+            output=~/"${pwd##*/}"
+            ;;
+        *)
+            output="${pwd#"${pwd%/*/*}/"}"
+            ;;
+    esac
+    echo -n "$blu$output$rst "
+}
+
+function prompt::sign {
+    if test "$(id -u)" -eq 0; then
+        echo -n "$red#$rst "
+    else
+        echo -n "$grn>$rst "
+    fi
+}
+
+prompt="$rst"
+
+if test -n "$PREPEND_WITH_NEWLINE"; then
+    prompt+=$'\n'
+fi
+
+prompt+="$(prompt::pwd)"
+prompt+="$(prompt::git)"
+prompt+=$'\n'
+prompt+="$(prompt::sign)"
+
+echo -n "$prompt"
