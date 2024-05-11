@@ -6,9 +6,27 @@
 # |_|_| |_| .__/ \__,_|\__|
 #         |_|
 
-source_if_exists "/usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh"
+# The name of the file in which command history is saved.
+export HISTFILE="$XDG_STATE_HOME"/zsh_history
 
-unsetopt BEEP
+# The maximum number of lines contained in the history file.
+export SAVEHIST=50000
+
+# The number of commands to remember in the command history.
+export HISTSIZE=50000
+
+# Do not enter command lines into the history list if they are duplicates
+# of the previous event.
+setopt HIST_IGNORE_DUPS
+
+# Remove command lines from the history list when the first character
+# on the line is a space, or when one of the expanded aliases contains
+# a leading space. Only normal aliases (not global or suffix aliases)
+# have this behaviour. Note that the command lingers in the internal
+# history until the next command is entered before it vanishes, allowing
+# you to briefly reuse or edit the line. If you want to make it vanish
+# right away without entering another command, type a space and press return.
+setopt HIST_IGNORE_SPACE
 
 # Do not require a leading ‘.’ in a filename to be matched explicitly.
 setopt GLOB_DOTS
@@ -22,6 +40,13 @@ setopt COMPLETE_ALIASES
 # the command is the name of a directory, perform the cd command to that directory.
 setopt AUTO_CD
 
+# Do not beep on error in ZLE.
+unsetopt BEEP
+
+# Fish-like autosuggestions for zsh.
+# It suggests commands as you type based on history and completions.
+source_if_exists "/usr/share/zsh/plugins/zsh-autosuggestions/zsh-autosuggestions.zsh"
+
 
 autoload -Uz compinit && compinit -d "$XDG_CACHE_HOME"/zcompdump
 
@@ -30,16 +55,16 @@ zstyle ':compinstall'                   filename "$HOME"/.zshrc
 zstyle ':completion:*'                  rehash true
 zstyle ':completion:*'                  menu select
 
-zstyle ':completion:*:pacman:*'         force-list always
-zstyle ':completion:*:*:pacman:*'       menu yes select
+# zstyle ':completion:*:pacman:*'         force-list always
+# zstyle ':completion:*:*:pacman:*'       menu true select
 
-zstyle ':completion:*:kill:*'           force-list always
-zstyle ':completion:*:*:kill:*'         menu yes select
+# zstyle ':completion:*:kill:*'           force-list always
+# zstyle ':completion:*:*:kill:*'         menu true select
 
-zstyle ':completion:*:killall:*'        force-list always
-zstyle ':completion:*:*:killall:*'      menu yes select
+# zstyle ':completion:*:killall:*'        force-list always
+# zstyle ':completion:*:*:killall:*'      menu true select
 
-zstyle ':completion:*:processes-names'  command  "ps c -u $USER -o command | uniq"
+# zstyle ':completion:*:processes-names'  command  "ps c -u $USER -o command | uniq"
 
 
 bindkey -e
@@ -67,13 +92,6 @@ function exit_zsh { exit }
 zle -N            exit_zsh
 bindkey '^D'      exit_zsh
 
-#  _
-# | | _____ _   _ ___
-# | |/ / _ \ | | / __|
-# |   <  __/ |_| \__ \
-# |_|\_\___|\__, |___/
-#           |___/
-#
 # TAB           Completion for commands and file/directory names
 # Ctrl + Shift  Switching between keyboard layouts
 

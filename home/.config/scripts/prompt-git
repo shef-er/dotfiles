@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+
+if ! command -v git &> /dev/null; then
+    exit
+fi
+
+branch="$(command git branch --show-current 2> /dev/null)"
+
+if test -n "$branch"; then
+    echo -n "$branch"
+else
+    echo -n "$(command git rev-parse --short HEAD 2> /dev/null)"
+fi
+
+status="$(command git status --porcelain -b 2> /dev/null)"
+
+# has worktree changes
+if
+    echo -n "$status" | command grep -E '^\?\? ' &> /dev/null || \
+    echo -n "$status" | command grep '^ [AMDRC] ' &> /dev/null || \
+    echo -n "$status" | command grep '^[ MTARC][MTD] ' &> /dev/null
+then
+    echo -n "*"
+fi
+
+# has indexed changes
+if
+    echo -n "$status" | command grep '^[MTARC][ MTD] ' &> /dev/null || \
+    echo -n "$status" | command grep '^D  ' &> /dev/null
+then
+    echo -n "+"
+fi
+
+if test -z "$branch"; then
+    exit
+fi
+
+revs_ahead=$(command git rev-list --count "$branch@{upstream}..HEAD" 2> /dev/null)
+revs_behind=$(command git rev-list --count "HEAD..$branch@{upstream}" 2> /dev/null)
+
+if (( revs_ahead )) && (( revs_behind )); then
+    echo -n " "
+    echo -n "><"
+elif (( revs_ahead )); then
+    echo -n " "
+    echo -n "->"
+elif (( revs_behind )); then
+    echo -n " "
+    echo -n "<-"
+fi
