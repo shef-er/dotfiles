@@ -7,17 +7,14 @@
 # |_|                       |_|
 
 # Unsets after the first prompt
-export IS_FIRST_PROMPT=1
+export _NO_NEWLINE=1
 
-function __bash_precmd {
-    if test -n "$IS_FIRST_PROMPT"; then
-        PS1="$(prompt bash)"
-        unset IS_FIRST_PROMPT
-    else
-        PS1="$(env PREPEND_WITH_NEWLINE=1 prompt bash)"
+function __precmd {
+    PS1="$(prompt bash)"
+
+    if test -n "$_NO_NEWLINE"; then
+        unset _NO_NEWLINE
     fi
-
-    export PS1
 }
 
-PROMPT_COMMAND+=('__bash_precmd')
+PROMPT_COMMAND+=('__precmd')

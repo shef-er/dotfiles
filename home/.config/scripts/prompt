@@ -42,7 +42,7 @@ function prompt::main {
 
     prompt="$rst"
 
-    if test -n "$PREPEND_WITH_NEWLINE"; then
+    if test -z "$_NO_NEWLINE"; then
         prompt+=$'\n'
     fi
 

@@ -7,18 +7,15 @@
 # |_|                       |_|
 
 # Unsets after the first prompt
-export IS_FIRST_PROMPT=1
+export _NO_NEWLINE=1
 
 function precmd {
     # terminal title
     print -Pn "\e]0;%2~ %(1j,%j job%(2j|s|); ,)\a"
 
-    if test -n "$IS_FIRST_PROMPT"; then
-        PROMPT="$(prompt zsh)"
-        unset IS_FIRST_PROMPT
-    else
-        PROMPT="$(env PREPEND_WITH_NEWLINE=1 prompt zsh)"
-    fi
+    PROMPT="$(prompt zsh)"
 
-    export PROMPT
+    if test -n "$_NO_NEWLINE"; then
+        unset _NO_NEWLINE
+    fi
 }
