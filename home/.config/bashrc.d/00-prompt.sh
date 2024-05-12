@@ -6,6 +6,9 @@
 # | .__/|_|  \___/|_| |_| |_| .__/ \__|
 # |_|                       |_|
 
+# Unsets after the first prompt
+export IS_FIRST_PROMPT=1
+
 function __bash_precmd {
     if test -n "$IS_FIRST_PROMPT"; then
         PS1="$(prompt bash)"
@@ -16,8 +19,5 @@ function __bash_precmd {
 
     export PS1
 }
-
-# Unsets after the first prompt
-export IS_FIRST_PROMPT=1
 
 PROMPT_COMMAND+=('__bash_precmd')
