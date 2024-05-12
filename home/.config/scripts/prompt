@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 function prompt::sign {
-    if test "$(id -u)" -eq 0; then
+    if [ "$(id -u)" -eq 0 ]; then
         echo -n "#"
     else
         case "$1" in
@@ -42,21 +42,21 @@ function prompt::main {
 
     prompt="$rst"
 
-    if test -z "$_NO_NEWLINE"; then
+    if [ -z "$_NO_NEWLINE" ]; then
         prompt+=$'\n'
     fi
 
     prompt+="${blu}$(prompt-pwd)${rst} "
 
     git="$(prompt-git)"
-    if test -n "$git"; then
+    if [ -n "$git" ]; then
         prompt+="${cyn}$git${rst} "
     fi
 
     prompt+=$'\n'
 
     sign="$(prompt::sign "$1" )"
-    if test "$sign" = '#'; then
+    if [ "$sign" = '#' ]; then
         prompt+="${red}$sign${rst} "
     else
         prompt+="${grn}$sign${rst} "
