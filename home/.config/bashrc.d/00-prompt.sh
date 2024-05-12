@@ -18,3 +18,4 @@ function prompt_ku_precmd {
 }
 
 PROMPT_COMMAND+=('prompt_ku_precmd')
+PROMPT_COMMAND+=('ku title bash')

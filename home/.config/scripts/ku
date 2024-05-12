@@ -6,6 +6,10 @@ function ku::main {
             ku::validate "$2"
             ku::prompt "$2"
             ;;
+        'title')
+            ku::validate "$2"
+            ku::title "$2"
+            ;;
         *)
             exit 0
             ;;
@@ -67,6 +71,17 @@ function ku::prompt {
     fi
 
     echo -n "$prompt"
+}
+
+function ku::title {
+    case "$1" in
+        'bash')
+            echo -en "\033]0;$1 $(pwd)\007"
+            ;;
+        'zsh')
+            echo -en "\e]0;$1 $(pwd)\a"
+            ;;
+    esac
 }
 
 function ku::segment::pwd {
