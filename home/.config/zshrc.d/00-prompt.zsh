@@ -9,13 +9,17 @@
 # Unsets after the first prompt
 export _NO_NEWLINE=1
 
-function precmd {
-    # terminal title
-    print -Pn "\e]0;%2~ %(1j,%j job%(2j|s|); ,)\a"
-
-    PROMPT="$(prompt zsh)"
+function prompt_ku_precmd {
+    PROMPT="$(ku prompt zsh)"
 
     if test -n "$_NO_NEWLINE"; then
         unset _NO_NEWLINE
     fi
+}
+
+autoload -Uz add-zsh-hook && add-zsh-hook precmd prompt_ku_precmd
+
+function precmd {
+    # terminal title
+    print -Pn "\e]0;%2~ %(1j,%j job%(2j|s|); ,)\a"
 }

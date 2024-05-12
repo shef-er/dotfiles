@@ -9,12 +9,12 @@
 # Unsets after the first prompt
 export _NO_NEWLINE=1
 
-function __precmd {
-    PS1="$(prompt bash)"
+function prompt_ku_precmd {
+    PS1="$(ku prompt bash)"
 
     if test -n "$_NO_NEWLINE"; then
         unset _NO_NEWLINE
     fi
 }
 
-PROMPT_COMMAND+=('__precmd')
+PROMPT_COMMAND+=('prompt_ku_precmd')
