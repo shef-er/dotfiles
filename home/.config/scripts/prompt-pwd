@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+pwd="$(pwd)"
+case "$pwd" in
+    "$HOME")
+        echo -n '~'
+        ;;
+    "$HOME"/*/*)
+        echo -n "${pwd#"${pwd%/*/*}/"}"
+        ;;
+    "$HOME"/*)
+        echo -n ~/"${pwd##*/}"
+        ;;
+    *)
+        echo -n "${pwd#"${pwd%/*/*}/"}"
+        ;;
+esac

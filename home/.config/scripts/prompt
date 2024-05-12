@@ -1,0 +1,76 @@
+#!/usr/bin/env bash
+
+function prompt::sign {
+    if test "$(id -u)" -eq 0; then
+        echo -n "#"
+    else
+        case "$1" in
+            'bash')
+                echo -n "\$"
+                ;;
+            'zsh')
+                echo -n "%%"
+                ;;
+        esac
+    fi
+}
+
+function prompt::main {
+    red=''
+    grn=''
+    blu=''
+    cyn=''
+    rst=''
+    case "$1" in
+        'bash')
+            # bright colors
+            red='\[\e[1;31m\]'
+            grn='\[\e[1;32m\]'
+            blu='\[\e[1;34m\]'
+            cyn='\[\e[1;36m\]'
+            rst='\[\e[0m\]'
+            ;;
+        'zsh')
+            # bright colors
+            red='%B%F{1}'
+            grn='%B%F{2}'
+            blu='%B%F{4}'
+            cyn='%B%F{6}'
+            rst='%f%b'
+            ;;
+    esac
+
+    prompt="$rst"
+
+    if test -n "$PREPEND_WITH_NEWLINE"; then
+        prompt+=$'\n'
+    fi
+
+    prompt+="${blu}$(prompt-pwd)${rst} "
+
+    git="$(prompt-git)"
+    if test -n "$git"; then
+        prompt+="${cyn}$git${rst} "
+    fi
+
+    prompt+=$'\n'
+
+    sign="$(prompt::sign "$1" )"
+    if test "$sign" = '#'; then
+        prompt+="${red}$sign${rst} "
+    else
+        prompt+="${grn}$sign${rst} "
+    fi
+
+    echo -n "$prompt"
+}
+
+case "$1" in
+    'bash'|'zsh')
+        prompt::main "$1"
+        exit 0
+        ;;
+    *)
+        exit 1
+        ;;
+esac
