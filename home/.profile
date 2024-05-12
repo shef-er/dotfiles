@@ -19,7 +19,8 @@ test -z "$XDG_BIN_HOME" && export XDG_BIN_HOME="$HOME"/.local/bin
 
 if test -d "$XDG_CONFIG_HOME"/profile.d/; then
     for profile in "$XDG_CONFIG_HOME"/profile.d/*; do
-        test -r "$profile" && source "$profile"
+        # shellcheck disable=SC1090
+        test -r "$profile" && . "$profile"
     done
     unset profile
 fi
