@@ -97,10 +97,6 @@ zle -N down-line-or-beginning-search
 test -n "${key[Up]}"    && bindkey -- "${key[Up]}"                  up-line-or-beginning-search
 test -n "${key[Down]}"  && bindkey -- "${key[Down]}"                down-line-or-beginning-search
 
-function exit_zsh { exit }
-zle -N            exit_zsh
-bindkey '^D'      exit_zsh
-
 # Finally, make sure the terminal is in application mode, when zle is
 # active. Only then are the values from $terminfo valid.
 if (( ${+terminfo[smkx]} && ${+terminfo[rmkx]} )); then
