@@ -50,7 +50,7 @@ function ku::prompt {
         prompt+=$'\n'
     fi
 
-    prompt+="${blu}$(prompt-pwd)${rst} "
+    prompt+="${blu}$(ku::segment::pwd)${rst} "
 
     git="$(prompt-git)"
     if [ -n "$git" ]; then
@@ -67,6 +67,25 @@ function ku::prompt {
     fi
 
     echo -n "$prompt"
+}
+
+function ku::segment::pwd {
+    local pwd
+    pwd="$(pwd)"
+    case "$pwd" in
+        "$HOME")
+            echo -n '~'
+            ;;
+        "$HOME"/*/*)
+            echo -n "${pwd#"${pwd%/*/*}/"}"
+            ;;
+        "$HOME"/*)
+            echo -n ~/"${pwd##*/}"
+            ;;
+        *)
+            echo -n "${pwd#"${pwd%/*/*}/"}"
+            ;;
+    esac
 }
 
 function ku::segment::sign {
