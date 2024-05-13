@@ -10,6 +10,10 @@ function ku::main {
             ku::validate "$2"
             ku::title "$2"
             ;;
+        'init')
+            ku::validate "$2"
+            ku::init "$2"
+            ;;
         *)
             exit 0
             ;;
@@ -80,6 +84,45 @@ function ku::title {
             ;;
         'zsh')
             echo -en "\e]0;$1 $(pwd)\a"
+            ;;
+    esac
+}
+
+function ku::init {
+    case "$1" in
+        'bash')
+            cat <<EOF
+export _NO_NEWLINE=1
+
+function prompt_ku_precmd {
+    PS1="\$(ku prompt bash)"
+
+    if test -n "\$_NO_NEWLINE"; then
+        unset _NO_NEWLINE
+    fi
+}
+
+PROMPT_COMMAND+=('prompt_ku_precmd')
+PROMPT_COMMAND+=('ku title bash')
+EOF
+            ;;
+        'zsh')
+            cat <<EOF
+export _NO_NEWLINE=1
+
+function prompt_ku_precmd {
+    PROMPT="\$(ku prompt zsh)"
+
+    if test -n "\$_NO_NEWLINE"; then
+        unset _NO_NEWLINE
+    fi
+}
+
+autoload -Uz add-zsh-hook && add-zsh-hook precmd prompt_ku_precmd
+EOF
+            ;;
+        *)
+            exit 0
             ;;
     esac
 }

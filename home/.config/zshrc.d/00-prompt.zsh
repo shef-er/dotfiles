@@ -6,18 +6,7 @@
 # | .__/|_|  \___/|_| |_| |_| .__/ \__|
 # |_|                       |_|
 
-# Unsets after the first prompt
-export _NO_NEWLINE=1
-
-function prompt_ku_precmd {
-    PROMPT="$(ku prompt zsh)"
-
-    if test -n "$_NO_NEWLINE"; then
-        unset _NO_NEWLINE
-    fi
-}
-
-autoload -Uz add-zsh-hook && add-zsh-hook precmd prompt_ku_precmd
+eval "$(ku init zsh)"
 
 function precmd {
     # terminal title
