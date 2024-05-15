@@ -25,7 +25,6 @@ if test -d "$XDG_CONFIG_HOME"/profile.d/; then
     unset profile
 fi
 
-
 prepend_path "$XDG_BIN_HOME"
 
 # move to bashrc?
