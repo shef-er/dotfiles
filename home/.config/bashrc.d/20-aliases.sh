@@ -5,22 +5,16 @@
 # | (_| | | | (_| \__ \  __/\__ \
 #  \__,_|_|_|\__,_|___/\___||___/
 
-# A trailing space causes the next word to be checked for alias substitution 
-# when the alias is expanded
-alias sudo='sudo '
-
-# i use arch, btw
-alias pacman='sudo pacman'
+if command -v pacman &> /dev/null; then
+    # i use arch, btw
+    alias pacman='sudo pacman'
+fi
 
 # shell is my file manager
 alias ls='ls -lahF --group-directories-first --color=auto --time-style=long-iso'
 alias cp='cp -ip'
 alias mv='mv -i'
 alias rm='rm -i'
-
-alias tarx='tar -v -xf'
-alias targzx='tar -v -xzf'
-alias tarbz2x='tar -v -xjf'
 
 alias dmesg='dmesg --color=auto'
 alias grep='grep --color=auto'
