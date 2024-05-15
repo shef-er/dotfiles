@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-if hash ffmpeg 2>/dev/null; then
+if command -v ffmpeg &> /dev/null; then
     for a in ./*.flac; do
         ffmpeg -i "$a" -b:a 320k -qscale:a 0 "${a[@]/%flac/mp3}"
     done

@@ -2,15 +2,15 @@
 
 function ku::main {
     case "$1" in
-        'prompt')
+        prompt)
             ku::validate "$2"
             ku::prompt "$2"
             ;;
-        'title')
+        title)
             ku::validate "$2"
             ku::title "$2"
             ;;
-        'init')
+        init)
             ku::validate "$2"
             ku::init "$2"
             ;;
@@ -22,7 +22,7 @@ function ku::main {
 
 function ku::validate {
     case "$1" in
-        'bash'|'zsh') ;;
+        bash|zsh) ;;
         *) exit 0 ;;
     esac
 }
@@ -34,7 +34,7 @@ function ku::prompt {
     cyn=''
     rst=''
     case "$1" in
-        'bash')
+        bash)
             # bright colors
             red='\[\e[1;31m\]'
             grn='\[\e[1;32m\]'
@@ -42,7 +42,7 @@ function ku::prompt {
             cyn='\[\e[1;36m\]'
             rst='\[\e[0m\]'
             ;;
-        'zsh')
+        zsh)
             # bright colors
             red='%B%F{1}'
             grn='%B%F{2}'
@@ -79,10 +79,10 @@ function ku::prompt {
 
 function ku::title {
     case "$1" in
-        'bash')
+        bash)
             echo -en "\033]0;$1 $(pwd)\007"
             ;;
-        'zsh')
+        zsh)
             echo -en "\e]0;$1 $(pwd)\a"
             ;;
     esac
@@ -90,7 +90,7 @@ function ku::title {
 
 function ku::init {
     case "$1" in
-        'bash')
+        bash)
             cat <<EOF
 export _NO_NEWLINE=1
 
@@ -106,7 +106,7 @@ PROMPT_COMMAND+=('prompt_ku_precmd')
 PROMPT_COMMAND+=('ku title bash')
 EOF
             ;;
-        'zsh')
+        zsh)
             cat <<EOF
 export _NO_NEWLINE=1
 
@@ -151,10 +151,10 @@ function ku::segment::sign {
         echo -n "#"
     else
         case "$1" in
-            'bash')
+            bash)
                 echo -n "\$"
                 ;;
-            'zsh')
+            zsh)
                 echo -n "%%"
                 ;;
         esac

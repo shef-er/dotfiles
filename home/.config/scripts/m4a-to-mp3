@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-if hash ffmpeg 2>/dev/null; then
+if command -v ffmpeg &> /dev/null; then
     for a in ./*.m4a; do
         ffmpeg -i "$a" -acodec libmp3lame -b:a 320k -qscale:a 0 "${a[@]/%m4a/mp3}"
     done
