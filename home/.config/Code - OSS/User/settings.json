@@ -19,6 +19,8 @@
   "explorer.confirmDragAndDrop": false,
 
   "files.associations": {
+    ".env": "env",
+    ".env.*": "env",
     "*.blade.php": "html",
     "*.twig": "html",
     "*.gohtml": "html"
