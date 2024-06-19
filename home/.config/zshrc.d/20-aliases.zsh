@@ -15,6 +15,7 @@ alias ls='ls -lahF --group-directories-first --color=auto --time-style=long-iso'
 alias cp='cp -ip'
 alias mv='mv -i'
 alias rm='rm -i'
+alias mkdir='mkdir -p'
 
 alias dmesg='dmesg --color=auto'
 alias grep='grep --color=auto'
