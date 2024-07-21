@@ -22,6 +22,10 @@
 # THE SOFTWARE.
 
 from __future__ import print_function
+from picard.ui.itemviews import BaseAction, register_cluster_action
+from picard.cluster import Cluster
+from picard import log
+
 PLUGIN_NAME = "Decode Cyrillic"
 PLUGIN_AUTHOR = "aeontech"
 PLUGIN_DESCRIPTION = '''
@@ -34,10 +38,6 @@ PLUGIN_VERSION = "1.1"
 PLUGIN_API_VERSIONS = ["1.0", "2.0"]
 PLUGIN_LICENSE = "MIT"
 PLUGIN_LICENSE_URL = "https://opensource.org/licenses/MIT"
-
-from picard import log
-from picard.cluster import Cluster
-from picard.ui.itemviews import BaseAction, register_cluster_action
 
 _decode_tags = [
     'title',
@@ -65,7 +65,11 @@ class DecodeCyrillic(BaseAction):
             unmangled_value = value.encode('latin1').decode('cp1251')
         except UnicodeError:
             unmangled_value = value
-            log.debug("%s: could not unmangle tag %s; original value: %s" % (PLUGIN_NAME, tag, value))
+            log.debug("%s: could not unmangle tag %s; original value: %s" % (
+                PLUGIN_NAME,
+                tag,
+                value
+            ))
         return unmangled_value
 
     def callback(self, objs):
@@ -77,13 +81,22 @@ class DecodeCyrillic(BaseAction):
                 if not (tag in cluster.metadata):
                     continue
 
-                cluster.metadata[tag] = self.unmangle(tag, cluster.metadata[tag])
+                cluster.metadata[tag] = self.unmangle(
+                    tag,
+                    cluster.metadata[tag]
+                )
 
-            log.debug("cluster name is %s by %s" % (cluster.metadata['album'], cluster.metadata['albumartist']))
+            log.debug("cluster name is %s by %s" % (
+                cluster.metadata['album'],
+                cluster.metadata['albumartist']
+            ))
 
             for i, file in enumerate(cluster.files):
 
-                log.debug("%s: Trying to unmangle file - original metadata %s" % (PLUGIN_NAME, file.orig_metadata))
+                log.debug("%s: Trying to unmangle file - original metadata %s" % (
+                    PLUGIN_NAME,
+                    file.orig_metadata
+                ))
 
                 for tag in _decode_tags:
 
@@ -100,5 +113,6 @@ class DecodeCyrillic(BaseAction):
                     file.update(signal=True)
 
             cluster.update()
+
 
 register_cluster_action(DecodeCyrillic())
