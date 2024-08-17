@@ -9,3 +9,9 @@ Before updating a system that has not been updated for more than a month, first 
 ```shell
 pacman -Sy archlinux-keyring
 ```
+
+## Remove orphaned packages
+
+```shell
+pacman -Qdtq | pacman -Rns -
+```
