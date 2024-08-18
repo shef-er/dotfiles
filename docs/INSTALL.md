@@ -170,9 +170,9 @@ mkfs.fat -F 32 /dev/nvme0n1p1
 [Mount](https://wiki.archlinux.org/title/Mount) system partitions to `/mnt`.
 
 ```shell
-mount /dev/nvme0n1p2 /mnt
-mount --mkdir /dev/nvme0n1p1 /mnt/boot
-mount --mkdir /dev/nvme0n1p4 /mnt/home
+mount -o noatime /dev/nvme0n1p2 /mnt
+mount -o noatime --mkdir /dev/nvme0n1p1 /mnt/boot
+mount -o noatime --mkdir /dev/nvme0n1p4 /mnt/home
 ```
 
 If you created a [swap](https://wiki.archlinux.org/title/Swap) volume, enable it with [swapon(8)](https://man.archlinux.org/man/swapon.8):
@@ -273,7 +273,7 @@ locale-gen
 Create `/etc/locale.conf` with the follwing content:
 
 ```shell
-LANG=ru_RU.UTF-8
+echo "LANG=ru_RU.UTF-8" > /etc/locale.conf
 ```
 
 ### 3.5.1 **Set the virtual console keyboard layout**
@@ -289,7 +289,7 @@ localectl list-keymaps
 For example, create `/etc/vconsole.conf` with following content, to set a russian keyboard layout:
 
 ```shell
-KEYMAP=ru
+echo "KEYMAP=ru" > /etc/vconsole.conf
 ```
 
 ### 3.5.2 **Set the virtual console font**
@@ -304,21 +304,21 @@ Add `FONT` variable to `/etc/vconsole.conf` according to your display density. F
 
 
 ```shell
-FONT=latarcyrheb-sun32
+echo "FONT=latarcyrheb-sun32" >> /etc/vconsole.conf
 ```
 
 For low DPI displays:
 
 ```shell
-FONT=latarcyrheb-sun16
+echo "FONT=latarcyrheb-sun16" >> /etc/vconsole.conf
 ```
 
 ### 3.6 **Network configuration**
 
 [Create](https://wiki.archlinux.org/title/Create) the [`/etc/hostname`](https://wiki.archlinux.org/title/Hostname) file:
 
-```
-myhostname
+```shell
+echo "myhostname" > /etc/hostname
 ```
 
 Complete the [network configuration](https://wiki.archlinux.org/title/Network_configuration) for the newly installed environment.
