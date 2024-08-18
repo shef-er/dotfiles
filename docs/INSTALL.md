@@ -489,7 +489,13 @@ echo "vm.dirty_writeback_centisecs=6000" >> /etc/sysctl.d/vm.conf
 echo "vm.max_map_count=1048576" >> /etc/sysctl.d/vm.conf
 ```
 
-You can install [tlp](https://wiki.archlinux.org/title/TLP) package if you don't want to use [power-profiles-daemon](https://wiki.archlinux.org/title/CPU_frequency_scaling#gnome-shell-extension-cpupower).
+Install [power-profiles-daemon](https://wiki.archlinux.org/title/CPU_frequency_scaling#power-profiles-daemon):
+
+```shell
+pacman -Sy power-profiles-daemon
+```
+
+You can install [tlp](https://wiki.archlinux.org/title/TLP) package if you don't want to use `power-profiles-daemon`.
 
 ```shell
 pacman -Sy tlp tlp-rdw
@@ -501,7 +507,7 @@ nano /etc/tlp.conf
 systemctl restart tlp.service
 ```
 
-### 5.2.4 **Nvidia** (TODO: add more info)
+### 5.2.4 **Nvidia** (please don't use nvidia)
 
 For the [Maxwell (NV110/GMXXX)](https://nouveau.freedesktop.org/CodeNames.html#NV110) series and newer, install the [nvidia](https://archlinux.org/packages/?name=nvidia) package (for use with the [linux](https://archlinux.org/packages/?name=linux) kernel) or [nvidia-lts](https://archlinux.org/packages/?name=nvidia-lts) (for use with the [linux-lts](https://archlinux.org/packages/?name=linux-lts) kernel) package. 
 
@@ -545,16 +551,10 @@ Install the [sudo](https://archlinux.org/packages/?name=sudo) package.
 pacman -S sudo
 ```
 
-To allow members of group [wheel](https://wiki.archlinux.org/title/Wheel) sudo access, create `/etc/sudoers.d/wheel` file as followed: 
+To allow members of group [wheel](https://wiki.archlinux.org/title/Wheel) sudo access, create `/etc/sudoers.d/wheel`:
 
 ```shell
-EDITOR=nano visudo -f /etc/sudoers.d/wheel
-```
-
-Contents of `/etc/sudoers.d/wheel`:
-
-```
-%wheel ALL=(ALL:ALL) ALL
+echo "%wheel ALL=(ALL:ALL) ALL" > /etc/sudoers.d/wheel
 ```
 
 > **Tip**  
@@ -621,16 +621,25 @@ Visit the [Mirrors](https://wiki.archlinux.org/title/Mirrors) article for steps 
 
 ### 5.6.1 **Audio and video**
 
-Wireplumber should be installed with `pipewire-alsa`, `pipewire-jack` and `pipewire-pulse` packages because it ships configuration that prompt media-session to activate PipeWire's audio features.
+Install [PipeWire](https://wiki.archlinux.org/title/PipeWire) and [WirePlumber](https://wiki.archlinux.org/title/WirePlumber): 
 
-https://archlinux.org/news/undone-replacement-of-pipewire-media-session-with-wireplumber/
+> **Tip**  
+> Packages `pipewire-alsa`, `pipewire-pulse` and `pipewire-jack` ships configuration that prompt media-session to activate PipeWire's audio features.
 
 ```shell
 pacman -Sy \
+    pipewire \
     wireplumber \
-    pipewire-jack \
     pipewire-alsa \
-    pipewire-pulse
+    pipewire-pulse \
+    pipewire-jack \
+    alsa-utils
+```
+
+Check if everything installed correctly:
+
+```shell
+pactl info | grep Pipe
 ```
 
 ### 5.6.2 **Gnome shell**
@@ -640,7 +649,6 @@ pacman -Sy \
     gnome \
     gst-plugin-pipewire \
     xdg-desktop-portal-gnome \
-    power-profiles-daemon \
     dconf-editor \
     gnome-shell-extensions \
     gnome-shell-extension-appindicator
