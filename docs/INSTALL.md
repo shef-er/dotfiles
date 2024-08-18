@@ -3,7 +3,7 @@
 ## 1. **Pre-installation**
 
 ### 1.1 **Verify the boot mode**
-S
+
 To verify the boot mode, list the [efivars](https://wiki.archlinux.org/title/Efivars) directory: 
 
 ```shell
