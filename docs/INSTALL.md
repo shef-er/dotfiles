@@ -4,17 +4,17 @@
 
 ### 1.1 **Verify the boot mode**
 
-To verify the boot mode, list the [efivars](https://wiki.archlinux.org/title/Efivars) directory: 
+To verify the boot mode, list the [efivars](https://wiki.archlinux.org/title/Efivars) directory:
 
 ```shell
 ls /sys/firmware/efi/efivars
 ```
 
-If the command shows the directory without error, then the system is booted in UEFI mode. 
+If the command shows the directory without error, then the system is booted in UEFI mode.
 
 ### 1.2 **Connect to the internet**
 
-To set up a network connection in the live environment, go through the following steps: 
+To set up a network connection in the live environment, go through the following steps:
 
 * Ensure your [network interface](https://wiki.archlinux.org/title/Network_interface) is listed and enabled, for example with [ip-link(8)](https://man.archlinux.org/man/ip-link.8):
 
@@ -28,7 +28,7 @@ ip link
     * Wi-Fi—authenticate to the wireless network using [iwctl](https://wiki.archlinux.org/title/Iwctl).
     * Mobile broadband modem—connect to the mobile network with the [mmcli](https://wiki.archlinux.org/title/Mmcli) utility.
 
-* The connection may be verified with [ping](https://wiki.archlinux.org/title/Ping): 
+* The connection may be verified with [ping](https://wiki.archlinux.org/title/Ping):
 
 ```shell
 ping archlinux.org
@@ -131,7 +131,7 @@ Partition type: home
 Command: w<Enter>
 ```
 
-See also [Partitioning#Example layouts](https://wiki.archlinux.org/title/Partitioning#Example_layouts). 
+See also [Partitioning#Example layouts](https://wiki.archlinux.org/title/Partitioning#Example_layouts).
 
 > **Tip**  
 > On UEFI-booted systems, if specific conditions are met, [systemd-gpt-auto-generator(8)](https://man.archlinux.org/man/systemd-gpt-auto-generator.8) will automount GPT partitions following the [Discoverable Partitions Specification](https://uapi-group.org/specifications/specs/discoverable_partitions_specification/). Automounted partitions can thus be omitted from [fstab](https://wiki.archlinux.org/title/Fstab), and if the root partition is automounted, then `root=` can be omitted from the kernel command line.
@@ -218,7 +218,7 @@ For comparison, packages available in the live system can be found in [pkglist.x
 
 ### 3.1 **Fstab**
 
-Generate an [fstab](https://wiki.archlinux.org/title/Fstab) file (use `-U` or `-L` to define by [UUID](https://wiki.archlinux.org/title/UUID) or labels, respectively): 
+Generate an [fstab](https://wiki.archlinux.org/title/Fstab) file (use `-U` or `-L` to define by [UUID](https://wiki.archlinux.org/title/UUID) or labels, respectively):
 
 ```shell
 genfstab -U /mnt >> /mnt/etc/fstab
@@ -248,7 +248,7 @@ pacman -Sy \
 
 ### 3.4 **Time zone**
 
-Set the [time zone](https://wiki.archlinux.org/title/Time_zone): 
+Set the [time zone](https://wiki.archlinux.org/title/Time_zone):
 
 ```shell
 ln -sf /usr/share/zoneinfo/Region/City /etc/localtime
@@ -374,7 +374,7 @@ Use [bootctl(1)](https://man.archlinux.org/man/bootctl.1) to install systemd-boo
 bootctl install
 ```
 
-This will copy the *systemd-boot* EFI boot manager to the ESP: on an x64 architecture system `/usr/lib/systemd/boot/efi/systemd-bootx64.efi` will be copied to `/boot/EFI/systemd/systemd-bootx64.efi` and `/boot/EFI/BOOT/BOOTX64.EFI`, and *systemd-boot* will be set as the default EFI application. 
+This will copy the *systemd-boot* EFI boot manager to the ESP: on an x64 architecture system `/usr/lib/systemd/boot/efi/systemd-bootx64.efi` will be copied to `/boot/EFI/systemd/systemd-bootx64.efi` and `/boot/EFI/BOOT/BOOTX64.EFI`, and *systemd-boot* will be set as the default EFI application.
 
 > **Note**  
 > * When running `bootctl install`, `systemd-boot` will try to locate the ESP at `/efi`, `/boot`, and `/boot/efi`. Setting `esp` to a different location requires passing the `--esp-path=esp` option. (See [bootctl(1) § OPTIONS](https://man.archlinux.org/man/bootctl.1#OPTIONS) for details.)
@@ -384,7 +384,7 @@ The loader configuration is stored in the file `/boot/loader/loader.conf`. See [
 
 > **Note**  
 > If `options` is present in a boot entry and [Secure Boot](https://wiki.archlinux.org/title/Secure_Boot) is disabled, the value of `options` will override any `.cmdline` string embedded in the EFI image that is specified by `efi` or `linux` (see [Unified kernel image#Preparing a unified kernel image](https://wiki.archlinux.org/title/Unified_kernel_image#Preparing_a_unified_kernel_image)).
-> With Secure Boot, however, `options` (and any edits made to the kernel command line in the bootloader UI) will be ignored, and only the embedded `.cmdline` will be used. 
+> With Secure Boot, however, `options` (and any edits made to the kernel command line in the bootloader UI) will be ignored, and only the embedded `.cmdline` will be used.
 
 Use the `initrd` option to load the microcode, before the initial ramdisk. If not compiled into the kernel, microcode must be loaded by the early loader. It can be passed to the loader as part of a [unified kernel image](https://wiki.archlinux.org/title/Unified_kernel_image), or as an initrd image.
 
@@ -440,7 +440,7 @@ Finally, restart the machine by typing `reboot`: any partitions still mounted wi
 
 See [General recommendations](https://wiki.archlinux.org/title/General_recommendations) for system management directions and post-installation tutorials (like creating unprivileged user accounts, setting up a graphical user interface, sound or a touchpad).
 
-For a list of applications that may be of interest, see [List of applications](https://wiki.archlinux.org/title/List_of_applications). 
+For a list of applications that may be of interest, see [List of applications](https://wiki.archlinux.org/title/List_of_applications).
 
 ### 5.1 **Setup network connection**
 
@@ -566,9 +566,9 @@ Contents of `/etc/sudoers.d/wheel`:
 
 ### 5.4.1 **Firewall**
 
-A firewall can provide an extra layer of protection on top of the Linux networking stack. It is highly recommended to set up some form of firewall. 
+A firewall can provide an extra layer of protection on top of the Linux networking stack. It is highly recommended to set up some form of firewall.
 
-See [Category:Firewalls](https://wiki.archlinux.org/title/Category:Firewalls) for available guides. 
+See [Category:Firewalls](https://wiki.archlinux.org/title/Category:Firewalls) for available guides.
 
 ### 5.5. **Packages**
 
