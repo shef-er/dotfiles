@@ -239,7 +239,6 @@ Basic set of essential packages:
 pacman -Sy \
     networkmanager iw wireless-regdb bluez-utils \
     nano nano-syntax-highlighting \
-    neovim \
     man-db man-pages
 ```
 
