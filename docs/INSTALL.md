@@ -41,10 +41,9 @@ ping -с 3 archlinux.org
 
 In the live environment [systemd-timesyncd](https://wiki.archlinux.org/title/Systemd-timesyncd) is enabled by default and time will be synced automatically once a connection to the internet is established.
 
-Use [timedatectl(1)](https://man.archlinux.org/man/timedatectl.1) to ensure the system clock is accurate, and set correct time zone, for example `Asia/Yekaterinburg`:
+Use [timedatectl(1)](https://man.archlinux.org/man/timedatectl.1) to ensure the system clock is synchronized: 
 
 ```shell
-timedatectl set-timezone Asia/Yekaterinburg
 timedatectl set-ntp true
 timedatectl status
 ```
@@ -64,7 +63,8 @@ The following [partitions](https://wiki.archlinux.org/title/Partition) are **req
 * One partition for the [root directory](https://en.wikipedia.org/wiki/Root_directory) `/`.
 * For booting in [UEFI](https://wiki.archlinux.org/title/UEFI) mode: an [EFI system partition](https://wiki.archlinux.org/title/EFI_system_partition).
 
-If you want to create any stacked block devices for [LVM](https://wiki.archlinux.org/title/LVM), [system encryption](https://wiki.archlinux.org/title/Dm-crypt) or [RAID](https://wiki.archlinux.org/title/RAID), do it now.
+> **Warning**  
+> If you want to create any stacked block devices for do it now.
 
 ### 1.4.1 **UEFI with [GPT](https://wiki.archlinux.org/title/GPT)**
 
@@ -78,9 +78,11 @@ Use [fdisk](https://wiki.archlinux.org/title/Fdisk) or [gdisk](https://wiki.arch
 fdisk /dev/nvme0n1
 ```
 
+> **Warning**  
+> If the disk from which you want to boot [already has an EFI system partition](https://wiki.archlinux.org/title/EFI_system_partition#Check_for_an_existing_partition), do not create another one, but use the existing partition instead.
+
 > **Note**  
-> * If the disk from which you want to boot [already has an EFI system partition](https://wiki.archlinux.org/title/EFI_system_partition#Check_for_an_existing_partition), do not create another one, but use the existing partition instead.
-> * [Swap](https://wiki.archlinux.org/title/Swap) space can be set on a [swap file](https://wiki.archlinux.org/title/Swap_file) for file systems supporting it.
+> [Swap](https://wiki.archlinux.org/title/Swap) space can be set on a [swap file](https://wiki.archlinux.org/title/Swap_file) for file systems supporting it.
 
 ```
 Mount point     Partition number        Partition type          Suggested size
@@ -143,7 +145,7 @@ See also [Partitioning#Example layouts](https://wiki.archlinux.org/title/Partiti
 Once the partitions have been created, each newly created partition must be formatted with an appropriate [file system](https://wiki.archlinux.org/title/File_system).
 See [File systems#Create a file system](https://wiki.archlinux.org/title/File_systems#Create_a_file_system) for details.
 
-To create an [Ext4](https://wiki.archlinux.org/title/Ext4) file system use [mkfs.ext4](https://man.archlinux.org/man/mkfs.ext4.8):
+To create an [Ext4](https://wiki.archlinux.org/title/Ext4) file system use [mkfs.ext4(8)](https://man.archlinux.org/man/mkfs.ext4.8):
 
 ```shell
 mkfs.ext4 -L ARCH_OS /dev/nvme0n1p2
@@ -221,7 +223,7 @@ Generate an [fstab](https://wiki.archlinux.org/title/Fstab) file (use `-U` or `-
 genfstab -U /mnt >> /mnt/etc/fstab
 ```
 
-Check the resulting `/mnt/etc/fstab` file, and [edit](https://wiki.archlinux.org/title/Textedit) it in case of errors. Also, you can add [corresponding](https://wiki.archlinux.org/title/Solid_state_drive#TRIM) mount options to extend your ssd lifespan.
+Check the resulting `/mnt/etc/fstab` file, and edit it in case of errors. Also, you can add [corresponding](https://wiki.archlinux.org/title/Solid_state_drive#TRIM) mount options to extend your ssd lifespan.
 
 ### 3.2 **Chroot**
 
@@ -242,12 +244,12 @@ pacman -Sy \
     man-db man-pages
 ```
 
-### 3.4 **Time zone**
+### 3.4 **Time**
 
-Set the [time zone](https://wiki.archlinux.org/title/Time_zone):
+Set the [time zone](https://wiki.archlinux.org/title/Time_zone), for example `Asia/Yekaterinburg`:
 
 ```shell
-ln -sf /usr/share/zoneinfo/Region/City /etc/localtime
+ln -sf /usr/share/zoneinfo/Asia/Yekaterinburg /etc/localtime
 ```
 
 Run [hwclock(8)](https://man.archlinux.org/man/hwclock.8) to generate `/etc/adjtime`:
@@ -315,7 +317,7 @@ echo "FONT=latarcyrheb-sun16" >> /etc/vconsole.conf
 
 ### 3.6 **Network configuration**
 
-[Create](https://wiki.archlinux.org/title/Create) the [`/etc/hostname`](https://wiki.archlinux.org/title/Hostname) file:
+Create the [`/etc/hostname`](https://wiki.archlinux.org/title/Hostname) file:
 
 ```shell
 echo "myhostname" > /etc/hostname
@@ -336,7 +338,7 @@ passwd
 
 Creating a new *initramfs* is usually not required, because [mkinitcpio](https://wiki.archlinux.org/title/Mkinitcpio) was run on installation of the [kernel](https://wiki.archlinux.org/title/Kernel) package with *pacstrap*.
 
-For [LVM](https://wiki.archlinux.org/title/Install_Arch_Linux_on_LVM#Adding_mkinitcpio_hooks), [system encryption](https://wiki.archlinux.org/title/Dm-crypt) or [RAID](https://wiki.archlinux.org/title/RAID#Configure_mkinitcpio), modify [mkinitcpio.conf(5)](https://man.archlinux.org/man/mkinitcpio.conf.5) and recreate the initramfs image:
+For [system encryption](https://wiki.archlinux.org/title/Dm-crypt) modify [mkinitcpio.conf(5)](https://man.archlinux.org/man/mkinitcpio.conf.5) and recreate the initramfs image:
 
 ```shell
 mkinitcpio -P
@@ -344,18 +346,10 @@ mkinitcpio -P
 
 ### 3.9 **Install microcode**
 
-If you have an Intel or AMD CPU, enable [microcode](https://wiki.archlinux.org/title/Microcode) updates.
-
-Install AMD microcode:
+Enable [microcode](https://wiki.archlinux.org/title/Microcode) updates. For example, to install AMD microcode:
 
 ```shell
 pacman -Sy amd-ucode
-```
-
-Or Intel microcode:
-
-```shell
-pacman -Sy intel-ucode
 ```
 
 ### 3.9 **Boot loader**
@@ -373,7 +367,7 @@ bootctl install
 This will copy the *systemd-boot* EFI boot manager to the ESP: on an x64 architecture system `/usr/lib/systemd/boot/efi/systemd-bootx64.efi` will be copied to `/boot/EFI/systemd/systemd-bootx64.efi` and `/boot/EFI/BOOT/BOOTX64.EFI`, and *systemd-boot* will be set as the default EFI application.
 
 > **Note**  
-> * When running `bootctl install`, `systemd-boot` will try to locate the ESP at `/efi`, `/boot`, and `/boot/efi`. Setting `esp` to a different location requires passing the `--esp-path=esp` option. (See [bootctl(1) § OPTIONS](https://man.archlinux.org/man/bootctl.1#OPTIONS) for details.)
+> * When running `bootctl install`, `systemd-boot` will try to locate the ESP at `/efi`, `/boot`, and `/boot/efi`. (See [bootctl(1) § OPTIONS](https://man.archlinux.org/man/bootctl.1#OPTIONS) for details.)
 > * Installing *systemd-boot* will overwrite any existing `esp/EFI/BOOT/BOOTX64.EFI`, e.g. Microsoft's version of the file.
 
 The loader configuration is stored in the file `/boot/loader/loader.conf`. See [loader.conf(5) § OPTIONS](https://man.archlinux.org/man/loader.conf.5#OPTIONS) for details.
@@ -384,7 +378,7 @@ The loader configuration is stored in the file `/boot/loader/loader.conf`. See [
 
 Use the `initrd` option to load the microcode, before the initial ramdisk. If not compiled into the kernel, microcode must be loaded by the early loader. It can be passed to the loader as part of a [unified kernel image](https://wiki.archlinux.org/title/Unified_kernel_image), or as an initrd image.
 
-The latest microcode `cpu_manufacturer-ucode.img` must be available at boot time in your ESP. The ESP must be mounted as `/boot` in order to have the microcode updated every time [amd-ucode](https://archlinux.org/packages/?name=amd-ucode) or [intel-ucode](https://archlinux.org/packages/?name=intel-ucode) is updated.
+The latest microcode `*-ucode.img` must be available at boot time in your ESP. The ESP must be mounted as `/boot` in order to have the microcode updated every time microcode is updated.
 
 An example of loader files launching Arch from a volume [labeled](https://wiki.archlinux.org/title/Persistent_block_device_naming#by-label) `ARCH_OS` and loading AMD CPU microcode is provided below.
 
@@ -422,7 +416,7 @@ options root="LABEL=ARCH_OS" rw
 > **Tip**  
 > * The available boot entries which have been configured can be listed with the command `bootctl list`.
 > * An example entry file is located at `/usr/share/systemd/bootctl/arch.conf`.
-> * The [kernel parameters](https://wiki.archlinux.org/title/Kernel_parameters) for scenarios such as [LVM](https://wiki.archlinux.org/title/LVM), [LUKS](https://wiki.archlinux.org/title/LUKS) or [dm-crypt](https://wiki.archlinux.org/title/Dm-crypt) can be found on the relevant pages.
+> * The [kernel parameters](https://wiki.archlinux.org/title/Kernel_parameters) for scenarios such as [LUKS](https://wiki.archlinux.org/title/LUKS) or [dm-crypt](https://wiki.archlinux.org/title/Dm-crypt) can be found on the relevant pages.
 
 ## 4. **Reboot**
 
