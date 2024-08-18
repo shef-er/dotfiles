@@ -2,24 +2,8 @@
 
 ## 1. **Pre-installation**
 
-### 1.1 **Set the virtual console keyboard layout**
-
-The default [console keymap](https://wiki.archlinux.org/title/Console_keymap) is US. Available layouts can be listed with:
-
-```shell
-ls /usr/share/kbd/keymaps/**/*.map.gz
-```
-
-To set the keyboard layout, pass a corresponding file name to [loadkeys(1)](https://man.archlinux.org/man/loadkeys.1), omitting path and file extension.
-
-To set a Russian keyboard layout: 
-
-```shell
-loadkeys ru
-```
-
-### 1.2 **Verify the boot mode**
-
+### 1.1 **Verify the boot mode**
+S
 To verify the boot mode, list the [efivars](https://wiki.archlinux.org/title/Efivars) directory: 
 
 ```shell
@@ -28,7 +12,7 @@ ls /sys/firmware/efi/efivars
 
 If the command shows the directory without error, then the system is booted in UEFI mode. 
 
-### 1.3 **Connect to the internet**
+### 1.2 **Connect to the internet**
 
 To set up a network connection in the live environment, go through the following steps: 
 
@@ -53,7 +37,7 @@ ping archlinux.org
 > **Note**  
 > In the installation image, [systemd-networkd](https://wiki.archlinux.org/title/Systemd-networkd), [systemd-resolved](https://wiki.archlinux.org/title/Systemd-resolved), [iwd](https://wiki.archlinux.org/title/Iwd) and [ModemManager](https://wiki.archlinux.org/title/ModemManager) are preconfigured and enabled by default. That will not be the case for the installed system.
 
-### 1.4 **Update the system clock**
+### 1.3 **Update the system clock**
 
 In the live environment [systemd-timesyncd](https://wiki.archlinux.org/title/Systemd-timesyncd) is enabled by default and time will be synced automatically once a connection to the internet is established.
 
@@ -63,7 +47,7 @@ Use [timedatectl(1)](https://man.archlinux.org/man/timedatectl.1) to ensure the 
 timedatectl status
 ```
 
-### 1.5 **Partition the disk**
+### 1.4 **Partition the disk**
 
 When recognized by the live system, disks are assigned to a [block device](https://wiki.archlinux.org/title/Block_device) such as `/dev/sda`, `/dev/nvme0n1` or `/dev/mmcblk0`. To identify these devices, use [lsblk](https://wiki.archlinux.org/title/Lsblk) or [fdisk](https://wiki.archlinux.org/title/Fdisk).
 
@@ -80,7 +64,7 @@ The following [partitions](https://wiki.archlinux.org/title/Partition) are **req
 
 If you want to create any stacked block devices for [LVM](https://wiki.archlinux.org/title/LVM), [system encryption](https://wiki.archlinux.org/title/Dm-crypt) or [RAID](https://wiki.archlinux.org/title/RAID), do it now.
 
-### 1.5.1 **UEFI with [GPT](https://wiki.archlinux.org/title/GPT)**
+### 1.4.1 **UEFI with [GPT](https://wiki.archlinux.org/title/GPT)**
 
 Given:
 - `16G` - RAM
@@ -152,7 +136,7 @@ See also [Partitioning#Example layouts](https://wiki.archlinux.org/title/Partiti
 > **Tip**  
 > On UEFI-booted systems, if specific conditions are met, [systemd-gpt-auto-generator(8)](https://man.archlinux.org/man/systemd-gpt-auto-generator.8) will automount GPT partitions following the [Discoverable Partitions Specification](https://uapi-group.org/specifications/specs/discoverable_partitions_specification/). Automounted partitions can thus be omitted from [fstab](https://wiki.archlinux.org/title/Fstab), and if the root partition is automounted, then `root=` can be omitted from the kernel command line.
 
-### 1.5.2 **Format the partitions**
+### 1.4.2 **Format the partitions**
 
 Once the partitions have been created, each newly created partition must be formatted with an appropriate [file system](https://wiki.archlinux.org/title/File_system).
 See [File systems#Create a file system](https://wiki.archlinux.org/title/File_systems#Create_a_file_system) for details.
@@ -184,7 +168,7 @@ If you created an EFI system partition, [format it](https://wiki.archlinux.org/t
 mkfs.fat -F 32 /dev/nvme0n1p1
 ```
 
-### 1.5.3 **Mount the file systems**
+### 1.4.3 **Mount the file systems**
 
 [Mount](https://wiki.archlinux.org/title/Mount) system partitions to `/mnt`.
 
@@ -296,11 +280,17 @@ Create `/etc/locale.conf` with the follwing content:
 LANG=ru_RU.UTF-8
 ```
 
-### 3.5.1 **Set the virtual console keymap**
+### 3.5.1 **Set the virtual console keyboard layout**
 
 If you [set the console keyboard layout](https://wiki.archlinux.org/title/Installation_guide#Set_the_console_keyboard_layout), make the changes persistent in [vconsole.conf(5)](https://man.archlinux.org/man/vconsole.conf.5).
 
-Create `/etc/vconsole.conf` with following content:
+Available layouts can be listed with:
+
+```shell
+localectl list-keymaps
+```
+
+For example, create `/etc/vconsole.conf` with following content, to set a russian keyboard layout:
 
 ```shell
 KEYMAP=ru
@@ -314,17 +304,16 @@ KEYMAP=ru
 ls -l /usr/share/kbd/consolefonts/ | grep -i '.psfu.gz'
 ```
 
-Set `FONT` variable according to your display density. For HiDPI displays:
+Add `FONT` variable to `/etc/vconsole.conf` according to your display density. For HiDPI displays:
+
 
 ```shell
-KEYMAP=ru
 FONT=latarcyrheb-sun32
 ```
 
 For low DPI displays:
 
 ```shell
-KEYMAP=ru
 FONT=latarcyrheb-sun16
 ```
 
@@ -364,13 +353,13 @@ If you have an Intel or AMD CPU, enable [microcode](https://wiki.archlinux.org/t
 Install AMD microcode:
 
 ```shell
-pacman -S amd-ucode
+pacman -Sy amd-ucode
 ```
 
 Or Intel microcode:
 
 ```shell
-pacman -S intel-ucode
+pacman -Sy intel-ucode
 ```
 
 ### 3.9 **Boot loader**
