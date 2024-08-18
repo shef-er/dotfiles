@@ -31,7 +31,7 @@ ip link
 * The connection may be verified with [ping](https://wiki.archlinux.org/title/Ping):
 
 ```shell
-ping archlinux.org
+ping -с 3 archlinux.org
 ```
 
 > **Note**  
@@ -41,9 +41,11 @@ ping archlinux.org
 
 In the live environment [systemd-timesyncd](https://wiki.archlinux.org/title/Systemd-timesyncd) is enabled by default and time will be synced automatically once a connection to the internet is established.
 
-Use [timedatectl(1)](https://man.archlinux.org/man/timedatectl.1) to ensure the system clock is accurate:
+Use [timedatectl(1)](https://man.archlinux.org/man/timedatectl.1) to ensure the system clock is accurate, and set correct time zone, for example `Asia/Yekaterinburg`:
 
 ```shell
+timedatectl set-timezone Asia/Yekaterinburg
+timedatectl set-ntp true
 timedatectl status
 ```
 
@@ -141,15 +143,10 @@ See also [Partitioning#Example layouts](https://wiki.archlinux.org/title/Partiti
 Once the partitions have been created, each newly created partition must be formatted with an appropriate [file system](https://wiki.archlinux.org/title/File_system).
 See [File systems#Create a file system](https://wiki.archlinux.org/title/File_systems#Create_a_file_system) for details.
 
-For example, to create an [Ext4](https://wiki.archlinux.org/title/Ext4) file system labeled `ARCH_OS` on `/dev/nvme0n1p2`, use [mkfs.ext4](https://man.archlinux.org/man/mkfs.ext4.8):
+To create an [Ext4](https://wiki.archlinux.org/title/Ext4) file system use [mkfs.ext4](https://man.archlinux.org/man/mkfs.ext4.8):
 
 ```shell
 mkfs.ext4 -L ARCH_OS /dev/nvme0n1p2
-```
-
-And
-
-```shell
 mkfs.ext4 /dev/nvme0n1p4
 ```
 
