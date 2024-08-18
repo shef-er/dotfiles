@@ -2,7 +2,7 @@
 
 ## 1. **Pre-installation**
 
-### 1.1 **Set the console keyboard layout**
+### 1.1 **Set the virtual console keyboard layout**
 
 The default [console keymap](https://wiki.archlinux.org/title/Console_keymap) is US. Available layouts can be listed with:
 
@@ -17,8 +17,6 @@ To set a Russian keyboard layout:
 ```shell
 loadkeys ru
 ```
-
-[Console fonts](https://wiki.archlinux.org/title/Console_fonts) are located in `/usr/share/kbd/consolefonts/` and can likewise be set with [setfont(8)](https://man.archlinux.org/man/setfont.8).
 
 ### 1.2 **Verify the boot mode**
 
@@ -65,7 +63,7 @@ Use [timedatectl(1)](https://man.archlinux.org/man/timedatectl.1) to ensure the 
 timedatectl status
 ```
 
-### 1.5 **Partition the disks** (TODO: Add home partion instructions)
+### 1.5 **Partition the disk**
 
 When recognized by the live system, disks are assigned to a [block device](https://wiki.archlinux.org/title/Block_device) such as `/dev/sda`, `/dev/nvme0n1` or `/dev/mmcblk0`. To identify these devices, use [lsblk](https://wiki.archlinux.org/title/Lsblk) or [fdisk](https://wiki.archlinux.org/title/Fdisk).
 
@@ -82,44 +80,99 @@ The following [partitions](https://wiki.archlinux.org/title/Partition) are **req
 
 If you want to create any stacked block devices for [LVM](https://wiki.archlinux.org/title/LVM), [system encryption](https://wiki.archlinux.org/title/Dm-crypt) or [RAID](https://wiki.archlinux.org/title/RAID), do it now.
 
+### 1.5.1 **UEFI with [GPT](https://wiki.archlinux.org/title/GPT)**
+
+Given:
+- `16G` - RAM
+- `1000G` - NVME SSD
+
 Use [fdisk](https://wiki.archlinux.org/title/Fdisk) or [gdisk](https://wiki.archlinux.org/title/GPT_fdisk) to modify partition tables. For example:
 
 ```shell
-fdisk /dev/the_disk_to_be_partitioned
+fdisk /dev/nvme0n1
 ```
 
 > **Note**  
-> * If the disk does not show up, [make sure the disk controller is not in RAID mode](https://wiki.archlinux.org/title/Partitioning#Drives_are_not_visible_when_firmware_RAID_is_enabled).
 > * If the disk from which you want to boot [already has an EFI system partition](https://wiki.archlinux.org/title/EFI_system_partition#Check_for_an_existing_partition), do not create another one, but use the existing partition instead.
 > * [Swap](https://wiki.archlinux.org/title/Swap) space can be set on a [swap file](https://wiki.archlinux.org/title/Swap_file) for file systems supporting it.
 
-### 1.5.1 **Example layout: UEFI with [GPT](https://wiki.archlinux.org/title/GPT)**
+```
+Mount point     Partition number        Partition type          Suggested size
+
+/mnt/boot       /dev/nvme0n1p1          EFI system partition    1G, or at least 550 MiB
+/mnt            /dev/nvme0n1p2          Linux root (x86-64)     127G, or at least 23–32 GiB
+[SWAP]          /dev/nvme0n1p3          Linux swap 	            32G, about 2*RAM size
+/mnt/home       /dev/nvme0n1p4          Linux home              Remainder of the device
+```
 
 ```
-Mount point     Partition                   Partition type          Suggested size
+Command: g<Enter>
 
-/mnt/boot       /dev/efi_system_partition   EFI system partition    At least 550 MiB
-[SWAP]          /dev/swap_partition         Linux swap 	            More than 512 MiB
-/mnt            /dev/root_partition         Linux x86-64 root (/)   Remainder of the device
+Command: n<Enter>
+Partition number: <Enter>
+First sector: <Enter>
+Last sector: +1G<Enter>
+
+Command: t<Enter>
+Partition number: <Enter>
+Partition type: uefi
+
+Command: n<Enter>
+Partition number: <Enter>
+First sector: <Enter>
+Last sector: +127G<Enter>
+
+Command: t<Enter>
+Partition number: <Enter>
+Partition type: 23
+
+Command: n<Enter>
+Partition number: <Enter>
+First sector: <Enter>
+Last sector: +32G<Enter>
+
+Command: t<Enter>
+Partition number: <Enter>
+Partition type: swap
+
+Command: n<Enter>
+Partition number: <Enter>
+First sector: <Enter>
+Last sector: <Enter>
+
+Command: t<Enter>
+Partition number: <Enter>
+Partition type: home
+
+Command: w<Enter>
 ```
 
 See also [Partitioning#Example layouts](https://wiki.archlinux.org/title/Partitioning#Example_layouts). 
 
-### 1.6 **Format the partitions**
+> **Tip**  
+> On UEFI-booted systems, if specific conditions are met, [systemd-gpt-auto-generator(8)](https://man.archlinux.org/man/systemd-gpt-auto-generator.8) will automount GPT partitions following the [Discoverable Partitions Specification](https://uapi-group.org/specifications/specs/discoverable_partitions_specification/). Automounted partitions can thus be omitted from [fstab](https://wiki.archlinux.org/title/Fstab), and if the root partition is automounted, then `root=` can be omitted from the kernel command line.
+
+### 1.5.2 **Format the partitions**
 
 Once the partitions have been created, each newly created partition must be formatted with an appropriate [file system](https://wiki.archlinux.org/title/File_system).
 See [File systems#Create a file system](https://wiki.archlinux.org/title/File_systems#Create_a_file_system) for details.
 
-For example, to create an [Ext4](https://wiki.archlinux.org/title/Ext4) file system labeled `ARCH_OS` on `/dev/root_partition`, use [mkfs.ext4](https://man.archlinux.org/man/mkfs.ext4.8):
+For example, to create an [Ext4](https://wiki.archlinux.org/title/Ext4) file system labeled `ARCH_OS` on `/dev/nvme0n1p2`, use [mkfs.ext4](https://man.archlinux.org/man/mkfs.ext4.8):
 
 ```shell
-mkfs.ext4 -L ARCH_OS /dev/root_partition
+mkfs.ext4 -L ARCH_OS /dev/nvme0n1p2
+```
+
+And
+
+```shell
+mkfs.ext4 /dev/nvme0n1p4
 ```
 
 If you created a partition for [swap](https://wiki.archlinux.org/title/Swap), initialize it with [mkswap(8)](https://man.archlinux.org/man/mkswap.8):
 
 ```shell
-mkswap /dev/swap_partition
+mkswap /dev/nvme0n1p3
 ```
 
 If you created an EFI system partition, [format it](https://wiki.archlinux.org/title/EFI_system_partition#Format_the_partition) to FAT32 using [mkfs.fat(8)](https://man.archlinux.org/man/mkfs.fat.8).
@@ -128,35 +181,26 @@ If you created an EFI system partition, [format it](https://wiki.archlinux.org/t
 > Only format the EFI system partition if you created it during the partitioning step. If there already was an EFI system partition on disk beforehand, reformatting it can destroy the boot loaders of other installed operating systems.
 
 ```shell
-mkfs.fat -F 32 /dev/efi_system_partition
+mkfs.fat -F 32 /dev/nvme0n1p1
 ```
 
-### 1.7 **Mount the file systems**
+### 1.5.3 **Mount the file systems**
 
-[Mount](https://wiki.archlinux.org/title/Mount) the root volume to `/mnt`. For example, if the root volume is `/dev/root_partition`:
-
-```shell
-mount /dev/root_partition /mnt
-```
-
-Create any remaining mount points (such as `/mnt/home`) and mount their corresponding volumes. 
-
-> **Tip**  
-> Run [mount(8)](https://man.archlinux.org/man/mount.8) with the `--mkdir` option to create the specified mount point. Alternatively, create it using [mkdir(1)](https://man.archlinux.org/man/mkdir.1) beforehand.
-
-For UEFI systems, mount the EFI system partition:
+[Mount](https://wiki.archlinux.org/title/Mount) system partitions to `/mnt`.
 
 ```shell
-mount --mkdir /dev/efi_system_partition /mnt/boot
+mount /dev/nvme0n1p2 /mnt
+mount --mkdir /dev/nvme0n1p1 /mnt/boot
+mount --mkdir /dev/nvme0n1p4 /mnt/home
 ```
 
 If you created a [swap](https://wiki.archlinux.org/title/Swap) volume, enable it with [swapon(8)](https://man.archlinux.org/man/swapon.8):
 
 ```shell
-swapon /dev/swap_partition
+swapon /dev/nvme0n1p3
 ```
 
-[genfstab(8)](https://man.archlinux.org/man/genfstab.8) will later detect mounted file systems and swap space. 
+[genfstab(8)](https://man.archlinux.org/man/genfstab.8) will later detect mounted file systems and swap space.
 
 
 ## 2. **Installation**
@@ -164,7 +208,7 @@ swapon /dev/swap_partition
 Use the [pacstrap(8)](https://man.archlinux.org/man/pacstrap.8) script to install the [base](https://archlinux.org/packages/?name=base) package, Linux [kernel](https://wiki.archlinux.org/title/Kernel) and firmware for common hardware:
 
 ```shell
-pacstrap -K /mnt base base-devel linux linux-firmware sof-firmware alsa-firmware
+pacstrap -K /mnt base base-devel linux-lts linux-firmware sof-firmware alsa-firmware
 ```
 
 > **Tip**  
@@ -214,7 +258,7 @@ Basic set of essential packages:
 pacman -Sy \
     networkmanager iw wireless-regdb bluez-utils \
     nano nano-syntax-highlighting \
-    nvim \
+    neovim \
     man-db man-pages
 ```
 
@@ -236,7 +280,6 @@ This command assumes the hardware clock is set to [UTC](https://en.wikipedia.org
 
 ### 3.5 **Localization**
 
-
 [Edit](https://wiki.archlinux.org/title/Textedit) `/etc/locale.gen` and uncomment `en_US.UTF-8 UTF-8`, `ru_RU.UTF-8 UTF-8` and other needed [locales](https://wiki.archlinux.org/title/Locale).
 
 Generate the locales by running:
@@ -253,6 +296,8 @@ Create `/etc/locale.conf` with the follwing content:
 LANG=ru_RU.UTF-8
 ```
 
+### 3.5.1 **Set the virtual console keymap**
+
 If you [set the console keyboard layout](https://wiki.archlinux.org/title/Installation_guide#Set_the_console_keyboard_layout), make the changes persistent in [vconsole.conf(5)](https://man.archlinux.org/man/vconsole.conf.5).
 
 Create `/etc/vconsole.conf` with following content:
@@ -261,7 +306,15 @@ Create `/etc/vconsole.conf` with following content:
 KEYMAP=ru
 ```
 
-Add FONT variable according to your display density. For HiDPI displays:
+### 3.5.2 **Set the virtual console font**
+
+[Console fonts](https://wiki.archlinux.org/title/Console_fonts) are located in `/usr/share/kbd/consolefonts/` and can likewise be set with [setfont(8)](https://man.archlinux.org/man/setfont.8).
+
+```shell
+ls -l /usr/share/kbd/consolefonts/ | grep -i '.psfu.gz'
+```
+
+Set `FONT` variable according to your display density. For HiDPI displays:
 
 ```shell
 KEYMAP=ru
@@ -363,20 +416,22 @@ Contents of `/boot/loader/entries/arch.conf`:
 
 ```
 title   Arch Linux
-linux   /vmlinuz-linux
+linux   /vmlinuz-linux-lts
 initrd  /amd-ucode.img
-initrd  /initramfs-linux.img
+initrd  /initramfs-linux-lts.img
 options root="LABEL=ARCH_OS" rw
+
 ```
 
 Contents of `/boot/loader/entries/arch-fallback.conf`:
 
 ```
 title   Arch Linux Fallback
-linux   /vmlinuz-linux
+linux   /vmlinuz-linux-lts
 initrd  /amd-ucode.img
-initrd  /initramfs-linux-fallback.img
+initrd  /initramfs-linux-lts-fallback.img
 options root="LABEL=ARCH_OS" rw
+
 ```
 
 > **Tip**  
