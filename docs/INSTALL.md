@@ -114,12 +114,10 @@ sgdisk --zap-all $DRIVE
 Create the partitions:
 
 ```shell
-sgdisk --clear \
-       --new=1:0:+1GiB   --typecode=1:ef00 --change-name=1:EFI \
-       --new=2:0:+32GiB  --typecode=2:8200 --change-name=2:swap \
-       --new=3:0:+128GiB --typecode=3:8304 --change-name=3:system \
-       --new=4:0:0       --typecode=4:8302 --change-name=4:home \
-       $DRIVE
+sgdisk --new=1:0:+1GiB   --typecode=1:ef00 --change-name=1:EFI $DRIVE
+sgdisk --new=2:0:+32GiB  --typecode=2:8200 --change-name=2:swap $DRIVE
+sgdisk --new=3:0:+128GiB --typecode=3:8304 --change-name=3:system $DRIVE
+sgdisk --new=4:0:0       --typecode=4:8302 --change-name=4:home $DRIVE
 ```
 
 Check the partitions:
@@ -157,7 +155,7 @@ mkfs.ext4 -L home /dev/disk/by-partlabel/home
 Format and enable [swap](https://wiki.archlinux.org/title/Swap) partition:
 
 ```shell
-mkswap -L swap /dev/mapper/swap
+mkswap -L swap /dev/disk/by-partlabel/swap
 swapon -L swap
 ```
 
@@ -216,18 +214,7 @@ Check the resulting `/mnt/etc/fstab` file, and edit it in case of errors. Also, 
 arch-chroot /mnt
 ```
 
-### 3.3 **Essential packages**
-
-Basic set of essential packages:
-
-```shell
-pacman -Sy \
-    networkmanager iw wireless-regdb bluez-utils \
-    nano nano-syntax-highlighting \
-    man-db man-pages
-```
-
-### 3.4 **Time**
+### 3.3 **Time**
 
 Set the [time zone](https://wiki.archlinux.org/title/Time_zone), for example `Asia/Yekaterinburg`:
 
@@ -243,9 +230,14 @@ hwclock --systohc
 
 This command assumes the hardware clock is set to [UTC](https://en.wikipedia.org/wiki/UTC). See [System time#Time standard](https://wiki.archlinux.org/title/System_time#Time_standard) for details.
 
-### 3.5 **Localization**
+### 3.4 **Localization**
 
-[Edit](https://wiki.archlinux.org/title/Textedit) `/etc/locale.gen` and uncomment `en_US.UTF-8 UTF-8`, `ru_RU.UTF-8 UTF-8` and other needed [locales](https://wiki.archlinux.org/title/Locale).
+Edit `/etc/locale.gen` and uncomment `en_US.UTF-8 UTF-8`, `ru_RU.UTF-8 UTF-8` and other needed [locales](https://wiki.archlinux.org/title/Locale).
+
+```shell
+echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
+echo "ru_RU.UTF-8 UTF-8" >> /etc/locale.gen
+```
 
 Generate the locales by running:
 
@@ -253,7 +245,7 @@ Generate the locales by running:
 locale-gen
 ```
 
-[Create](https://wiki.archlinux.org/title/Create) the [locale.conf(5)](https://man.archlinux.org/man/locale.conf.5) file, and [set the LANG variable](https://wiki.archlinux.org/title/Locale#Setting_the_system_locale) accordingly.
+Create the [locale.conf(5)](https://man.archlinux.org/man/locale.conf.5) file, and [set the LANG variable](https://wiki.archlinux.org/title/Locale#Setting_the_system_locale) accordingly.
 
 Create `/etc/locale.conf` with the follwing content:
 
@@ -261,7 +253,7 @@ Create `/etc/locale.conf` with the follwing content:
 echo "LANG=ru_RU.UTF-8" > /etc/locale.conf
 ```
 
-### 3.5.1 **Set the virtual console keyboard layout**
+### 3.4.1 **Set the virtual console keyboard layout**
 
 If you [set the console keyboard layout](https://wiki.archlinux.org/title/Installation_guide#Set_the_console_keyboard_layout), make the changes persistent in [vconsole.conf(5)](https://man.archlinux.org/man/vconsole.conf.5).
 
@@ -274,10 +266,10 @@ localectl list-keymaps
 For example, create `/etc/vconsole.conf` with following content, to set a russian keyboard layout:
 
 ```shell
-echo "KEYMAP=ru" > /etc/vconsole.conf
+echo "KEYMAP=ru" >> /etc/vconsole.conf
 ```
 
-### 3.5.2 **Set the virtual console font**
+### 3.4.2 **Set the virtual console font**
 
 [Console fonts](https://wiki.archlinux.org/title/Console_fonts) are located in `/usr/share/kbd/consolefonts/` and can likewise be set with [setfont(8)](https://man.archlinux.org/man/setfont.8).
 
@@ -298,7 +290,7 @@ For low DPI displays:
 echo "FONT=latarcyrheb-sun16" >> /etc/vconsole.conf
 ```
 
-### 3.6 **Network configuration**
+### 3.5 **Network configuration**
 
 Create the [`/etc/hostname`](https://wiki.archlinux.org/title/Hostname) file:
 
@@ -309,7 +301,7 @@ echo "myhostname" > /etc/hostname
 Complete the [network configuration](https://wiki.archlinux.org/title/Network_configuration) for the newly installed environment.
 That may include installing suitable [network management](https://wiki.archlinux.org/title/Network_management) software.
 
-### 3.7 **Root password**
+### 3.6 **Root password**
 
 Set the root password:
 
@@ -317,7 +309,7 @@ Set the root password:
 passwd
 ```
 
-### 3.8 **Initramfs**
+### 3.7 **Initramfs**
 
 Creating a new *initramfs* is usually not required, because [mkinitcpio](https://wiki.archlinux.org/title/Mkinitcpio) was run on installation of the [kernel](https://wiki.archlinux.org/title/Kernel) package with *pacstrap*.
 
@@ -327,7 +319,7 @@ For [system encryption](https://wiki.archlinux.org/title/Dm-crypt) modify [mkini
 mkinitcpio -P
 ```
 
-### 3.9 **Install microcode**
+### 3.8 **Install microcode**
 
 Select the CPU architecture:
 
@@ -341,7 +333,18 @@ Enable [microcode](https://wiki.archlinux.org/title/Microcode) updates.
 pacman -S $CPU_ARCH-ucode
 ```
 
-### 3.9 **Boot loader**
+### 3.9 **Install essential packages**
+
+Basic set of essential packages:
+
+```shell
+pacman -Sy \
+    networkmanager iw wireless-regdb bluez-utils \
+    nano nano-syntax-highlighting \
+    man-db man-pages
+```
+
+### 3.10 **Install systemd-boot**
 
 To verify the boot mode, list the [efivars](https://wiki.archlinux.org/title/Efivars) directory:
 
@@ -350,8 +353,6 @@ ls /sys/firmware/efi/efivars
 ```
 
 Choose and install a Linux-capable [boot loader](https://wiki.archlinux.org/title/Boot_loader). For example [systemd-boot](https://wiki.archlinux.org/title/Systemd-boot).
-
-### 3.9.1 **systemd-boot**
 
 Use [bootctl(1)](https://man.archlinux.org/man/bootctl.1) to install systemd-boot to the [ESP mountpoint](https://wiki.archlinux.org/title/EFI_system_partition#Typical_mount_points), e.g. `/boot`:
 
@@ -393,7 +394,7 @@ title   Arch Linux
 linux   /vmlinuz-linux-lts
 initrd  /amd-ucode.img
 initrd  /initramfs-linux-lts.img
-options root="LABEL=ARCH_OS" rw
+options root="LABEL=ARCH_OS" rw nmi_watchdog=0
 
 ```
 
@@ -404,7 +405,7 @@ title   Arch Linux Fallback
 linux   /vmlinuz-linux-lts
 initrd  /amd-ucode.img
 initrd  /initramfs-linux-lts-fallback.img
-options root="LABEL=ARCH_OS" rw
+options root="LABEL=ARCH_OS" rw nmi_watchdog=0
 
 ```
 
@@ -442,13 +443,13 @@ Connect to the network using `nmtui`
 nmtui
 ```
 
-If you installed [bluez-utils](https://archlinux.org/packages/?name=bluez-utils), you can enable bluetooth:
+[!] If you installed [bluez-utils](https://archlinux.org/packages/?name=bluez-utils), you can enable bluetooth:
 
 ```shell
 systemctl enable --now bluetooth.service
 ```
 
-### 5.2 **Hardware** (TODO: add more info)
+### 5.2 **Hardware**
 
 ### 5.2.1 **Disable hardware speaker**
 
@@ -484,7 +485,7 @@ Install [power-profiles-daemon](https://wiki.archlinux.org/title/CPU_frequency_s
 pacman -Sy power-profiles-daemon
 ```
 
-You can install [tlp](https://wiki.archlinux.org/title/TLP) package if you don't want to use `power-profiles-daemon`.
+[!] You can install [tlp](https://wiki.archlinux.org/title/TLP) package if you don't want to use `power-profiles-daemon`.
 
 ```shell
 pacman -Sy tlp tlp-rdw
@@ -502,16 +503,20 @@ A new installation leaves you with only the [superuser](https://en.wikipedia.org
 
 Users and groups are a mechanism for *access control*; administrators may fine-tune group membership and ownership to grant or deny users and services access to system resources. Read the [Users and groups](https://wiki.archlinux.org/title/Users_and_groups) article for details and potential security risks. 
 
+```shell
+NEWUSER=<USERNAME>
+```
+
 To add a new user, use the `useradd` command: 
 
 ```shell
-useradd -m -G sys,rfkill,wheel -s /bin/bash your_username
+useradd -m -G sys,rfkill,wheel -s /bin/bash $NEWUSER
 ```
 
 Set password for this user with [passwd](https://man.archlinux.org/man/passwd.1) command:
 
 ```
-passwd your_username
+passwd $NEWUSER
 ```
 
 ### 5.4 **Security**
@@ -541,7 +546,7 @@ A firewall can provide an extra layer of protection on top of the Linux networki
 
 See [Category:Firewalls](https://wiki.archlinux.org/title/Category:Firewalls) for available guides.
 
-### 5.5. **Packages**
+### 5.5. **Packages** [!]
 
 Set up timer to refresh existing [PGP keys](https://wiki.archlinux.org/title/Pacman/Package_signing) of [archlinux-keyring](https://archlinux.org/packages/?name=archlinux-keyring) regularly:
 
@@ -611,7 +616,7 @@ pacman -Sy \
     alsa-utils
 ```
 
-Check if everything installed correctly:
+[!] Check if everything installed correctly:
 
 ```shell
 pactl info | grep Pipe
@@ -626,14 +631,17 @@ pacman -Sy \
     xdg-desktop-portal-gnome \
     dconf-editor \
     gnome-shell-extensions \
-    gnome-shell-extension-appindicator
+    gnome-shell-extension-appindicator \
+    gnome-software-packagekit-plugin
 ```
 
-Install PackageKit plugin if you want to manage pacman packages using [gnome-software](https://archlinux.org/packages/?name=gnome-software)
+Enable [GDM](https://wiki.archlinux.org/title/GDM)
 
 ```shell
-pacman -Sy gnome-software-packagekit-plugin
+systemctl enable gdm.service
 ```
+
+Restart the machine by typing `reboot`.
 
 ### 6. **System maintenance**
 
