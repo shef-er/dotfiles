@@ -2,17 +2,7 @@
 
 ## 1. **Pre-installation**
 
-### 1.1 **Verify the boot mode**
-
-To verify the boot mode, list the [efivars](https://wiki.archlinux.org/title/Efivars) directory:
-
-```shell
-ls /sys/firmware/efi/efivars
-```
-
-If the command shows the directory without error, then the system is booted in UEFI mode.
-
-### 1.2 **Connect to the internet**
+### 1.1 **Connect to the internet**
 
 To set up a network connection in the live environment, go through the following steps:
 
@@ -45,7 +35,7 @@ ping -с 3 archlinux.org
 > **Note**  
 > In the installation image, [systemd-networkd](https://wiki.archlinux.org/title/Systemd-networkd), [systemd-resolved](https://wiki.archlinux.org/title/Systemd-resolved), [iwd](https://wiki.archlinux.org/title/Iwd) and [ModemManager](https://wiki.archlinux.org/title/ModemManager) are preconfigured and enabled by default. That will not be the case for the installed system.
 
-### 1.3 **Update the system clock**
+### 1.2 **Update the system clock**
 
 In the live environment [systemd-timesyncd](https://wiki.archlinux.org/title/Systemd-timesyncd) is enabled by default and time will be synced automatically once a connection to the internet is established.
 
@@ -56,7 +46,7 @@ timedatectl set-ntp true
 timedatectl status
 ```
 
-### 1.4 **Partition the disk**
+### 1.3 **Partition the disk**
 
 When recognized by the live system, disks are assigned to a [block device](https://wiki.archlinux.org/title/Block_device) such as `/dev/sda`, `/dev/nvme0n1` or `/dev/mmcblk0`. To identify these devices, use [lsblk](https://wiki.archlinux.org/title/Lsblk).
 
@@ -74,11 +64,9 @@ The following [partitions](https://wiki.archlinux.org/title/Partition) are **req
 > **Warning**  
 > If you want to create any stacked block devices do it now.
 
-### 1.4.1 **UEFI with [GPT](https://wiki.archlinux.org/title/GPT)**
-
 Given:
+- `~1000G` - NVME SSD on `/dev/nvme0n1` device
 - `16G` - RAM
-- `~1000G` - NVME SSD
 
 Use [sgdisk](https://wiki.archlinux.org/title/GPT_fdisk) to modify partition tables.
 
@@ -128,8 +116,6 @@ lsblk -o +PARTLABEL
 
 Once the partitions have been created, each newly created partition must be formatted with an appropriate [file system](https://wiki.archlinux.org/title/File_system).
 See [File systems#Create a file system](https://wiki.archlinux.org/title/File_systems#Create_a_file_system) for details.
-
-### 1.4.2 **Format and mount the partitions**
 
 [Format](https://wiki.archlinux.org/title/ EFI_system_partition#Format_the_partition) EFI system partition:
 
@@ -194,10 +180,6 @@ To [install](https://wiki.archlinux.org/title/Install) other packages or package
 
 For comparison, packages available in the live system can be found in [pkglist.x86_64.txt](https://geo.mirror.pkgbuild.com/iso/latest/arch/pkglist.x86_64.txt).
 
-## 3. **Configure the system**
-
-### 3.1 **Fstab**
-
 Generate an [fstab](https://wiki.archlinux.org/title/Fstab) file (use `-U` or `-L` to define by [UUID](https://wiki.archlinux.org/title/UUID) or labels, respectively):
 
 ```shell
@@ -206,7 +188,7 @@ genfstab -L /mnt >> /mnt/etc/fstab
 
 Check the resulting `/mnt/etc/fstab` file, and edit it in case of errors. Also, you can add [corresponding](https://wiki.archlinux.org/title/Solid_state_drive#TRIM) mount options to extend your ssd lifespan.
 
-### 3.2 **Chroot**
+## 3. **Configure the system**
 
 [Change root](https://wiki.archlinux.org/title/Change_root) into the new system:
 
@@ -214,7 +196,7 @@ Check the resulting `/mnt/etc/fstab` file, and edit it in case of errors. Also, 
 arch-chroot /mnt
 ```
 
-### 3.3 **Time**
+### 3.1 **Time**
 
 Set the [time zone](https://wiki.archlinux.org/title/Time_zone), for example `Asia/Yekaterinburg`:
 
@@ -230,7 +212,7 @@ hwclock --systohc
 
 This command assumes the hardware clock is set to [UTC](https://en.wikipedia.org/wiki/UTC). See [System time#Time standard](https://wiki.archlinux.org/title/System_time#Time_standard) for details.
 
-### 3.4 **Localization**
+### 3.2 **Localization**
 
 Edit `/etc/locale.gen` and uncomment `en_US.UTF-8 UTF-8`, `ru_RU.UTF-8 UTF-8` and other needed [locales](https://wiki.archlinux.org/title/Locale).
 
@@ -253,7 +235,7 @@ Create `/etc/locale.conf` with the follwing content:
 echo "LANG=ru_RU.UTF-8" > /etc/locale.conf
 ```
 
-### 3.4.1 **Set the virtual console keyboard layout**
+### 3.2.1 **Set the virtual console keyboard layout**
 
 If you [set the console keyboard layout](https://wiki.archlinux.org/title/Installation_guide#Set_the_console_keyboard_layout), make the changes persistent in [vconsole.conf(5)](https://man.archlinux.org/man/vconsole.conf.5).
 
@@ -269,7 +251,7 @@ For example, create `/etc/vconsole.conf` with following content, to set a russia
 echo "KEYMAP=ru" >> /etc/vconsole.conf
 ```
 
-### 3.4.2 **Set the virtual console font**
+### 3.2.2 **Set the virtual console font**
 
 [Console fonts](https://wiki.archlinux.org/title/Console_fonts) are located in `/usr/share/kbd/consolefonts/` and can likewise be set with [setfont(8)](https://man.archlinux.org/man/setfont.8).
 
@@ -290,18 +272,18 @@ For low DPI displays:
 echo "FONT=latarcyrheb-sun16" >> /etc/vconsole.conf
 ```
 
-### 3.5 **Network configuration**
+### 3.3 **Network configuration**
 
 Create the [`/etc/hostname`](https://wiki.archlinux.org/title/Hostname) file:
 
 ```shell
-echo "myhostname" > /etc/hostname
+echo "my-hostname" > /etc/hostname
 ```
 
 Complete the [network configuration](https://wiki.archlinux.org/title/Network_configuration) for the newly installed environment.
 That may include installing suitable [network management](https://wiki.archlinux.org/title/Network_management) software.
 
-### 3.6 **Root password**
+### 3.4 **Root password**
 
 Set the root password:
 
@@ -309,7 +291,7 @@ Set the root password:
 passwd
 ```
 
-### 3.7 **Initramfs**
+### 3.5 **Initramfs**
 
 Creating a new *initramfs* is usually not required, because [mkinitcpio](https://wiki.archlinux.org/title/Mkinitcpio) was run on installation of the [kernel](https://wiki.archlinux.org/title/Kernel) package with *pacstrap*.
 
@@ -319,7 +301,7 @@ For [system encryption](https://wiki.archlinux.org/title/Dm-crypt) modify [mkini
 mkinitcpio -P
 ```
 
-### 3.8 **Install microcode**
+### 3.6 **CPU Microcode**
 
 Select the CPU architecture:
 
@@ -333,24 +315,26 @@ Enable [microcode](https://wiki.archlinux.org/title/Microcode) updates.
 pacman -S $CPU_ARCH-ucode
 ```
 
-### 3.9 **Install essential packages**
+### 3.7 **Install essential packages**
 
 Basic set of essential packages:
 
 ```shell
 pacman -Sy \
-    networkmanager iw wireless-regdb bluez-utils \
-    nano nano-syntax-highlighting \
-    man-db man-pages
+    nano nano-syntax-highlighting man-db man-pages \
+    networkmanager iw wireless-regdb \
+    bluez bluez-utils
 ```
 
-### 3.10 **Install systemd-boot**
+### 3.8 **systemd-boot**
 
 To verify the boot mode, list the [efivars](https://wiki.archlinux.org/title/Efivars) directory:
 
 ```shell
 ls /sys/firmware/efi/efivars
 ```
+
+If the command shows the directory without error, then the system is booted in UEFI mode.
 
 Choose and install a Linux-capable [boot loader](https://wiki.archlinux.org/title/Boot_loader). For example [systemd-boot](https://wiki.archlinux.org/title/Systemd-boot).
 
@@ -416,11 +400,27 @@ options root="LABEL=ARCH_OS" rw nmi_watchdog=0
 
 ## 4. **Reboot**
 
-Exit the chroot environment by typing `exit` or pressing `Ctrl+d`.
+Optionally manually unmount all the partitions with 
 
-Optionally manually unmount all the partitions with `umount -R /mnt`: this allows noticing any "busy" partitions, and finding the cause with [fuser(1)](https://man.archlinux.org/man/fuser.1).
+```shell
+umount -R /mnt
+```
 
-Finally, restart the machine by typing `reboot`: any partitions still mounted will be automatically unmounted by *systemd*. Remember to remove the installation medium and then login into the new system with the root account.
+this allows noticing any "busy" partitions, and finding the cause with [fuser(1)](https://man.archlinux.org/man/fuser.1).
+
+Exit the chroot environment by pressing `Ctrl+d` or typing
+
+```shell
+exit
+```
+
+Finally, restart the machine by typing
+
+```shell
+reboot
+```
+
+any partitions still mounted will be automatically unmounted by *systemd*. Remember to remove the installation medium and then login into the new system with the root account.
 
 ## 5. **Post-installation**
 
@@ -428,7 +428,7 @@ See [General recommendations](https://wiki.archlinux.org/title/General_recommend
 
 For a list of applications that may be of interest, see [List of applications](https://wiki.archlinux.org/title/List_of_applications).
 
-### 5.1 **Setup network connection**
+### 5.1 **Network connection**
 
 Enable NetworkManager:
 
@@ -443,61 +443,13 @@ Connect to the network using `nmtui`
 nmtui
 ```
 
-[!] If you installed [bluez-utils](https://archlinux.org/packages/?name=bluez-utils), you can enable bluetooth:
+Enable [Bluetooth](https://wiki.archlinux.org/title/Bluetooth):
 
 ```shell
 systemctl enable --now bluetooth.service
 ```
 
-### 5.2 **Hardware**
-
-### 5.2.1 **Disable hardware speaker**
-
-```shell
-echo "blacklist pcspkr" > /etc/modprobe.d/nobeep.conf
-```
-
-### 5.2.2 **Solid State Drive**
-
-```shell
-systemctl enable --now fstrim.timer
-```
-
-Also you can install [smartctl](https://wiki.archlinux.org/title/S.M.A.R.T.#smartctl) tool
-
-```shell
-pacman -Sy smartmontools
-```
-
-### 5.2.3 **Power optimization**
-
-```shell
-echo 'kernel.nmi_watchdog=0' > /etc/sysctl.d/nonmiwatchdog.conf
-
-touch /etc/sysctl.d/vm.conf
-echo "vm.dirty_writeback_centisecs=6000" >> /etc/sysctl.d/vm.conf
-echo "vm.max_map_count=1048576" >> /etc/sysctl.d/vm.conf
-```
-
-Install [power-profiles-daemon](https://wiki.archlinux.org/title/CPU_frequency_scaling#power-profiles-daemon):
-
-```shell
-pacman -Sy power-profiles-daemon
-```
-
-[!] You can install [tlp](https://wiki.archlinux.org/title/TLP) package if you don't want to use `power-profiles-daemon`.
-
-```shell
-pacman -Sy tlp tlp-rdw
-systemctl enable --now tlp.service
-systemctl enable --now NetworkManager-dispatcher.service
-
-# tlp settings: https://linrunner.de/tlp/settings/index.html
-nano /etc/tlp.conf
-systemctl restart tlp.service
-```
-
-### 5.3 **Users and groups**
+### 5.2 **User**
 
 A new installation leaves you with only the [superuser](https://en.wikipedia.org/wiki/Superuser) account, better known as "root". Logging in as root for prolonged periods of time, possibly even exposing it via [SSH](https://wiki.archlinux.org/title/SSH) on a server, [is insecure](https://apple.stackexchange.com/questions/192365/is-it-ok-to-use-the-root-user-as-a-normal-user/192422#192422). Instead, you should create and use unprivileged user account(s) for most tasks, only using the root account for system administration. See [Users and groups#User management](https://wiki.archlinux.org/title/Users_and_groups#User_management) for details.
 
@@ -519,7 +471,7 @@ Set password for this user with [passwd](https://man.archlinux.org/man/passwd.1)
 passwd $NEWUSER
 ```
 
-### 5.4 **Security**
+### 5.3 **Security**
 
 Read [Security](https://wiki.archlinux.org/title/Security) for recommendations and best practices on hardening the system.
 
@@ -540,68 +492,29 @@ echo "%wheel ALL=(ALL:ALL) ALL" > /etc/sudoers.d/wheel
 > **Tip**  
 > When creating new administrators, it is often desirable to enable sudo access for the `wheel` group and [add the user to it](https://wiki.archlinux.org/title/Users_and_groups#Group_management), since by default [Polkit](https://wiki.archlinux.org/title/Polkit#Administrator_identities) treats the members of the `wheel` group as administrators. If the user is not a member of `wheel`, software using Polkit may ask to authenticate using the root password instead of the user password.
 
-### 5.4.1 **Firewall**
-
-A firewall can provide an extra layer of protection on top of the Linux networking stack. It is highly recommended to set up some form of firewall.
-
-See [Category:Firewalls](https://wiki.archlinux.org/title/Category:Firewalls) for available guides.
-
-### 5.5. **Packages** [!]
-
-Set up timer to refresh existing [PGP keys](https://wiki.archlinux.org/title/Pacman/Package_signing) of [archlinux-keyring](https://archlinux.org/packages/?name=archlinux-keyring) regularly:
+### 5.4 **SSD**
 
 ```shell
-systemctl enable archlinux-keyring-wkd-sync.timer
+systemctl enable --now fstrim.timer
 ```
 
-### 5.5.1 **Enabling parallel downloads**
-
-Pacman 6.0 introduced the option to download packages in parallel. `ParallelDownloads` under `[options]` needs to be set to a positive integer in `/etc/pacman.conf` to use this feature (e.g., `5`). Packages will otherwise be downloaded sequentially if this option is unset.
-
-### 5.5.2 **Cleaning the package cache**
-
-Pacman stores its downloaded packages in `/var/cache/pacman/pkg/` and does not remove the old or uninstalled versions automatically.
-This has some advantages:
-
-* It allows to [downgrade](https://wiki.archlinux.org/title/Downgrade) a package without the need to retrieve the previous version through other means, such as the [Arch Linux Archive](https://wiki.archlinux.org/title/Arch_Linux_Archive).
-* A package that has been uninstalled can easily be reinstalled directly from the cache directory, not requiring a new download from the repository.
-
-However, it is necessary to deliberately clean up the cache periodically to prevent the directory to grow indefinitely in size.
-
-The [paccache(8)](https://man.archlinux.org/man/paccache.8) script, provided within the [pacman-contrib](https://archlinux.org/packages/?name=pacman-contrib) package, deletes all cached versions of installed and uninstalled packages, except for the most recent three, by default:
+Also you can install [smartctl](https://wiki.archlinux.org/title/S.M.A.R.T.#smartctl) tool
 
 ```shell
-paccache -r
+pacman -Sy smartmontools
 ```
 
-Enable and start `paccache.timer` to discard unused packages weekly.
+### 5.5 **CPU controls**
+
+Install [power-profiles-daemon](https://wiki.archlinux.org/title/CPU_frequency_scaling#power-profiles-daemon):
 
 ```shell
-pacman -Sy pacman-contrib
-systemctl enable --now paccache.timer
+pacman -Sy power-profiles-daemon
 ```
 
-To remove all the cached packages that are not currently installed, and the unused sync database, execute:
+### 5.6 **Sound**
 
-```shell
-pacman -Sc
-```
-
-To remove all files from the cache, use the clean switch twice, this is the most aggressive approach and will leave nothing in the cache directory:
-
-```shell
-pacman -Scc
-```
-
-### 5.5.3 **Mirrors**
-
-Visit the [Mirrors](https://wiki.archlinux.org/title/Mirrors) article for steps on taking full advantage of using the fastest and most up to date mirrors of the official repositories. As explained in the article, a particularly good advice is to routinely check the [Mirror Status](https://archlinux.org/mirrors/status/) page for a list of mirrors that have been recently synced. This can be automated with [Reflector](https://wiki.archlinux.org/title/Reflector). 
-
-### 5.6 **GUI**
-
-### 5.6.1 **Audio and video**
-
-Install [PipeWire](https://wiki.archlinux.org/title/PipeWire) and [WirePlumber](https://wiki.archlinux.org/title/WirePlumber): 
+Install [PipeWire](https://wiki.archlinux.org/title/PipeWire) and [WirePlumber](https://wiki.archlinux.org/title/WirePlumber):
 
 > **Tip**  
 > Packages `pipewire-alsa`, `pipewire-pulse` and `pipewire-jack` ships configuration that prompt media-session to activate PipeWire's audio features.
@@ -616,13 +529,7 @@ pacman -Sy \
     alsa-utils
 ```
 
-[!] Check if everything installed correctly:
-
-```shell
-pactl info | grep Pipe
-```
-
-### 5.6.2 **Gnome shell**
+### 5.7 **Gnome shell**
 
 ```shell
 pacman -Sy \
