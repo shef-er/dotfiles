@@ -30,6 +30,14 @@ ip link
 
 * The connection may be verified with [ping](https://wiki.archlinux.org/title/Ping):
 
+For example, assuming your wireless device named `wlan0`:
+
+```shell
+iwctl station wlan0 connect <SSID>
+```
+
+Test your connection:
+
 ```shell
 ping -с 3 archlinux.org
 ```
@@ -353,6 +361,12 @@ pacman -Sy amd-ucode
 ```
 
 ### 3.9 **Boot loader**
+
+To verify the boot mode, list the [efivars](https://wiki.archlinux.org/title/Efivars) directory:
+
+```shell
+ls /sys/firmware/efi/efivars
+```
 
 Choose and install a Linux-capable [boot loader](https://wiki.archlinux.org/title/Boot_loader). For example [systemd-boot](https://wiki.archlinux.org/title/Systemd-boot).
 
