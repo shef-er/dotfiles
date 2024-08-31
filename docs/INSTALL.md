@@ -58,10 +58,10 @@ timedatectl status
 
 ### 1.4 **Partition the disk**
 
-When recognized by the live system, disks are assigned to a [block device](https://wiki.archlinux.org/title/Block_device) such as `/dev/sda`, `/dev/nvme0n1` or `/dev/mmcblk0`. To identify these devices, use [lsblk](https://wiki.archlinux.org/title/Lsblk) or [fdisk](https://wiki.archlinux.org/title/Fdisk).
+When recognized by the live system, disks are assigned to a [block device](https://wiki.archlinux.org/title/Block_device) such as `/dev/sda`, `/dev/nvme0n1` or `/dev/mmcblk0`. To identify these devices, use [lsblk](https://wiki.archlinux.org/title/Lsblk).
 
 ```shell
-fdisk -l
+lsblk -o +PARTLABEL
 ```
 
 Results ending in `rom`, `loop` or `airoot` may be ignored.
@@ -72,127 +72,102 @@ The following [partitions](https://wiki.archlinux.org/title/Partition) are **req
 * For booting in [UEFI](https://wiki.archlinux.org/title/UEFI) mode: an [EFI system partition](https://wiki.archlinux.org/title/EFI_system_partition).
 
 > **Warning**  
-> If you want to create any stacked block devices for do it now.
+> If you want to create any stacked block devices do it now.
 
 ### 1.4.1 **UEFI with [GPT](https://wiki.archlinux.org/title/GPT)**
 
 Given:
 - `16G` - RAM
-- `1000G` - NVME SSD
+- `~1000G` - NVME SSD
 
-Use [fdisk](https://wiki.archlinux.org/title/Fdisk) or [gdisk](https://wiki.archlinux.org/title/GPT_fdisk) to modify partition tables. For example:
+Use [sgdisk](https://wiki.archlinux.org/title/GPT_fdisk) to modify partition tables.
 
 ```shell
-fdisk /dev/nvme0n1
+export DRIVE=/dev/nvme0n1
 ```
 
-> **Warning**  
-> If the disk from which you want to boot [already has an EFI system partition](https://wiki.archlinux.org/title/EFI_system_partition#Check_for_an_existing_partition), do not create another one, but use the existing partition instead.
-
-> **Note**  
-> [Swap](https://wiki.archlinux.org/title/Swap) space can be set on a [swap file](https://wiki.archlinux.org/title/Swap_file) for file systems supporting it.
+Disk partition example:
 
 ```
 Mount point     Partition number        Partition type          Suggested size
 
 /mnt/boot       /dev/nvme0n1p1          EFI system partition    1G, or at least 550 MiB
-/mnt            /dev/nvme0n1p2          Linux root (x86-64)     127G, or at least 23–32 GiB
-[SWAP]          /dev/nvme0n1p3          Linux swap 	            32G, about 2*RAM size
+[SWAP]          /dev/nvme0n1p2          Linux swap 	            32G, about 2*RAM size
+/mnt            /dev/nvme0n1p3          Linux root (x86-64)     128G, or at least 23–32 GiB
 /mnt/home       /dev/nvme0n1p4          Linux home              Remainder of the device
-```
-
-```
-Command: g<Enter>
-
-Command: n<Enter>
-Partition number: <Enter>
-First sector: <Enter>
-Last sector: +1G<Enter>
-
-Command: t<Enter>
-Partition number: <Enter>
-Partition type: uefi
-
-Command: n<Enter>
-Partition number: <Enter>
-First sector: <Enter>
-Last sector: +127G<Enter>
-
-Command: t<Enter>
-Partition number: <Enter>
-Partition type: 23
-
-Command: n<Enter>
-Partition number: <Enter>
-First sector: <Enter>
-Last sector: +32G<Enter>
-
-Command: t<Enter>
-Partition number: <Enter>
-Partition type: swap
-
-Command: n<Enter>
-Partition number: <Enter>
-First sector: <Enter>
-Last sector: <Enter>
-
-Command: t<Enter>
-Partition number: <Enter>
-Partition type: home
-
-Command: w<Enter>
 ```
 
 See also [Partitioning#Example layouts](https://wiki.archlinux.org/title/Partitioning#Example_layouts).
 
 > **Tip**  
-> On UEFI-booted systems, if specific conditions are met, [systemd-gpt-auto-generator(8)](https://man.archlinux.org/man/systemd-gpt-auto-generator.8) will automount GPT partitions following the [Discoverable Partitions Specification](https://uapi-group.org/specifications/specs/discoverable_partitions_specification/). Automounted partitions can thus be omitted from [fstab](https://wiki.archlinux.org/title/Fstab), and if the root partition is automounted, then `root=` can be omitted from the kernel command line.
+> On UEFI-booted systems, if specific conditions are met, [systemd-gpt-auto-generator(8)](https://man.archlinux.org/man/systemd-gpt-auto-generator.8) will automount GPT partitions following the [Discoverable Partitions Specification](https://uapi-group.org/specifications/specs/discoverable_partitions_specification/).
 
-### 1.4.2 **Format the partitions**
+Zap the disk:
+
+```
+sgdisk --zap-all $DRIVE
+```
+
+> **Warning**  
+> Zap (destroy) the GPT and MBR data structures and then exit. This option works much like -z, but as it wipes the MBR as well as the GPT, it's more  suitable  if  you  want  to repartition a disk after using this option, and completely unsuitable if you've already repartitioned the disk.
+
+Create the partitions:
+
+```shell
+sgdisk --clear \
+       --new=1:0:+1GiB   --typecode=1:ef00 --change-name=1:EFI \
+       --new=2:0:+32GiB  --typecode=2:8200 --change-name=2:swap \
+       --new=3:0:+128GiB --typecode=3:8304 --change-name=3:system \
+       --new=4:0:0       --typecode=4:8302 --change-name=4:home \
+       $DRIVE
+```
+
+Check the partitions:
+
+```shell
+lsblk -o +PARTLABEL
+```
 
 Once the partitions have been created, each newly created partition must be formatted with an appropriate [file system](https://wiki.archlinux.org/title/File_system).
 See [File systems#Create a file system](https://wiki.archlinux.org/title/File_systems#Create_a_file_system) for details.
 
-To create an [Ext4](https://wiki.archlinux.org/title/Ext4) file system use [mkfs.ext4(8)](https://man.archlinux.org/man/mkfs.ext4.8):
+### 1.4.2 **Format and mount the partitions**
+
+[Format](https://wiki.archlinux.org/title/ EFI_system_partition#Format_the_partition) EFI system partition:
 
 ```shell
-mkfs.ext4 -L ARCH_OS /dev/nvme0n1p2
-mkfs.ext4 /dev/nvme0n1p4
+mkfs.fat -F32 -n EFI /dev/disk/by-partlabel/EFI
 ```
-
-If you created a partition for [swap](https://wiki.archlinux.org/title/Swap), initialize it with [mkswap(8)](https://man.archlinux.org/man/mkswap.8):
-
-```shell
-mkswap /dev/nvme0n1p3
-```
-
-If you created an EFI system partition, [format it](https://wiki.archlinux.org/title/EFI_system_partition#Format_the_partition) to FAT32 using [mkfs.fat(8)](https://man.archlinux.org/man/mkfs.fat.8).
 
 > **Warning**  
 > Only format the EFI system partition if you created it during the partitioning step. If there already was an EFI system partition on disk beforehand, reformatting it can destroy the boot loaders of other installed operating systems.
 
-```shell
-mkfs.fat -F 32 /dev/nvme0n1p1
-```
-
-### 1.4.3 **Mount the file systems**
-
-[Mount](https://wiki.archlinux.org/title/Mount) system partitions to `/mnt`.
+Format and mount root partition:
 
 ```shell
-mount -o noatime /dev/nvme0n1p2 /mnt
-mount -o noatime --mkdir /dev/nvme0n1p1 /mnt/boot
-mount -o noatime --mkdir /dev/nvme0n1p4 /mnt/home
+mkfs.ext4 -L system /dev/disk/by-partlabel/system
 ```
 
-If you created a [swap](https://wiki.archlinux.org/title/Swap) volume, enable it with [swapon(8)](https://man.archlinux.org/man/swapon.8):
+Format home partition:
 
 ```shell
-swapon /dev/nvme0n1p3
+mkfs.ext4 -L home /dev/disk/by-partlabel/home
 ```
 
-[genfstab(8)](https://man.archlinux.org/man/genfstab.8) will later detect mounted file systems and swap space.
+Format and enable [swap](https://wiki.archlinux.org/title/Swap) partition:
 
+```shell
+mkswap -L swap /dev/mapper/swap
+swapon -L swap
+```
+
+[Mount](https://wiki.archlinux.org/title/Mount) system partitions to `/mnt`:
+
+```shell
+mount -o noatime LABEL=system /mnt
+mount -o noatime --mkdir LABEL=EFI /mnt/boot
+mount -o noatime --mkdir LABEL=home /mnt/home
+```
 
 ## 2. **Installation**
 
@@ -228,7 +203,7 @@ For comparison, packages available in the live system can be found in [pkglist.x
 Generate an [fstab](https://wiki.archlinux.org/title/Fstab) file (use `-U` or `-L` to define by [UUID](https://wiki.archlinux.org/title/UUID) or labels, respectively):
 
 ```shell
-genfstab -U /mnt >> /mnt/etc/fstab
+genfstab -L /mnt >> /mnt/etc/fstab
 ```
 
 Check the resulting `/mnt/etc/fstab` file, and edit it in case of errors. Also, you can add [corresponding](https://wiki.archlinux.org/title/Solid_state_drive#TRIM) mount options to extend your ssd lifespan.
@@ -354,10 +329,16 @@ mkinitcpio -P
 
 ### 3.9 **Install microcode**
 
-Enable [microcode](https://wiki.archlinux.org/title/Microcode) updates. For example, to install AMD microcode:
+Select the CPU architecture:
 
 ```shell
-pacman -Sy amd-ucode
+export CPU_ARCH=amd # amd or intel
+```
+
+Enable [microcode](https://wiki.archlinux.org/title/Microcode) updates.
+
+```shell
+pacman -S $CPU_ARCH-ucode
 ```
 
 ### 3.9 **Boot loader**
@@ -513,20 +494,6 @@ systemctl enable --now NetworkManager-dispatcher.service
 # tlp settings: https://linrunner.de/tlp/settings/index.html
 nano /etc/tlp.conf
 systemctl restart tlp.service
-```
-
-### 5.2.4 **Nvidia** (please don't use nvidia)
-
-For the [Maxwell (NV110/GMXXX)](https://nouveau.freedesktop.org/CodeNames.html#NV110) series and newer, install the [nvidia](https://archlinux.org/packages/?name=nvidia) package (for use with the [linux](https://archlinux.org/packages/?name=linux) kernel) or [nvidia-lts](https://archlinux.org/packages/?name=nvidia-lts) (for use with the [linux-lts](https://archlinux.org/packages/?name=linux-lts) kernel) package. 
-
-Here are some settings for [Wayland](https://wiki.archlinux.org/title/NVIDIA#Wayland) support:
-
-```shell
-echo "options nvidia_drm modeset=1" > /etc/modprobe.d/nvidia-drm-modeset.conf
-```
-
-```shell
-echo "options nvidia NVreg_PreserveVideoMemoryAllocations=1 NVreg_TemporaryFilePath=/tmp" > /etc/modprobe.d/nvidia-power-management.conf
 ```
 
 ### 5.3 **Users and groups**
