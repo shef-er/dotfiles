@@ -113,34 +113,50 @@ Packages to install:
 
 ```shell
 sudo pacman -Sy \
-    htop \
-    firefox \
-    firefox-i18n-ru \
     flatpak \
-    telegram-desktop \
+    htop
     obsidian \
     gnome-passwordsafe \
     seahorse \
-    neovim \
+    neovim
+
+sudo pacman -Sy \
+    firefox \
+    firefox-i18n-ru \
+    telegram-desktop \
     noto-fonts \
     noto-fonts-cjk \
     noto-fonts-emoji \
     noto-fonts-extra \
-    transmission-gtk \
-    vlc \
-    foliate \
-    gnome-epub-thumbnailer \
+    fragments \
+    transmission-gtk
+
+sudo pacman -Sy \
     libreoffice-fresh \
     gimp \
     inkscape \
-    qt5-wayland \
-    picard
+    picard \
+    qt5-wayland
+```
 
-flatpak remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+Install [Flatpak](https://wiki.archlinux.org/title/Flatpak) and [flathub](https://flathub.org/) repository:
 
-flatpak install -u flathub \
-    com.github.unrud.VideoDownloader \
-    org.gnome.Loupe
+```shell
+sudo pacman -Sy flatpak
+flatpak --user remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+
+flatpak --user install flathub \
+    io.bassi.Amberol \
+    com.valvesoftware.Steam \
+    org.gtk.Gtk3theme.adw-gtk3 \
+    org.nickvision.tubeconverter
+```
+
+Install and enable [Syncthing](https://wiki.archlinux.org/title/Syncthing):
+
+```shell
+sudo pacman -Sy syncthing
+systemctl enable --now syncthing@"$USER".service
 ```
 
 Packages to remove:
@@ -175,6 +191,6 @@ sudo pacman -Sy docker docker-compose
 sudo systemctl enable --now docker.service
 sudo usermod -aG docker "$USER"
 echo '{ "registry-mirrors": ["https://mirror.gcr.io"] }' | sudo tee /etc/docker/daemon.json
-
+reboot
 docker run hello-world
 ```

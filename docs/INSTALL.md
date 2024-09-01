@@ -277,7 +277,7 @@ echo "FONT=latarcyrheb-sun16" >> /etc/vconsole.conf
 
 ### 3.3 **Network configuration**
 
-Create the [`/etc/hostname`](https://wiki.archlinux.org/title/Hostname) file:
+Create the [hostname](https://wiki.archlinux.org/title/Hostname) file:
 
 ```shell
 echo "my-hostname" > /etc/hostname
