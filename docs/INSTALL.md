@@ -108,6 +108,9 @@ sgdisk --new=3:0:+128GiB --typecode=3:8304 --change-name=3:system $DRIVE
 sgdisk --new=4:0:0       --typecode=4:8302 --change-name=4:home $DRIVE
 ```
 
+> **Tip**  
+> Use `sgdisk -L | less` to list all available partition type codes.
+
 Check the partitions:
 
 ```shell
@@ -158,7 +161,7 @@ mount -o noatime --mkdir LABEL=home /mnt/home
 Use the [pacstrap(8)](https://man.archlinux.org/man/pacstrap.8) script to install the [base](https://archlinux.org/packages/?name=base) package, Linux [kernel](https://wiki.archlinux.org/title/Kernel) and firmware for common hardware:
 
 ```shell
-pacstrap -K /mnt base base-devel linux-lts linux-firmware sof-firmware alsa-firmware
+pacstrap -K /mnt base linux-lts linux-firmware
 ```
 
 > **Tip**  
@@ -214,14 +217,14 @@ This command assumes the hardware clock is set to [UTC](https://en.wikipedia.org
 
 ### 3.2 **Localization**
 
-Edit `/etc/locale.gen` and uncomment `en_US.UTF-8 UTF-8`, `ru_RU.UTF-8 UTF-8` and other needed [locales](https://wiki.archlinux.org/title/Locale).
+Edit `/etc/locale.gen` and uncomment or add your preffered locales and `en_US.UTF-8 UTF-8` which is commonly used as a fallback locale.
 
 ```shell
 echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
 echo "ru_RU.UTF-8 UTF-8" >> /etc/locale.gen
 ```
 
-Generate the locales by running:
+Generate the [locales](https://wiki.archlinux.org/title/Locale) by running:
 
 ```shell
 locale-gen
@@ -321,7 +324,9 @@ Basic set of essential packages:
 
 ```shell
 pacman -Sy \
-    nano nano-syntax-highlighting man-db man-pages \
+    base-devel \
+    man-db man-pages \
+    nano nano-syntax-highlighting \
     networkmanager iw wireless-regdb \
     bluez bluez-utils
 ```
@@ -521,6 +526,8 @@ Install [PipeWire](https://wiki.archlinux.org/title/PipeWire) and [WirePlumber](
 
 ```shell
 pacman -Sy \
+    sof-firmware \
+    alsa-firmware \
     pipewire \
     wireplumber \
     pipewire-alsa \
