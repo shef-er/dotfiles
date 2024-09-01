@@ -2,7 +2,7 @@
 
 # Prepend "$1" to $PATH when not already in.
 # This function API is accessible to scripts in ~/.config/profile.d
-prepend_path () {
+path_prepend () {
     case ":$PATH:" in
         *"$1":*)
             ;;
@@ -25,13 +25,13 @@ if test -d "$XDG_CONFIG_HOME"/profile.d/; then
     unset profile
 fi
 
-prepend_path "$XDG_BIN_HOME"
+path_prepend "$XDG_BIN_HOME"
 
 # move to bashrc?
-prepend_path "$XDG_CONFIG_HOME"/scripts
+path_prepend "$XDG_CONFIG_HOME"/scripts
 
 # Unload our profile API functions
-unset -f prepend_path
+unset -f path_prepend
 
 export VISUAL=nvim
 export EDITOR="$VISUAL"

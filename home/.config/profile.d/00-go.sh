@@ -7,4 +7,4 @@
 
 export GOPATH="$XDG_DATA_HOME"/go
 
-prepend_path "$GOPATH"/bin
+path_prepend "$GOPATH"/bin

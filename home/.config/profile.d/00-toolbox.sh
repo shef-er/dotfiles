@@ -5,4 +5,4 @@
 # | || (_) | (_) | | |_) | (_) >  <
 #  \__\___/ \___/|_|_.__/ \___/_/\_\
 
-prepend_path "$XDG_DATA_HOME"/JetBrains/Toolbox/scripts
+path_prepend "$XDG_DATA_HOME"/JetBrains/Toolbox/scripts
