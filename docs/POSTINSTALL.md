@@ -113,7 +113,6 @@ Packages to install:
 
 ```shell
 sudo pacman -Sy \
-    flatpak \
     htop
     obsidian \
     gnome-passwordsafe \
