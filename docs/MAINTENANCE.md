@@ -8,10 +8,20 @@ Arch is a rolling release system and has rapid package turnover, so users have t
 echo "blacklist pcspkr" > /etc/modprobe.d/nobeep.conf
 ```
 
-## Disable wifi power management
+## **Disable wifi power management**
 
 ```shell
 sudo echo "[connection]\nwifi.powersave = 2" >> /etc/NetworkManager/conf.d/default-wifi-powersave-off.conf
+```
+
+### **Remap cursed copilot key to Right Ctrl**
+
+```shell
+sudo pacman -Sy keyd
+
+echo "[ids]\n*\n\n[main]\nleftmeta = layer(leftmeta)\n\n[leftmeta]\nleftshift = rightcontrol" | sudo tee /etc/keyd/default.conf
+
+systemctl enable --now keyd.service
 ```
 
 ## **Kernel tweaks**
