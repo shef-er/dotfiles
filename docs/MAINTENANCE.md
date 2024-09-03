@@ -8,6 +8,12 @@ Arch is a rolling release system and has rapid package turnover, so users have t
 echo "blacklist pcspkr" > /etc/modprobe.d/nobeep.conf
 ```
 
+## Disable wifi power management
+
+```shell
+sudo echo "[connection]\nwifi.powersave = 2" >> /etc/NetworkManager/conf.d/default-wifi-powersave-off.conf
+```
+
 ## **Kernel tweaks**
 
 ```shell
