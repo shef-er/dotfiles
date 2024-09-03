@@ -38,7 +38,7 @@ After that relogin into your session.
 
 ### 1.2 **Gnome settings**
 
-### 1.2.1 **Tap to click**
+### **Tap to click**
 
 Enable tap to click for your current user:
 
@@ -53,19 +53,39 @@ sudo machinectl shell gdm@ /bin/bash -c 'gsettings set org.gnome.desktop.periphe
 sudo systemctl restart gdm
 ```
 
-### 1.2.2 **Use CapsLock as Ctrl key**
+### **Use CapsLock as Ctrl key**
 
 ```shell
 gsettings set org.gnome.desktop.input-sources xkb-options "['caps:ctrl_modifier']"
 ```
 
-### 1.2.3 **Monospace font**
+### **Fonts**
 
 Install [JetBrains Mono](https://www.jetbrains.com/lp/mono/) and set it as default monospace font:
 
 ```shell
 sudo pacman -Sy ttf-jetbrains-mono
 gsettings set org.gnome.desktop.interface monospace-font-name 'JetBrains Mono 13'
+```
+
+Install [Noto](https://fonts.google.com/noto) fonts
+
+```shell
+sudo pacman -Sy noto-fonts noto-fonts-cjk noto-fonts-emoji noto-fonts-extra
+```
+
+### **GTK3 theme**
+
+Install [adw-gtk3](https://github.com/lassekongo83/adw-gtk3):
+
+```shell
+sudo pacman -Sy adw-gtk-theme
+```
+
+Change the theme to adw-gtk3 light:
+
+```shell
+gsettings set org.gnome.desktop.interface gtk-theme 'adw-gtk3' && gsettings set org.gnome.desktop.interface color-scheme 'default'
 ```
 
 ### 1.2.4 **Tracker settings**
@@ -123,10 +143,6 @@ sudo pacman -Sy \
     firefox \
     firefox-i18n-ru \
     telegram-desktop \
-    noto-fonts \
-    noto-fonts-cjk \
-    noto-fonts-emoji \
-    noto-fonts-extra \
     fragments \
     transmission-gtk
 
@@ -134,8 +150,7 @@ sudo pacman -Sy \
     libreoffice-fresh \
     gimp \
     inkscape \
-    picard \
-    qt5-wayland
+    picard qt5-wayland
 ```
 
 Install [Flatpak](https://wiki.archlinux.org/title/Flatpak) and [flathub](https://flathub.org/) repository:
@@ -147,7 +162,6 @@ flatpak --user remote-add --if-not-exists flathub https://dl.flathub.org/repo/fl
 flatpak --user install flathub \
     io.bassi.Amberol \
     com.valvesoftware.Steam \
-    org.gtk.Gtk3theme.adw-gtk3 \
     org.nickvision.tubeconverter
 ```
 
