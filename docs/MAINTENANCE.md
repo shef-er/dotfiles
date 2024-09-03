@@ -16,6 +16,8 @@ sudo echo "[connection]\nwifi.powersave = 2" >> /etc/NetworkManager/conf.d/defau
 
 ### **Remap cursed copilot key to Right Ctrl**
 
+Only one side-effect, your `Super + LeftShift` combinations will yield `RightCtrl` key 
+
 ```shell
 sudo pacman -Sy keyd
 
