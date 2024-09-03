@@ -161,7 +161,13 @@ mount -o noatime --mkdir LABEL=home /mnt/home
 Use the [pacstrap(8)](https://man.archlinux.org/man/pacstrap.8) script to install the [base](https://archlinux.org/packages/?name=base) package, Linux [kernel](https://wiki.archlinux.org/title/Kernel) and firmware for common hardware:
 
 ```shell
-pacstrap -K /mnt base linux-lts linux-firmware
+pacstrap -K /mnt \
+    base linux-lts linux-firmware \
+    base-devel \
+    man-db man-pages \
+    nano nano-syntax-highlighting \
+    networkmanager iw wireless-regdb \
+    bluez bluez-utils
 ```
 
 > **Tip**  
@@ -238,7 +244,7 @@ Create `/etc/locale.conf` with the follwing content:
 echo "LANG=ru_RU.UTF-8" > /etc/locale.conf
 ```
 
-### 3.2.1 **Set the virtual console keyboard layout**
+### 3.3 **Virtual console settings**
 
 If you [set the console keyboard layout](https://wiki.archlinux.org/title/Installation_guide#Set_the_console_keyboard_layout), make the changes persistent in [vconsole.conf(5)](https://man.archlinux.org/man/vconsole.conf.5).
 
@@ -254,28 +260,26 @@ For example, create `/etc/vconsole.conf` with following content, to set a russia
 echo "KEYMAP=ru" >> /etc/vconsole.conf
 ```
 
-### 3.2.2 **Set the virtual console font**
-
 [Console fonts](https://wiki.archlinux.org/title/Console_fonts) are located in `/usr/share/kbd/consolefonts/` and can likewise be set with [setfont(8)](https://man.archlinux.org/man/setfont.8).
 
 ```shell
 ls -l /usr/share/kbd/consolefonts/ | grep -i '.psfu.gz'
 ```
 
-Add `FONT` variable to `/etc/vconsole.conf` according to your display density. For HiDPI displays:
-
+Add `FONT` variable to `/etc/vconsole.conf` according to your display density.  
+For HiDPI displays:
 
 ```shell
 echo "FONT=latarcyrheb-sun32" >> /etc/vconsole.conf
 ```
 
-For low DPI displays:
+Or, for low DPI displays:
 
 ```shell
 echo "FONT=latarcyrheb-sun16" >> /etc/vconsole.conf
 ```
 
-### 3.3 **Network configuration**
+### 3.4 **Network configuration**
 
 Create the [hostname](https://wiki.archlinux.org/title/Hostname) file:
 
@@ -286,7 +290,7 @@ echo "my-hostname" > /etc/hostname
 Complete the [network configuration](https://wiki.archlinux.org/title/Network_configuration) for the newly installed environment.
 That may include installing suitable [network management](https://wiki.archlinux.org/title/Network_management) software.
 
-### 3.4 **Root password**
+### 3.5 **Root password**
 
 Set the root password:
 
@@ -294,7 +298,7 @@ Set the root password:
 passwd
 ```
 
-### 3.5 **Initramfs**
+### 3.6 **Initramfs**
 
 Creating a new *initramfs* is usually not required, because [mkinitcpio](https://wiki.archlinux.org/title/Mkinitcpio) was run on installation of the [kernel](https://wiki.archlinux.org/title/Kernel) package with *pacstrap*.
 
@@ -304,9 +308,9 @@ For [system encryption](https://wiki.archlinux.org/title/Dm-crypt) modify [mkini
 mkinitcpio -P
 ```
 
-### 3.6 **CPU Microcode**
+### 3.7 **CPU Microcode**
 
-Select the CPU architecture:
+Select your CPU architecture:
 
 ```shell
 export CPU_ARCH=amd # amd or intel
@@ -318,20 +322,7 @@ Enable [microcode](https://wiki.archlinux.org/title/Microcode) updates.
 pacman -S $CPU_ARCH-ucode
 ```
 
-### 3.7 **Install essential packages**
-
-Basic set of essential packages:
-
-```shell
-pacman -Sy \
-    base-devel \
-    man-db man-pages \
-    nano nano-syntax-highlighting \
-    networkmanager iw wireless-regdb \
-    bluez bluez-utils
-```
-
-### 3.8 **systemd-boot**
+### 3.9 **systemd-boot**
 
 To verify the boot mode, list the [efivars](https://wiki.archlinux.org/title/Efivars) directory:
 
@@ -371,7 +362,7 @@ Contents of `/boot/loader/loader.conf`:
 
 ```
 default arch.conf
-timeout 3
+timeout 1
 editor no
 #console-mode keep
 ```
@@ -403,7 +394,7 @@ options root="LABEL=ARCH_OS" rw nmi_watchdog=0
 > * An example entry file is located at `/usr/share/systemd/bootctl/arch.conf`.
 > * The [kernel parameters](https://wiki.archlinux.org/title/Kernel_parameters) for scenarios such as [LUKS](https://wiki.archlinux.org/title/LUKS) or [dm-crypt](https://wiki.archlinux.org/title/Dm-crypt) can be found on the relevant pages.
 
-## 4. **Reboot**
+## 3.10 **Reboot**
 
 Optionally manually unmount all the partitions with 
 
@@ -427,15 +418,15 @@ reboot
 
 any partitions still mounted will be automatically unmounted by *systemd*. Remember to remove the installation medium and then login into the new system with the root account.
 
-## 5. **Post-installation**
+## 4. **Post-installation**
 
 See [General recommendations](https://wiki.archlinux.org/title/General_recommendations) for system management directions and post-installation tutorials (like creating unprivileged user accounts, setting up a graphical user interface, sound or a touchpad).
 
 For a list of applications that may be of interest, see [List of applications](https://wiki.archlinux.org/title/List_of_applications).
 
-### 5.1 **Network connection**
+### 4.1 **Network connection**
 
-Enable NetworkManager:
+Enable [NetworkManager](https://wiki.archlinux.org/title/NetworkManager):
 
 ```shell
 systemctl enable --now NetworkManager.service
@@ -454,7 +445,7 @@ Enable [Bluetooth](https://wiki.archlinux.org/title/Bluetooth):
 systemctl enable --now bluetooth.service
 ```
 
-### 5.2 **User**
+### 4.2 **User**
 
 A new installation leaves you with only the [superuser](https://en.wikipedia.org/wiki/Superuser) account, better known as "root". Logging in as root for prolonged periods of time, possibly even exposing it via [SSH](https://wiki.archlinux.org/title/SSH) on a server, [is insecure](https://apple.stackexchange.com/questions/192365/is-it-ok-to-use-the-root-user-as-a-normal-user/192422#192422). Instead, you should create and use unprivileged user account(s) for most tasks, only using the root account for system administration. See [Users and groups#User management](https://wiki.archlinux.org/title/Users_and_groups#User_management) for details.
 
@@ -476,7 +467,7 @@ Set password for this user with [passwd](https://man.archlinux.org/man/passwd.1)
 passwd $NEWUSER
 ```
 
-### 5.3 **Security**
+### 4.3 **Security**
 
 Read [Security](https://wiki.archlinux.org/title/Security) for recommendations and best practices on hardening the system.
 
@@ -497,7 +488,9 @@ echo "%wheel ALL=(ALL:ALL) ALL" > /etc/sudoers.d/wheel
 > **Tip**  
 > When creating new administrators, it is often desirable to enable sudo access for the `wheel` group and [add the user to it](https://wiki.archlinux.org/title/Users_and_groups#Group_management), since by default [Polkit](https://wiki.archlinux.org/title/Polkit#Administrator_identities) treats the members of the `wheel` group as administrators. If the user is not a member of `wheel`, software using Polkit may ask to authenticate using the root password instead of the user password.
 
-### 5.4 **SSD**
+### 4.4 **SSD**
+
+The [util-linux](https://archlinux.org/packages/?name=util-linux) package provides `fstrim.service` and `fstrim.timer` [systemd](https://wiki.archlinux.org/title/Systemd) unit files. Enabling the timer will activate the service weekly. The service executes [fstrim(8)](https://man.archlinux.org/man/fstrim.8) on all mounted filesystems on devices that support the *discard* operation.
 
 ```shell
 systemctl enable --now fstrim.timer
@@ -509,7 +502,7 @@ Also you can install [smartctl](https://wiki.archlinux.org/title/S.M.A.R.T.#smar
 pacman -Sy smartmontools
 ```
 
-### 5.5 **CPU controls**
+### 4.5 **CPU controls**
 
 Install [power-profiles-daemon](https://wiki.archlinux.org/title/CPU_frequency_scaling#power-profiles-daemon):
 
@@ -517,7 +510,7 @@ Install [power-profiles-daemon](https://wiki.archlinux.org/title/CPU_frequency_s
 pacman -Sy power-profiles-daemon
 ```
 
-### 5.6 **Sound**
+### 4.6 **Sound**
 
 Install [PipeWire](https://wiki.archlinux.org/title/PipeWire) and [WirePlumber](https://wiki.archlinux.org/title/WirePlumber):
 
@@ -536,7 +529,7 @@ pacman -Sy \
     alsa-utils
 ```
 
-### 5.7 **Gnome shell**
+### 4.7 **Gnome shell**
 
 ```shell
 pacman -Sy \
@@ -555,12 +548,12 @@ Enable [GDM](https://wiki.archlinux.org/title/GDM)
 systemctl enable gdm.service
 ```
 
-Restart the machine by typing `reboot`.
+Restart the machine by typing:
 
-### 6. **System maintenance**
+```shell
+reboot
+```
+
+### 5. **System maintenance**
 
 See [MAINTENANCE.md](MAINTENANCE.md)
-
-### 7. **Devices**
-
-See [DEVICES.md](DEVICES.md)
