@@ -16,6 +16,16 @@ sudo echo "[connection]\nwifi.powersave = 2" >> /etc/NetworkManager/conf.d/defau
 
 ### **Remap cursed copilot key to Right Ctrl**
 
+[Map scancodes to keycodes](https://wiki.archlinux.org/title/Map_scancodes_to_keycodes)
+
+```shell
+echo "evdev:name:AT Translated Set 2 keyboard:*\n KEYBOARD_KEY_6e=rightctrl" | sudo tee -a /etc/udev/hwdb.d/99-copilot-key.hwdb
+
+sudo systemd-hwdb update
+sudo udevadm trigger
+```
+
+<!--
 Only one side-effect, your `Super + LeftShift` combinations will yield `RightCtrl` key 
 
 ```shell
@@ -25,6 +35,8 @@ echo "[ids]\n*\n\n[main]\nleftmeta = layer(leftmeta)\n\n[leftmeta]\nleftshift = 
 
 systemctl enable --now keyd.service
 ```
+-->
+
 
 ## **Kernel tweaks**
 
