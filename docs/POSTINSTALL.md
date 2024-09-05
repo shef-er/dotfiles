@@ -169,7 +169,7 @@ Install and enable [Syncthing](https://wiki.archlinux.org/title/Syncthing):
 
 ```shell
 sudo pacman -Sy syncthing
-systemctl enable --now syncthing@"$USER".service
+systemctl --user enable --now syncthing.service
 ```
 
 Packages to remove:

@@ -2,6 +2,37 @@
 
 Arch is a rolling release system and has rapid package turnover, so users have to take some time to do [system maintenance](https://wiki.archlinux.org/title/System_maintenance).
 
+## **Noise cancellation**
+
+Create file `~/.config/pipewire/pipewire.conf.d/99-echo-cacnel.conf` with content:
+
+```conf
+context.modules = [
+    {   
+        name = libpipewire-module-echo-cancel
+        args = {
+            # Monitor mode: Instead of creating a virtual sink into which all
+            # applications must play, in PipeWire the echo cancellation module can read
+            # the audio that should be cancelled directly from the current fallback
+            # audio output
+            monitor.mode = true
+            aec.args = {
+                # Settings for the WebRTC echo cancellation engine
+                webrtc.gain_control = true
+                webrtc.extended_filter = false
+                # Other WebRTC echo cancellation settings which may or may not exist
+                # Documentation for the WebRTC echo cancellation library is difficult
+                # to find
+                #webrtc.analog_gain_control = false
+                #webrtc.digital_gain_control = true
+                #webrtc.experimental_agc = true
+                webrtc.noise_suppression = true
+            }
+        }
+    }
+ ]
+```
+
 ## **Disable hardware speaker**
 
 ```shell

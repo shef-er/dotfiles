@@ -521,12 +521,20 @@ Install [PipeWire](https://wiki.archlinux.org/title/PipeWire) and [WirePlumber](
 pacman -Sy \
     sof-firmware \
     alsa-firmware \
+    alsa-utils \
     pipewire \
-    wireplumber \
+    pipewire-jack \
     pipewire-alsa \
     pipewire-pulse \
-    pipewire-jack \
-    alsa-utils
+    pipewire-audio \
+    gst-plugin-pipewire \
+    wireplumber
+```
+
+Enable services for current user:
+
+```shell
+systemctl --user enable pipewire pipewire-pulse
 ```
 
 ### 4.7 **Gnome shell**
@@ -534,12 +542,11 @@ pacman -Sy \
 ```shell
 pacman -Sy \
     gnome \
-    gst-plugin-pipewire \
     xdg-desktop-portal-gnome \
-    dconf-editor \
     gnome-shell-extensions \
     gnome-shell-extension-appindicator \
-    gnome-software-packagekit-plugin
+    gnome-software-packagekit-plugin \
+    dconf-editor
 ```
 
 Enable [GDM](https://wiki.archlinux.org/title/GDM)
