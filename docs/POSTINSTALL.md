@@ -36,6 +36,15 @@ chsh -s /bin/zsh
 
 After that relogin into your session.
 
+### **Ble.sh**
+
+```shell
+BLESH_URL="https://github.com/akinomyoga/ble.sh/releases/download/v0.3.4/ble-0.3.4.tar.xz"
+BLESH_DIR="$HOME/.local/share/blesh"
+BLESH_TMP="/tmp/ble.tar.xz"
+(curl -Lo "$BLESH_TMP" "$BLESH_URL"; mkdir -p "$BLESH_DIR"; cd "$BLESH_DIR"; tar xJf "$BLESH_TMP" --strip-components 1; rm "$BLESH_TMP")
+```
+
 ### 1.2 **Gnome settings**
 
 ### **Tap to click**

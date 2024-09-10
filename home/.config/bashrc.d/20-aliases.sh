@@ -10,6 +10,10 @@ if command -v pacman &> /dev/null; then
     alias pacman='sudo pacman'
 fi
 
+if command -v flatpak &> /dev/null; then
+    alias flatpak='flatpak --user'
+fi
+
 # shell is my file manager
 alias ls='ls -lahF --group-directories-first --color=auto --time-style=long-iso'
 alias cp='cp -ip'
