@@ -32,6 +32,3 @@ path_prepend "$XDG_CONFIG_HOME"/scripts
 
 # Unload our profile API functions
 unset -f path_prepend
-
-export VISUAL=nvim
-export EDITOR="$VISUAL"
