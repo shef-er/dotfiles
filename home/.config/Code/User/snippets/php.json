@@ -69,18 +69,8 @@
     ],
     "description": "private function"
   },
-  "prf": {
-    "prefix": "prf",
-    "body": [
-      "private function ${1:method}($2)$3",
-      "{",
-      "\t$0",
-      "}"
-    ],
-    "description": "private function"
-  },
   "prif": {
-    "prefix": "prif",
+    "prefix": ["prif", "prf"],
     "body": [
       "private function ${1:method}($2)$3",
       "{",
