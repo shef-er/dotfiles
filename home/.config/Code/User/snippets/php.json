@@ -1,46 +1,41 @@
 {
-  "ctor": {
+  "constructor": {
     "prefix": "ctor",
     "body": [
       "function __construct($1){",
       "\t$0",
       "}"
-    ],
-    "description": "Create iteration loop"
+    ]
   },
-  "eco": {
+  "'echo' statement": {
     "prefix": "eco",
     "body": "echo \"$0\";",
-    "description": "'echo' statement"
   },
-  "fore": {
+  "foreach(iterable_expr as $value) {...}": {
     "prefix": "fore",
     "body": [
-      "foreach ($1 as $${2:item}) {",
+      "foreach ($1 as \\$${2:item}) {",
       "\t$0",
       "}"
     ],
-    "description": "foreach(iterable_expr as $value) {...}"
   },
-  "forek": {
+  "foreach(iterable_expr as $key => $value) {...}": {
     "prefix": "forek",
     "body": [
-      "foreach ($1 as $${2:key} => $${3:index}) {",
+      "foreach ($1 as \\$${2:key} => \\$${3:index}) {",
       "\t$0",
       "}"
     ],
-    "description": "foreach(iterable_expr as $key => $value) {...}"
   },
-  "fori": {
+  "Create iteration loop": {
     "prefix": "fori",
     "body": [
-      "for ($1$ = 0; $1$ < $2$; $1$++) {",
+      "for (\\$$1 = 0; $1 < $2; $1++) {",
       "\t$0",
       "}"
     ],
-    "description": "Create iteration loop"
   },
-  "fun": {
+  "function": {
     "prefix": "fun",
     "body": [
       "function $1($2){",
@@ -49,37 +44,27 @@
     ],
     "description": "Create iteration loop"
   },
-  "inc": {
+  "'include' statement": {
     "prefix": "inc",
     "body": "include \"$0\";",
-    "description": "'include' statement"
   },
-  "inco": {
+  "'include_once' statement": {
     "prefix": "inco",
     "body": "include_once \"$0\";",
-    "description": "'include_once' statement"
   },
-  "pf": {
-    "prefix": "pf",
-    "body": [
-      "public function ${1:method}($2)$3",
-      "{",
-      "\t$0",
-      "}"
+  "private function": {
+    "prefix": [
+      "prif",
+      "prf"
     ],
-    "description": "private function"
-  },
-  "prif": {
-    "prefix": ["prif", "prf"],
     "body": [
       "private function ${1:method}($2)$3",
       "{",
       "\t$0",
       "}"
     ],
-    "description": "private function"
   },
-  "prisf": {
+  "private static function": {
     "prefix": "prisf",
     "body": [
       "private static function ${1:method}($2)$3",
@@ -87,9 +72,8 @@
       "\t$0",
       "}"
     ],
-    "description": "private static function"
   },
-  "prof": {
+  "protected function": {
     "prefix": "prof",
     "body": [
       "protected function ${1:method}($2)$3",
@@ -97,9 +81,8 @@
       "\t$0",
       "}"
     ],
-    "description": "protected function"
   },
-  "prosf": {
+  "protected static function": {
     "prefix": "prosf",
     "body": [
       "protected static function ${1:method}($2)$3",
@@ -107,24 +90,25 @@
       "\t$0",
       "}"
     ],
-    "description": "protected static function"
   },
   "ps": {
     "prefix": "ps",
     "body": "public static $0",
     "description": "public static"
   },
-  "pubf": {
-    "prefix": "pubf",
+  "public function": {
+    "prefix": [
+      "pubf",
+      "pf"
+    ],
     "body": [
       "public function ${1:method}($2)$3",
       "{",
       "\t$0",
       "}"
     ],
-    "description": "public function"
   },
-  "pubsf": {
+  "public static function": {
     "prefix": "pubsf",
     "body": [
       "public static function ${1:method}($2)$3",
@@ -132,26 +116,21 @@
       "\t$0",
       "}"
     ],
-    "description": "public static function"
   },
-  "rqr": {
+  "'require' statement": {
     "prefix": "rqr",
     "body": "require \"$0\";",
-    "description": "'require' statement"
   },
-  "rqro": {
+  "'require_once' statement": {
     "prefix": "rqro",
     "body": "require_once \"$0\";",
-    "description": "'require_once' statement"
   },
-  "t": {
+  "$this": {
     "prefix": "t",
     "body": "$this->$0",
-    "description": "$this"
   },
-  "thr": {
+  "throw new": {
     "prefix": "thr",
     "body": "throw new $0",
-    "description": "throw new"
   },
 }
