@@ -1,8 +1,53 @@
 {
+  "ctor": {
+    "prefix": "ctor",
+    "body": [
+      "function __construct($1){",
+      "\t$0",
+      "}"
+    ],
+    "description": "Create iteration loop"
+  },
   "eco": {
     "prefix": "eco",
     "body": "echo \"$0\";",
     "description": "'echo' statement"
+  },
+  "fore": {
+    "prefix": "fore",
+    "body": [
+      "foreach ($1 as $${2:item}) {",
+      "\t$0",
+      "}"
+    ],
+    "description": "foreach(iterable_expr as $value) {...}"
+  },
+  "forek": {
+    "prefix": "forek",
+    "body": [
+      "foreach ($1 as $${2:key} => $${3:index}) {",
+      "\t$0",
+      "}"
+    ],
+    "description": "foreach(iterable_expr as $key => $value) {...}"
+  },
+  "fori": {
+    "prefix": "fori",
+    "body": [
+      "for ($1$ = 0; $1$ < $2$; $1$++) {",
+      "\t$0",
+      "}"
+    ],
+    "description": "Create iteration loop"
+  },
+  "fun": {
+    "prefix": "fun",
+    "body": [
+      "function $1($2){",
+      "\t$0",
+      "}"
+    ],
+    "description": "Create iteration loop"
   },
   "inc": {
     "prefix": "inc",
@@ -74,6 +119,11 @@
     ],
     "description": "protected static function"
   },
+  "ps": {
+    "prefix": "ps",
+    "body": "public static $0",
+    "description": "public static"
+  },
   "pubf": {
     "prefix": "pubf",
     "body": [
@@ -103,6 +153,11 @@
     "prefix": "rqro",
     "body": "require_once \"$0\";",
     "description": "'require_once' statement"
+  },
+  "t": {
+    "prefix": "t",
+    "body": "$this->$0",
+    "description": "$this"
   },
   "thr": {
     "prefix": "thr",
