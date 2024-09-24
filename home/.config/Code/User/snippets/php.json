@@ -11,6 +11,34 @@
     "prefix": "eco",
     "body": "echo \"$0\";",
   },
+  "'include' statement": {
+    "prefix": "inc",
+    "body": "include \"$0\";",
+  },
+  "'include_once' statement": {
+    "prefix": "inco",
+    "body": "include_once \"$0\";",
+  },
+  "'require' statement": {
+    "prefix": "rqr",
+    "body": "require \"$0\";",
+  },
+  "'require_once' statement": {
+    "prefix": "rqro",
+    "body": "require_once \"$0\";",
+  },
+  "array": {
+    "prefix": "arr",
+    "body": [
+      "[$0];"
+    ],
+  },
+  "'key' => 'value'": {
+    "prefix": "kv",
+    "body": [
+      "$1 => $2,"
+    ],
+  },
   "foreach(iterable_expr as $value) {...}": {
     "prefix": "fore",
     "body": [
@@ -27,30 +55,31 @@
       "}"
     ],
   },
-  "Create iteration loop": {
+  "create iteration loop": {
     "prefix": "fori",
     "body": [
-      "for (\\$$1 = 0; $1 < $2; $1++) {",
+      "for (\\$$1 = 0; \\$$1 < $2; \\$$1++) {",
       "\t$0",
       "}"
     ],
+  },
+  "$this": {
+    "prefix": "t",
+    "body": "$this->$0",
+  },
+  "throw new": {
+    "prefix": "thr",
+    "body": "throw new $0",
   },
   "function": {
     "prefix": "fun",
     "body": [
-      "function $1($2){",
+      "function $1($2)$3",
+      "{",
       "\t$0",
       "}"
     ],
     "description": "Create iteration loop"
-  },
-  "'include' statement": {
-    "prefix": "inc",
-    "body": "include \"$0\";",
-  },
-  "'include_once' statement": {
-    "prefix": "inco",
-    "body": "include_once \"$0\";",
   },
   "private function": {
     "prefix": [
@@ -117,20 +146,67 @@
       "}"
     ],
   },
-  "'require' statement": {
-    "prefix": "rqr",
-    "body": "require \"$0\";",
+  "class": {
+    "prefix": "cl",
+    "body": [
+      "class $1",
+      "{",
+      "\t$0",
+      "}"
+    ],
   },
-  "'require_once' statement": {
-    "prefix": "rqro",
-    "body": "require_once \"$0\";",
+  "class ... extends": {
+    "prefix": "clx",
+    "body": [
+      "class $1 extends $2",
+      "{",
+      "\t$0",
+      "}"
+    ],
   },
-  "$this": {
-    "prefix": "t",
-    "body": "$this->$0",
+  "class ... implements ...": {
+    "prefix": "cli",
+    "body": [
+      "class $1 implements $2",
+      "{",
+      "\t$0",
+      "}"
+    ],
   },
-  "throw new": {
-    "prefix": "thr",
-    "body": "throw new $0",
+  "class ... extends ... implements ...": {
+    "prefix": "clxi",
+    "body": [
+      "class $1 extends $2 implements $3",
+      "{",
+      "\t$0",
+      "}"
+    ],
   },
+  "interface": {
+    "prefix": "in",
+    "body": [
+      "interface $1",
+      "{",
+      "\t$0",
+      "}"
+    ],
+  },
+  "interface ... extends ...": {
+    "prefix": "inx",
+    "body": [
+      "interface $1 extends $2",
+      "{",
+      "\t$0",
+      "}"
+    ],
+  },
+  "trait": {
+    "prefix": "trt",
+    "body": [
+      "trait $1",
+      "{",
+      "\t$0",
+      "}"
+    ],
+  }
 }
