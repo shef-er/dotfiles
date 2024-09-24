@@ -1,0 +1,10 @@
+[
+  {
+    "key": "ctrl+shift+[Backquote]",
+    "command": "workbench.action.terminal.new"
+  },
+  {
+    "key": "shift shift",
+    "command": "workbench.action.showCommands"
+  }
+]

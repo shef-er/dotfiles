@@ -1,0 +1,92 @@
+{
+  "window.customTitleBarVisibility": "auto",
+  "window.dialogStyle": "custom",
+  "window.titleBarStyle": "custom",
+  "window.title": "${dirty}${activeEditorShort}${separator}${rootName}",
+
+  "workbench.colorTheme": "Default Light Modern",
+  "workbench.editor.revealIfOpen": true,
+  "workbench.sideBar.location": "right",
+
+  "zenMode.hideLineNumbers": false,
+
+  "editor.codeLens": false,
+  "editor.minimap.enabled": false,
+  "editor.find.loop": false,
+  "editor.fontFamily": "'JetBrains Mono', 'monospace', monospace",
+  "editor.fontSize": 14,
+  "editor.fontLigatures": true,
+  "editor.formatOnPaste": true,
+  "editor.quickSuggestions": {
+    "comments": true
+  },
+  "editor.guides.bracketPairs": "active",
+
+  "files.associations": {
+    "*.blade.php": "html",
+    "*.twig": "html"
+  },
+  "files.autoSave": "onFocusChange",
+  "files.simpleDialog.enable": true,
+
+  "search.searchEditor.reusePriorSearchConfiguration": true,
+  "search.showLineNumbers": true,
+
+  // SCM
+  "scm.alwaysShowRepositories": true,
+  "scm.defaultViewMode": "tree",
+  "scm.repositories.sortOrder": "path",
+
+  "git.branchProtection": ["master", "main"],
+  "git.confirmSync": false,
+  "git.inputValidationLength": 200,
+  "git.inputValidationSubjectLength": null,
+
+  "github.gitProtocol": "ssh",
+
+  // Lang: Go
+  "gopls": {
+    "codelenses": {
+      // Show a code lens toggling the display of gc's choices.
+      "gc_details": true,
+      // Don't show the `go generate` lens.
+      "generate": true
+    }
+  },
+
+  // Lang: PHP
+  // "php.suggest.basic": false,
+  // "php.validate.enable": false,
+
+  // Python
+  "python.defaultInterpreterPath": "/bin/python",
+
+  // Telemetry
+  "telemetry.telemetryLevel": "off",
+  "redhat.telemetry.enabled": false,
+
+  // Extensions
+  "extensions.autoUpdate": "onlyEnabledExtensions",
+  "extensions.ignoreRecommendations": true,
+
+  "[dockercompose]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[sql]": {
+    "editor.defaultFormatter": "lea21st.vscode-sql-formatter"
+  },
+
+  "dotenv.enableAutocloaking": false,
+}
