@@ -3,14 +3,12 @@
   "window.dialogStyle": "custom",
   "window.titleBarStyle": "custom",
   "window.title": "${dirty}${activeEditorShort}${separator}${rootName}",
-
   "workbench.colorTheme": "Default Light Modern",
   "workbench.editor.revealIfOpen": true,
   "workbench.sideBar.location": "right",
-
+  // "zenMode.hideTabs": false,
   "zenMode.hideLineNumbers": false,
-
-  "editor.codeLens": false,
+  // "editor.codeLens": false,
   "editor.minimap.enabled": false,
   "editor.find.loop": false,
   "editor.fontFamily": "'JetBrains Mono', 'monospace', monospace",
@@ -21,31 +19,38 @@
     "comments": true
   },
   "editor.guides.bracketPairs": "active",
-
+  "diffEditor.ignoreTrimWhitespace": false,
   "files.associations": {
     "*.blade.php": "html",
-    "*.twig": "html"
+    "*.twig": "html",
+    // better use .gotmpl or .tmpl
+    "*.gohtml": "gotmpl",
+    "*.go.html": "gotmpl"
   },
   "files.autoSave": "onFocusChange",
   "files.simpleDialog.enable": true,
-
   "search.searchEditor.reusePriorSearchConfiguration": true,
   "search.showLineNumbers": true,
-
-  // SCM
+  //// SCM
   "scm.alwaysShowRepositories": true,
   "scm.defaultViewMode": "tree",
   "scm.repositories.sortOrder": "path",
-
-  "git.branchProtection": ["master", "main"],
+  "git.branchProtection": [
+    "master",
+    "main"
+  ],
   "git.confirmSync": false,
   "git.inputValidationLength": 200,
   "git.inputValidationSubjectLength": null,
-
   "github.gitProtocol": "ssh",
-
-  // Lang: Go
+  //// Telemetry
+  "telemetry.telemetryLevel": "off",
+  //// Extensions
+  "extensions.autoUpdate": "onlyEnabledExtensions",
+  "extensions.ignoreRecommendations": true,
+  //// Go
   "gopls": {
+    "ui.semanticTokens": true,
     "codelenses": {
       // Show a code lens toggling the display of gc's choices.
       "gc_details": true,
@@ -53,36 +58,27 @@
       "generate": true
     }
   },
-
-  // Lang: PHP
-  // "php.suggest.basic": false,
-  // "php.validate.enable": false,
-
-  // Python
-  "python.defaultInterpreterPath": "/bin/python",
-
-  // Telemetry
-  "telemetry.telemetryLevel": "off",
-  "redhat.telemetry.enabled": false,
-
-  // Extensions
-  "extensions.autoUpdate": "onlyEnabledExtensions",
-  "extensions.ignoreRecommendations": true,
-
-  "[dockercompose]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  "[gotmpl]": {
+    "editor.defaultFormatter": "golang.go"
   },
+  //// PHP
+  "php.suggest.basic": true,
+  "php.validate.enable": true,
+  "php.validate.executablePath": "/usr/bin/php",
+  //// Python
+  "python.defaultInterpreterPath": "/usr/bin/python",
+  //// Etc...
   "[html]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "vscode.html-language-features"
   },
   "[javascript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "vscode.typescript-language-features"
   },
   "[json]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "vscode.json-language-features"
   },
   "[jsonc]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "vscode.json-language-features"
   },
   "[snippets]": {
     "editor.defaultFormatter": "vscode.json-language-features"
@@ -90,6 +86,7 @@
   "[sql]": {
     "editor.defaultFormatter": "lea21st.vscode-sql-formatter"
   },
-
-  "dotenv.enableAutocloaking": false
+  "[yaml]": {
+    "editor.defaultFormatter": "redhat.vscode-yaml"
+  },
 }

@@ -1,0 +1,82 @@
+{
+    // Place your snippets for gotmpl here. Each snippet is defined under a snippet name and has a prefix, body and 
+    // description. The prefix is what is used to trigger the snippet and the body will be expanded and inserted. Possible variables are:
+    // $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders. Placeholders with the 
+    // same ids are connected.
+    "Define template": {
+        "prefix": "def",
+        "body": [
+            "{{- define \"$1\" -}}",
+            "$END$",
+            "{{- end -}}"
+        ],
+        "description": "Define template"
+    },
+    "Call template": {
+        "prefix": "templ",
+        "body": [
+            "{{ template \"$1\" $0}}"
+        ],
+        "description": "Call template"
+    },
+    "Go Template value": {
+        "prefix": "val",
+        "body": [
+            "{{ .$0 }}"
+        ],
+        "description": "Go Template value"
+    },
+    "Insert {{ else if }}": {
+        "prefix": "elif",
+        "body": [
+            "{{ else if $0 }}"
+        ],
+        "description": "Insert {{ else if }}"
+    },
+    "Insert {{ if }}": {
+        "prefix": "if",
+        "body": [
+            "{{ if $1 }}",
+            "$0",
+            "{{ end }}"
+        ],
+        "description": "Insert {{ if }}"
+    },
+    "Insert {{ if }}{{ else }}": {
+        "prefix": "if",
+        "body": [
+            "{{ if $1 }}",
+            "$0",
+            "{{ else }}",
+            "{{ end }}"
+        ],
+        "description": "Insert {{ if }}{{ else }}"
+    },
+    "{{ range }}": {
+        "prefix": "range",
+        "body": [
+            "{{ range .$1 }}",
+            "$0",
+            "{{ end }}"
+        ],
+        "description": "{{ range }}"
+    },
+    "Insert {{ range }} with key/value variables": {
+        "prefix": "rangekv",
+        "body": [
+            "{{ range \\$$1, \\$$2 := .$3 }}",
+            "$0",
+            "{{ end }}"
+        ],
+        "description": "Insert {{ range }} with key/value variables"
+    },
+    "Insert {{ with }}": {
+        "prefix": "with",
+        "body": [
+            "{{ with .$1 }}",
+            "$0",
+            "{{ end }}"
+        ],
+        "description": "Insert {{ with }}"
+    }
+}
