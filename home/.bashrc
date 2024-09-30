@@ -1,12 +1,15 @@
 #!/usr/bin/env bash
 
 # Should be near top
-[[ $- == *i* ]] && source "$HOME/.local/share/blesh/ble.sh"
+BLESH_INSTALL_PATH="$HOME/.local/share/blesh/ble.sh"
+# shellcheck disable=SC1090
+[[ $- == *i* ]] && [ -f "$BLESH_INSTALL_PATH" ] && source "$BLESH_INSTALL_PATH"
 
-# Just usual bash config
+# Just plain bash config
 if test -d "$XDG_CONFIG_HOME"/bashrc.d/; then
     for script in "$XDG_CONFIG_HOME"/bashrc.d/*; do
-        test -r "$script" && source "$script"
+        # shellcheck disable=SC1090
+        [ -r "$script" ] && source "$script"
     done
     unset script
 fi
