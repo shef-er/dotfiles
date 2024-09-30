@@ -21,11 +21,11 @@ git clone '<this-repo-url>' ~/.local/share/dotfiles
 Open dotfiles directory and link configs to `$HOME`:
 
 ```shell
-cd ~/.local/share/dotfiles
-make link
+(cd ~/.local/share/dotfiles && make link)
 ```
 
-### 1.1 **Shell**
+<!--
+### **Zsh**
 
 Install [zsh](https://wiki.archlinux.org/title/zsh) and make it your default shell
 
@@ -35,8 +35,9 @@ chsh -s /bin/zsh
 ```
 
 After that relogin into your session.
+-->
 
-### **Ble.sh**
+## **Ble.sh**
 
 ```shell
 BLESH_URL="https://github.com/akinomyoga/ble.sh/releases/download/v0.3.4/ble-0.3.4.tar.xz"
@@ -45,98 +46,7 @@ BLESH_TMP="/tmp/ble.tar.xz"
 (curl -Lo "$BLESH_TMP" "$BLESH_URL"; mkdir -p "$BLESH_DIR"; cd "$BLESH_DIR"; tar xJf "$BLESH_TMP" --strip-components 1; rm "$BLESH_TMP")
 ```
 
-### 1.2 **Gnome settings**
-
-### **Tap to click**
-
-Enable tap to click for your current user:
-
-```shell
-gsettings set org.gnome.desktop.peripherals.touchpad tap-to-click true
-```
-
-Enable tap to click for gdm user and restart GDM:
-
-```shell
-sudo machinectl shell gdm@ /bin/bash -c 'gsettings set org.gnome.desktop.peripherals.touchpad tap-to-click true'
-sudo systemctl restart gdm
-```
-
-### **Use CapsLock as Ctrl key**
-
-```shell
-gsettings set org.gnome.desktop.input-sources xkb-options "['caps:ctrl_modifier']"
-```
-
-### **Fonts**
-
-Install [JetBrains Mono](https://www.jetbrains.com/lp/mono/) and set it as default monospace font:
-
-```shell
-sudo pacman -Sy ttf-jetbrains-mono
-gsettings set org.gnome.desktop.interface monospace-font-name 'JetBrains Mono 13'
-```
-
-Install [Noto](https://fonts.google.com/noto) fonts
-
-```shell
-sudo pacman -Sy noto-fonts noto-fonts-cjk noto-fonts-emoji noto-fonts-extra
-```
-
-### **GTK3 theme**
-
-Install [adw-gtk3](https://github.com/lassekongo83/adw-gtk3):
-
-```shell
-sudo pacman -Sy adw-gtk-theme
-```
-
-Change the theme to adw-gtk3 light:
-
-```shell
-gsettings set org.gnome.desktop.interface gtk-theme 'adw-gtk3' && gsettings set org.gnome.desktop.interface color-scheme 'default'
-```
-
-### 1.2.4 **Tracker settings**
-
-Disable file indexing when running on battery:
-
-```shell
-gsettings set org.freedesktop.Tracker3.Miner.Files index-on-battery false
-```
-
-Reduce maximum number of UTF-8 bytes to extract:
-
-```shell
-gsettings set org.freedesktop.Tracker3.Extract max-bytes 10000
-```
-
-You can completely disable tracker file monitoring and reset tracker index:
-
-```shell
-gsettings set org.freedesktop.Tracker3.Miner.Files crawling-interval -2
-gsettings set org.freedesktop.Tracker3.Miner.Files enable-monitors false
-tracker3 reset --filesystem
-```
-
-### 1.2.5 **IBus settings (optional and questionable)**
-
-Install the [ibus](https://archlinux.org/packages/?name=ibus) package.
-
-```shell
-pacman -Sy ibus
-```
-
-Disable [IBus](https://wiki.archlinux.org/title/IBus) emoji hotkeys:
-
-```shell
-gsettings set org.freedesktop.ibus.panel.emoji hotkey "@as []"
-gsettings set org.freedesktop.ibus.panel.emoji unicode-hotkey "@as []"
-```
-
-## 2. **Applications**
-
-### 2.1 **Essentials**
+## **Essential applications**
 
 Packages to install:
 
@@ -162,6 +72,12 @@ sudo pacman -Sy \
     picard qt5-wayland
 ```
 
+Install [Noto](https://fonts.google.com/noto) and [JetBrains Mono](https://www.jetbrains.com/lp/mono/) fonts:
+
+```shell
+sudo pacman -Sy noto-fonts noto-fonts-cjk noto-fonts-emoji noto-fonts-extra ttf-jetbrains-mono
+```
+
 Install [Flatpak](https://wiki.archlinux.org/title/Flatpak) and [flathub](https://flathub.org/) repository:
 
 ```shell
@@ -185,15 +101,14 @@ Packages to remove:
 
 ```shell
 sudo pacman -Rs \
+    epiphany \
     gnome-logs \
     gnome-music \
     gnome-photos \
     gnome-software \
     gnome-user-docs \
     yelp \
-    totem \
-    cheese \
-    gnome-video-effects
+    totem
 ```
 
 ### 2.2 **AppImage**
@@ -202,17 +117,4 @@ AppImages require [FUSE](https://wiki.archlinux.org/title/FUSE) version 2 to run
 
 ```shell
 pacman -Sy fuse
-```
-
-## 3. Development tools
-
-### 3.1 Docker
-
-```shell
-sudo pacman -Sy docker docker-compose
-sudo systemctl enable --now docker.service
-sudo usermod -aG docker "$USER"
-echo '{ "registry-mirrors": ["https://mirror.gcr.io"] }' | sudo tee /etc/docker/daemon.json
-reboot
-docker run hello-world
 ```
