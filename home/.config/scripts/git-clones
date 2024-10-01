@@ -5,7 +5,7 @@ FRAG="${URI#*://}"
 FRAG="${FRAG#*@}"
 FRAG="${FRAG%.git}"
 
-# check if url begins with scema section like ssh://
+# check if url begins with schema section like ssh://
 if [[ "$URI" =~ ^[A-Za-z]+:// ]] ; then
     # for URI-like urls
     URI_HOST="${FRAG%%/*}"

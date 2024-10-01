@@ -39,12 +39,20 @@ After that relogin into your session.
 
 ## **Ble.sh**
 
+Install [ble.sh](https://wiki.archlinux.org/title/Bash#Syntax_highlighting_and_autosuggestions):
+
+```shell
+aur install blesh
+```
+
+<!--
 ```shell
 BLESH_URL="https://github.com/akinomyoga/ble.sh/releases/download/v0.3.4/ble-0.3.4.tar.xz"
 BLESH_DIR="$HOME/.local/share/blesh"
 BLESH_TMP="/tmp/ble.tar.xz"
 (curl -Lo "$BLESH_TMP" "$BLESH_URL"; mkdir -p "$BLESH_DIR"; cd "$BLESH_DIR"; tar xJf "$BLESH_TMP" --strip-components 1; rm "$BLESH_TMP")
 ```
+-->
 
 ## **Essential applications**
 

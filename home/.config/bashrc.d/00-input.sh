@@ -75,6 +75,5 @@ bind -m emacs '"\e[A": history-substring-search-backward'
 # anywhere in a history line. This is a non-incremental search.
 bind -m emacs '"\e[B": history-substring-search-forward'
 
-
 # bind -m emacs '"\e[A": history-search-backward'
 # bind -m emacs '"\e[B": history-search-forward'

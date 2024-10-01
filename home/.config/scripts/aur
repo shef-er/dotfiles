@@ -1,0 +1,41 @@
+#!/usr/bin/env bash
+
+SNAPSHOT_DEST="$HOME"/.local/share/aur/snapshot
+PACKAGE_DEST="$HOME"/.local/share/aur/package
+
+## makepkg vars
+export PKGDEST="$PACKAGE_DEST"
+export SRCDEST="/tmp/makepkg/src"
+export SRCPKGDEST="/tmp/makepkg/build"
+
+case "$1" in
+install | i)
+    [ -d "$SNAPSHOT_DEST" ] || /usr/bin/mkdir -p "$SNAPSHOT_DEST"
+    [ -d "$PKGDEST" ] || /usr/bin/mkdir -p "$PKGDEST"
+    [ -d "$SRCDEST" ] || /usr/bin/mkdir -p "$SRCDEST"
+    [ -d "$SRCPKGDEST" ] || /usr/bin/mkdir -p "$SRCPKGDEST"
+
+    PACKAGE_NAME=$2
+    if [ -n "$PACKAGE_NAME" ]; then
+        # clear previous snapshot if exists
+        [ -d "$SNAPSHOT_DEST/$PACKAGE_NAME" ] &&
+            /usr/bin/rm -r "${SNAPSHOT_DEST:?}/${PACKAGE_NAME:?}"
+
+        # download snapshot and build using makepkg
+        cd "$SNAPSHOT_DEST" &&
+            /usr/bin/curl -O "https://aur.archlinux.org/cgit/aur.git/snapshot/$PACKAGE_NAME.tar.gz" &&
+            /usr/bin/tar -xzf "$PACKAGE_NAME.tar.gz" &&
+            cd "$PACKAGE_NAME" &&
+            /usr/bin/makepkg --install --syncdeps --rmdeps --clean
+    fi
+    ;;
+clear-snapshot)
+    [ -d "$SNAPSHOT_DEST" ] && /usr/bin/rm -r "${SNAPSHOT_DEST:?}"
+    ;;
+clear-cache)
+    [ -d "$PKGDEST" ] && paccache -c "$PKGDEST"
+    ;;
+*)
+    exit 0
+    ;;
+esac
