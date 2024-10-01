@@ -24,19 +24,6 @@ Open dotfiles directory and link configs to `$HOME`:
 (cd ~/.local/share/dotfiles && make link)
 ```
 
-<!--
-### **Zsh**
-
-Install [zsh](https://wiki.archlinux.org/title/zsh) and make it your default shell
-
-```shell
-sudo pacman -Sy zsh zsh-autosuggestions zsh-completions
-chsh -s /bin/zsh
-```
-
-After that relogin into your session.
--->
-
 ## **Ble.sh**
 
 Install [ble.sh](https://wiki.archlinux.org/title/Bash#Syntax_highlighting_and_autosuggestions):
@@ -52,6 +39,19 @@ BLESH_DIR="$HOME/.local/share/blesh"
 BLESH_TMP="/tmp/ble.tar.xz"
 (curl -Lo "$BLESH_TMP" "$BLESH_URL"; mkdir -p "$BLESH_DIR"; cd "$BLESH_DIR"; tar xJf "$BLESH_TMP" --strip-components 1; rm "$BLESH_TMP")
 ```
+-->
+
+<!--
+### **Zsh**
+
+Install [zsh](https://wiki.archlinux.org/title/zsh) and make it your default shell
+
+```shell
+sudo pacman -Sy zsh zsh-autosuggestions zsh-completions
+chsh -s /bin/zsh
+```
+
+After that relogin into your session.
 -->
 
 ## **Essential applications**
@@ -92,10 +92,8 @@ Install [Flatpak](https://wiki.archlinux.org/title/Flatpak) and [flathub](https:
 sudo pacman -Sy flatpak
 flatpak --user remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
 
-flatpak --user install flathub \
-    io.bassi.Amberol \
-    com.valvesoftware.Steam \
-    org.nickvision.tubeconverter
+flatpak --user install flathub com.valvesoftware.Steam
+flatpak --user install flathub io.bassi.Amberol
 ```
 
 Install and enable [Syncthing](https://wiki.archlinux.org/title/Syncthing):
@@ -112,11 +110,8 @@ sudo pacman -Rs \
     epiphany \
     gnome-logs \
     gnome-music \
-    gnome-photos \
-    gnome-software \
-    gnome-user-docs \
     yelp \
-    totem
+    gnome-user-docs
 ```
 
 ### 2.2 **AppImage**
