@@ -5,6 +5,7 @@
   "window.title": "${dirty}${activeEditorShort}${separator}${rootName}",
   "workbench.colorTheme": "Default Light Modern",
   "workbench.editor.revealIfOpen": true,
+  "workbench.remoteIndicator.showExtensionRecommendations": false,
   "workbench.sideBar.location": "right",
   // "zenMode.hideTabs": false,
   "zenMode.hideLineNumbers": false,
