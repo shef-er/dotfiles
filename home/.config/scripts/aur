@@ -23,7 +23,7 @@ install | i)
 
         # download snapshot and build using makepkg
         cd "$SNAPSHOT_DEST" &&
-            /usr/bin/curl -O "https://aur.archlinux.org/cgit/aur.git/snapshot/$PACKAGE_NAME.tar.gz" &&
+            /usr/bin/curl -Of "https://aur.archlinux.org/cgit/aur.git/snapshot/$PACKAGE_NAME.tar.gz" &&
             /usr/bin/tar -xzf "$PACKAGE_NAME.tar.gz" &&
             cd "$PACKAGE_NAME" &&
             /usr/bin/makepkg --install --syncdeps --rmdeps --clean
