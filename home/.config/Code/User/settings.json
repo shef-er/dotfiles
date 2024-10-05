@@ -4,6 +4,8 @@
   "window.titleBarStyle": "custom",
   "window.title": "${dirty}${activeEditorShort}${separator}${rootName}",
   "workbench.colorTheme": "Default Light Modern",
+  "workbench.editor.highlightModifiedTabs": true,
+  "workbench.editor.pinnedTabSizing": "shrink",
   "workbench.editor.revealIfOpen": true,
   "workbench.remoteIndicator.showExtensionRecommendations": false,
   "workbench.sideBar.location": "right",
@@ -13,12 +15,13 @@
   "editor.minimap.enabled": false,
   "editor.find.loop": false,
   "editor.fontFamily": "'JetBrains Mono', 'monospace', monospace",
-  "editor.fontSize": 14,
+  "editor.fontSize": 13,
   "editor.fontLigatures": true,
   "editor.formatOnPaste": true,
   "editor.quickSuggestions": {
     "comments": true
   },
+  "editor.tabCompletion": "on",
   "editor.guides.bracketPairs": "active",
   "diffEditor.ignoreTrimWhitespace": false,
   "files.associations": {
@@ -63,9 +66,8 @@
     "editor.defaultFormatter": "golang.go"
   },
   //// PHP
-  "php.suggest.basic": true,
-  "php.validate.enable": true,
-  "php.validate.executablePath": "/usr/bin/php",
+  "php.suggest.basic": false,
+  "php.validate.enable": false,
   //// Python
   "python.defaultInterpreterPath": "/usr/bin/python",
   //// Etc...

@@ -73,6 +73,12 @@
 [interactive]
 	diffFilter = perl /usr/share/git/diff-highlight/diff-highlight
 
+[difftool "code"]
+  cmd = code --wait --diff $LOCAL $REMOTE
+
+[mergetool "code"]
+  cmd = code --wait $MERGED
+
 [alias]
 	patch = add --patch
 	graph = log --graph --author-date-order
