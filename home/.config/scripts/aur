@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+[ -z "$1" ] && exit 1
+
 SNAPSHOT_DEST="$HOME"/.local/share/aur/snapshot
 PACKAGE_DEST="$HOME"/.local/share/aur/package
 
@@ -8,14 +10,13 @@ export PKGDEST="$PACKAGE_DEST"
 export SRCDEST="/tmp/makepkg/src"
 export SRCPKGDEST="/tmp/makepkg/build"
 
-case "$1" in
-install | i)
+function aur::install() {
     [ -d "$SNAPSHOT_DEST" ] || /usr/bin/mkdir -p "$SNAPSHOT_DEST"
     [ -d "$PKGDEST" ] || /usr/bin/mkdir -p "$PKGDEST"
     [ -d "$SRCDEST" ] || /usr/bin/mkdir -p "$SRCDEST"
     [ -d "$SRCPKGDEST" ] || /usr/bin/mkdir -p "$SRCPKGDEST"
 
-    PACKAGE_NAME=$2
+    PACKAGE_NAME=$1
     if [ -n "$PACKAGE_NAME" ]; then
         # clear previous snapshot if exists
         [ -d "$SNAPSHOT_DEST/$PACKAGE_NAME" ] &&
@@ -28,14 +29,26 @@ install | i)
             cd "$PACKAGE_NAME" &&
             /usr/bin/makepkg --install --syncdeps --rmdeps --clean
     fi
-    ;;
-clear-snapshot)
-    [ -d "$SNAPSHOT_DEST" ] && /usr/bin/rm -r "${SNAPSHOT_DEST:?}"
-    ;;
-clear-cache)
+}
+
+function aur::clear-cache() {
     [ -d "$PKGDEST" ] && paccache -c "$PKGDEST"
+}
+
+function aur::clear-snapshot() {
+    [ -d "$SNAPSHOT_DEST" ] && /usr/bin/rm -r "${SNAPSHOT_DEST:?}"
+}
+
+case "$1" in
+--clear-snapshot)
+    aur::clear-snapshot
+    ;;
+--clear-cache)
+    aur::clear-cache
     ;;
 *)
-    exit 0
+    for arg in "$@"; do
+        aur::install "$arg"
+    done
     ;;
 esac
