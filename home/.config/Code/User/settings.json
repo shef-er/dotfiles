@@ -3,6 +3,7 @@
   "window.dialogStyle": "custom",
   "window.titleBarStyle": "custom",
   "window.title": "${dirty}${activeEditorShort}${separator}${rootName}",
+  "window.openFoldersInNewWindow": "on",
   "workbench.colorTheme": "Default Light Modern",
   "workbench.editor.highlightModifiedTabs": true,
   "workbench.editor.pinnedTabSizing": "shrink",
