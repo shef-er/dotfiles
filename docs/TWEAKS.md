@@ -43,7 +43,7 @@ context.modules = [
  ]
 ```
 
-## **Remap cursed copilot key to Right Ctrl**
+## **Remap copilot key (cursed) to Right Ctrl**
 
 [Map scancodes to keycodes](https://wiki.archlinux.org/title/Map_scancodes_to_keycodes)
 
@@ -119,7 +119,7 @@ gsettings set org.gnome.desktop.interface gtk-theme 'adw-gtk3'
 gsettings set org.gnome.desktop.interface color-scheme 'default'
 ```
 
-## **TinySPARQL (Tracker)**
+## **LocalSearch**
 
 Disable file indexing when running on battery:
 
@@ -138,7 +138,7 @@ You can completely disable tracker file monitoring and reset tracker index:
 ```shell
 gsettings set org.freedesktop.Tracker3.Miner.Files crawling-interval -2
 gsettings set org.freedesktop.Tracker3.Miner.Files enable-monitors false
-tracker3 reset --filesystem
+localsearch reset --filesystem
 ```
 
 ## **Power optimization**
