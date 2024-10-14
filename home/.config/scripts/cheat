@@ -20,17 +20,34 @@ __cheat_show() {
     [ -z "$1" ] && exit 1
     CHEAT="$CHEAT_PATH"/"$1"
     if [ -r "$CHEAT" ]; then
-        /usr/bin/sed '1 { /^---/ { :a N; /\n---/! ba; d} }' <"$CHEAT" | \
-        /usr/bin/awk  \
+        /usr/bin/awk \
             -v dim="$(tput dim)" \
             -v reset="$(tput sgr0)" \
-            '{
-                if ($1 == "#") {
-                    printf "%s%s%s\n", dim, $0, reset
-                } else {
-                    print $0
+            'BEGIN {
+                is_first_line=1;
+                is_front_matter=0;
+            }
+            /^---$/ {
+                if (is_first_line) {
+                    is_front_matter=1;
                 }
-            }'
+            }
+            {
+                if (! is_front_matter) {
+                    if ($1 == "#") {
+                        printf "%s%s%s\n", dim, $0, reset;
+                    } else {
+                        print $0;
+                    }
+                }
+            }
+            /^(---)$/ {
+                if (! is_first_line) {
+                    is_front_matter=0;
+                }
+                is_first_line=0;
+            }' \
+            <"$CHEAT"
     fi
 }
 
