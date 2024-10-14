@@ -1,0 +1,63 @@
+#!/usr/bin/env bash
+
+[ -z "$EDITOR" ] && export EDITOR=/usr/bin/nano
+[ -z "$CHEAT_PATH" ] && export CHEAT_PATH="$XDG_CONFIG_HOME"/cheat
+
+__cheat_help() {
+    /usr/bin/echo "Usage:"
+    /usr/bin/echo "  ${0##*/} -h                       Show this help"
+    /usr/bin/echo "  ${0##*/}                          List available cheats"
+    /usr/bin/echo "  ${0##*/} <NAME>                   Show cheat"
+    /usr/bin/echo "  ${0##*/} -e <NAME>                Edit cheat"
+    /usr/bin/echo "  ${0##*/} -r <NAME>                Remove cheat"
+}
+
+__cheat_list() {
+    /usr/bin/ls -1A "$CHEAT_PATH"
+}
+
+__cheat_show() {
+    [ -z "$1" ] && exit 1
+    CHEAT="$CHEAT_PATH"/"$1"
+    if [ -r "$CHEAT" ]; then
+        /usr/bin/sed '1 { /^---/ { :a N; /\n---/! ba; d} }' <"$CHEAT"
+    fi
+}
+
+__cheat_edit() {
+    [ -z "$1" ] && exit 1
+    [ -d "$CHEAT_PATH" ] || /usr/bin/mkdir -p
+    $EDITOR "$CHEAT_PATH"/"$1"
+}
+
+__cheat_remove() {
+    [ -z "$1" ] && exit 1
+    /usr/bin/rm "$CHEAT_PATH"/"$1"
+}
+
+case "$1" in
+-h)
+    __cheat_help
+    ;;
+-e)
+    if [ -z "$2" ]; then
+        __cheat_help
+        exit 1
+    fi
+    __cheat_edit "$2"
+    ;;
+-r)
+    if [ -z "$2" ]; then
+        __cheat_help
+        exit 1
+    fi
+    __cheat_remove "$2"
+    ;;
+*)
+    if [ -z "$1" ]; then
+        __cheat_list
+        exit
+    fi
+    __cheat_show "$1"
+    ;;
+esac
