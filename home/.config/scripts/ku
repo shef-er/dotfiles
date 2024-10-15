@@ -88,7 +88,7 @@ function ku_prompt_pwd {
         echo -n "${PWD#"${PWD%/*/*}/"}"
         ;;
     "$HOME"/*)
-        echo -n ~/"${PWD##*/}"
+        echo -n \~/"${PWD##*/}"
         ;;
     *)
         echo -n "${PWD#"${PWD%/*/*}/"}"
