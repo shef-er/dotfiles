@@ -1,164 +1,120 @@
 #!/usr/bin/env bash
 
-function ku::main {
+function ku_init {
     case "$1" in
-        prompt)
-            ku::validate "$2"
-            ku::prompt "$2"
-            ;;
-        title)
-            ku::validate "$2"
-            ku::title "$2"
-            ;;
-        init)
-            ku::validate "$2"
-            ku::init "$2"
-            ;;
-        *)
-            exit 0
-            ;;
+    bash)
+        cat <<EOF
+export _NO_NEWLINE=1
+function prompt_ku_precmd {
+    PS1="\$(ku prompt)"
+    [ "\$_NO_NEWLINE" ] && unset _NO_NEWLINE
+}
+PROMPT_COMMAND+=('prompt_ku_precmd')
+PROMPT_COMMAND+=('ku title bash')
+EOF
+        ;;
+    zsh)
+        cat <<EOF
+export _NO_NEWLINE=1
+function prompt_ku_precmd {
+    PROMPT="\$(ku prompt)"
+    [ "\$_NO_NEWLINE" ] && unset _NO_NEWLINE
+}
+autoload -Uz add-zsh-hook && add-zsh-hook precmd prompt_ku_precmd
+EOF
+        ;;
+    *)
+        exit 1
+        ;;
     esac
 }
 
-function ku::validate {
+function ku_title {
     case "$1" in
-        bash|zsh) ;;
-        *) exit 0 ;;
+    bash)
+        echo -en "\033]0;$1 $(pwd)\007"
+        ;;
+    zsh)
+        echo -en "\e]0;$1 $(pwd)\a"
+        ;;
+    *)
+        exit 1
+        ;;
     esac
 }
 
-function ku::prompt {
-    red=''
-    grn=''
-    blu=''
-    cyn=''
-    rst=''
-    case "$1" in
-        bash)
-            # bright colors
-            red='\[\e[1;31m\]'
-            grn='\[\e[1;32m\]'
-            blu='\[\e[1;34m\]'
-            cyn='\[\e[1;36m\]'
-            rst='\[\e[0m\]'
-            ;;
-        zsh)
-            # bright colors
-            red='%B%F{1}'
-            grn='%B%F{2}'
-            blu='%B%F{4}'
-            cyn='%B%F{6}'
-            rst='%f%b'
-            ;;
-    esac
+function ku_prompt {
+    bold="$(tput bold)"
+    red="$(tput setaf 1)"
+    cyn="$(tput setaf 6)"
+    reset="$(tput sgr0)"
 
-    prompt="$rst"
+    prompt="$reset"
 
+    ### New line
     if [ -z "$_NO_NEWLINE" ]; then
         prompt+=$'\n'
     fi
+    prompt+=" "
 
-    prompt+="${blu}$(ku::segment::pwd)${rst} "
+    ### Path to working dir
+    prompt+="$bold$cyn$(ku_prompt_pwd)$reset "
 
-    git="$(prompt-git)"
-    if [ -n "$git" ]; then
-        prompt+="${cyn}$git${rst} "
-    fi
+    ### Git
+    # git="$(prompt-git)"
+    # if [ -n "$git" ]; then
+    #     prompt+="$bold$blu$git$reset "
+    # fi
+    # prompt+=$'\n'
+    # prompt+=" "
 
-    prompt+=$'\n'
-
-    sign="$(ku::segment::sign "$1" )"
-    if [ "$sign" = '#' ]; then
-        prompt+="${red}$sign${rst} "
+    ### Sign
+    if [ "$(id -u)" -eq 0 ]; then
+        prompt+="$bold$red$(ku_prompt_sign)$reset "
     else
-        prompt+="${grn}$sign${rst} "
+        prompt+="$bold$(ku_prompt_sign)$reset "
     fi
 
     echo -n "$prompt"
 }
 
-function ku::title {
-    case "$1" in
-        bash)
-            echo -en "\033]0;$1 $(pwd)\007"
-            ;;
-        zsh)
-            echo -en "\e]0;$1 $(pwd)\a"
-            ;;
+function ku_prompt_pwd {
+    [ -z "$PWD" ] && PWD="$(pwd)"
+    case "$PWD" in
+    "$HOME")
+        echo -n '~'
+        ;;
+    "$HOME"/*/*)
+        echo -n "${PWD#"${PWD%/*/*}/"}"
+        ;;
+    "$HOME"/*)
+        echo -n ~/"${PWD##*/}"
+        ;;
+    *)
+        echo -n "${PWD#"${PWD%/*/*}/"}"
+        ;;
     esac
 }
 
-function ku::init {
-    case "$1" in
-        bash)
-            cat <<EOF
-export _NO_NEWLINE=1
-
-function prompt_ku_precmd {
-    PS1="\$(ku prompt bash)"
-
-    if test -n "\$_NO_NEWLINE"; then
-        unset _NO_NEWLINE
-    fi
-}
-
-PROMPT_COMMAND+=('prompt_ku_precmd')
-PROMPT_COMMAND+=('ku title bash')
-EOF
-            ;;
-        zsh)
-            cat <<EOF
-export _NO_NEWLINE=1
-
-function prompt_ku_precmd {
-    PROMPT="\$(ku prompt zsh)"
-
-    if test -n "\$_NO_NEWLINE"; then
-        unset _NO_NEWLINE
-    fi
-}
-
-autoload -Uz add-zsh-hook && add-zsh-hook precmd prompt_ku_precmd
-EOF
-            ;;
-        *)
-            exit 0
-            ;;
-    esac
-}
-
-function ku::segment::pwd {
-    local pwd
-    pwd="$(pwd)"
-    case "$pwd" in
-        "$HOME")
-            echo -n '~'
-            ;;
-        "$HOME"/*/*)
-            echo -n "${pwd#"${pwd%/*/*}/"}"
-            ;;
-        "$HOME"/*)
-            echo -n ~/"${pwd##*/}"
-            ;;
-        *)
-            echo -n "${pwd#"${pwd%/*/*}/"}"
-            ;;
-    esac
-}
-
-function ku::segment::sign {
+function ku_prompt_sign {
     if [ "$(id -u)" -eq 0 ]; then
         echo -n "#"
     else
-        case "$1" in
-            bash)
-                echo -n "\$"
-                ;;
-            zsh)
-                echo -n "%%"
-                ;;
-        esac
+        echo -n ">"
     fi
 }
 
-ku::main "$@"
+case "$1" in
+prompt)
+    ku_prompt "$2"
+    ;;
+title)
+    ku_title "$2"
+    ;;
+init)
+    ku_init "$2"
+    ;;
+*)
+    exit 1
+    ;;
+esac
