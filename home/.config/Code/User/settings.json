@@ -6,7 +6,7 @@
   "window.openFoldersInNewWindow": "on",
   "workbench.colorTheme": "Default Light Modern",
   "workbench.editor.highlightModifiedTabs": true,
-  "workbench.editor.pinnedTabSizing": "shrink",
+  "workbench.editor.pinnedTabSizing": "compact",
   "workbench.editor.revealIfOpen": true,
   "workbench.remoteIndicator.showExtensionRecommendations": false,
   "workbench.sideBar.location": "right",

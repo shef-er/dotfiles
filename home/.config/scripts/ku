@@ -1,16 +1,24 @@
 #!/usr/bin/env bash
 
+function ku_shell {
+    if [ -n "$ZSH_VERSION" ]; then
+        echo -n 'zsh'
+    elif [ -n "$BASH_VERSION" ]; then
+        echo -n 'bash'
+    fi
+}
+
 function ku_init {
-    case "$1" in
+    case "$(ku_shell)" in
     bash)
         cat <<EOF
 export _NO_NEWLINE=1
 function prompt_ku_precmd {
     PS1="\$(ku prompt)"
-    [ "\$_NO_NEWLINE" ] && unset _NO_NEWLINE
+    [ -n "\$_NO_NEWLINE" ] && unset _NO_NEWLINE
 }
 PROMPT_COMMAND+=('prompt_ku_precmd')
-PROMPT_COMMAND+=('ku title bash')
+PROMPT_COMMAND+=('ku title')
 EOF
         ;;
     zsh)
@@ -18,7 +26,7 @@ EOF
 export _NO_NEWLINE=1
 function prompt_ku_precmd {
     PROMPT="\$(ku prompt)"
-    [ "\$_NO_NEWLINE" ] && unset _NO_NEWLINE
+    [ -n "\$_NO_NEWLINE" ] && unset _NO_NEWLINE
 }
 autoload -Uz add-zsh-hook && add-zsh-hook precmd prompt_ku_precmd
 EOF
@@ -30,7 +38,7 @@ EOF
 }
 
 function ku_title {
-    case "$1" in
+    case "$(ku_shell)" in
     bash)
         echo -en "\033]0;$1 $(pwd)\007"
         ;;
@@ -44,36 +52,54 @@ function ku_title {
 }
 
 function ku_prompt {
-    bold="$(tput bold)"
-    red="$(tput setaf 1)"
-    cyn="$(tput setaf 6)"
-    reset="$(tput sgr0)"
+    BLD=""
+    RED=""
+    CYN=""
+    RST=""
+    case "$(ku_shell)" in
+    bash)
+        BLD="\[$(tput bold)\]"
+        RST="\[$(tput sgr0)\]"
+        RED="\[$(tput setaf 1)\]"
+        CYN="\[$(tput setaf 6)\]"
+        ;;
+    zsh)
+        BLD="$(tput bold)"
+        RST="$(tput sgr0)"
+        RED="$(tput setaf 1)"
+        CYN="$(tput setaf 6)"
+        ;;
+    esac
 
-    prompt="$reset"
+    prompt="$RST"
 
     ### New line
     if [ -z "$_NO_NEWLINE" ]; then
         prompt+=$'\n'
     fi
-    prompt+=" "
+    prompt+=' '
 
     ### Path to working dir
-    prompt+="$bold$cyn$(ku_prompt_pwd)$reset "
+    prompt+="$BLD$CYN$(ku_prompt_pwd)$RST"
+    prompt+=' '
 
     ### Git
     # git="$(prompt-git)"
     # if [ -n "$git" ]; then
-    #     prompt+="$bold$blu$git$reset "
+    #     prompt+="$BLD$blu$git$RST"
     # fi
+    # prompt+=' '
+    #
     # prompt+=$'\n'
-    # prompt+=" "
+    # prompt+=' '
 
     ### Sign
     if [ "$(id -u)" -eq 0 ]; then
-        prompt+="$bold$red$(ku_prompt_sign)$reset "
+        prompt+="$BLD$RED$(ku_prompt_sign)$RST"
     else
-        prompt+="$bold$(ku_prompt_sign)$reset "
+        prompt+="$BLD$(ku_prompt_sign)$RST"
     fi
+    prompt+=' '
 
     echo -n "$prompt"
 }
@@ -88,7 +114,8 @@ function ku_prompt_pwd {
         echo -n "${PWD#"${PWD%/*/*}/"}"
         ;;
     "$HOME"/*)
-        echo -n \~/"${PWD##*/}"
+        echo -n '~'/
+        echo -n "${PWD##*/}"
         ;;
     *)
         echo -n "${PWD#"${PWD%/*/*}/"}"
@@ -98,9 +125,9 @@ function ku_prompt_pwd {
 
 function ku_prompt_sign {
     if [ "$(id -u)" -eq 0 ]; then
-        echo -n "#"
+        echo -n '#'
     else
-        echo -n ">"
+        echo -n '>'
     fi
 }
 
