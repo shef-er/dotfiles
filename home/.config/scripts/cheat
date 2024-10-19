@@ -3,20 +3,20 @@
 [ -z "$EDITOR" ] && export EDITOR=/usr/bin/nano
 [ -z "$CHEAT_PATH" ] && export CHEAT_PATH="$XDG_CONFIG_HOME"/cheat
 
-__cheat_help() {
+_cheat_help() {
     /usr/bin/echo "Usage:"
-    /usr/bin/echo "  ${0##*/} -h                       Show this help"
     /usr/bin/echo "  ${0##*/}                          List available cheats"
-    /usr/bin/echo "  ${0##*/} <NAME>                   Show cheat"
-    /usr/bin/echo "  ${0##*/} -e <NAME>                Edit cheat"
-    /usr/bin/echo "  ${0##*/} -r <NAME>                Remove cheat"
+    /usr/bin/echo "  ${0##*/} <NAME>                   Show cheat by NAME"
+    /usr/bin/echo "  ${0##*/} -e <NAME>                Edit cheat by NAME"
+    /usr/bin/echo "  ${0##*/} -r <NAME>                Remove cheat by NAME"
+    /usr/bin/echo "  ${0##*/} -h                       Show this help"
 }
 
-__cheat_list() {
+_cheat_list() {
     /usr/bin/ls -1A "$CHEAT_PATH"
 }
 
-__cheat_show() {
+_cheat_show() {
     [ -z "$1" ] && exit 1
     CHEAT="$CHEAT_PATH"/"$1"
     if [ -r "$CHEAT" ]; then
@@ -51,40 +51,40 @@ __cheat_show() {
     fi
 }
 
-__cheat_edit() {
+_cheat_edit() {
     [ -z "$1" ] && exit 1
     [ -d "$CHEAT_PATH" ] || /usr/bin/mkdir -p
     $EDITOR "$CHEAT_PATH"/"$1"
 }
 
-__cheat_remove() {
+_cheat_remove() {
     [ -z "$1" ] && exit 1
     /usr/bin/rm "$CHEAT_PATH"/"$1"
 }
 
 case "$1" in
 -h)
-    __cheat_help
+    _cheat_help
     ;;
 -e)
     if [ -z "$2" ]; then
-        __cheat_help
+        _cheat_help
         exit 1
     fi
-    __cheat_edit "$2"
+    _cheat_edit "$2"
     ;;
 -r)
     if [ -z "$2" ]; then
-        __cheat_help
+        _cheat_help
         exit 1
     fi
-    __cheat_remove "$2"
+    _cheat_remove "$2"
     ;;
 *)
     if [ -z "$1" ]; then
-        __cheat_list
+        _cheat_list
         exit
     fi
-    __cheat_show "$1"
+    _cheat_show "$1"
     ;;
 esac

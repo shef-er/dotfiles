@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 
 [ -z "$1" ] && exit 1
 
@@ -10,7 +10,15 @@ export PKGDEST="$PACKAGE_DEST"
 export SRCDEST="/tmp/makepkg/src"
 export SRCPKGDEST="/tmp/makepkg/build"
 
-function aur::install() {
+_aur_help() {
+    /usr/bin/echo "Usage:"
+    /usr/bin/echo "  ${0##*/} <NAME> [NAME1] [NAME2]   Install packages in order"
+    /usr/bin/echo "  ${0##*/} -cp                      Clear packages cache"
+    /usr/bin/echo "  ${0##*/} -cs                      Clear snapshots cache"
+    /usr/bin/echo "  ${0##*/} -h                       Show this help"
+}
+
+_aur_install() {
     [ -d "$SNAPSHOT_DEST" ] || /usr/bin/mkdir -p "$SNAPSHOT_DEST"
     [ -d "$PKGDEST" ] || /usr/bin/mkdir -p "$PKGDEST"
     [ -d "$SRCDEST" ] || /usr/bin/mkdir -p "$SRCDEST"
@@ -31,24 +39,27 @@ function aur::install() {
     fi
 }
 
-function aur::clear-cache() {
+_aur_clear_packages() {
     [ -d "$PKGDEST" ] && paccache -c "$PKGDEST"
 }
 
-function aur::clear-snapshot() {
+_aur_clear_snapshots() {
     [ -d "$SNAPSHOT_DEST" ] && /usr/bin/rm -r "${SNAPSHOT_DEST:?}"
 }
 
 case "$1" in
---clear-snapshot)
-    aur::clear-snapshot
+-cs)
+    _aur_clear_snapshots
     ;;
---clear-cache)
-    aur::clear-cache
+-cp)
+    _aur_clear_packages
+    ;;
+-h)
+    _aur_help
     ;;
 *)
     for arg in "$@"; do
-        aur::install "$arg"
+        _aur_install "$arg"
     done
     ;;
 esac

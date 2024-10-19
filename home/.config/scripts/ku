@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-function ku_shell {
+function _ku_shell {
     if [ -n "$ZSH_VERSION" ]; then
         echo -n 'zsh'
     elif [ -n "$BASH_VERSION" ]; then
@@ -8,8 +8,8 @@ function ku_shell {
     fi
 }
 
-function ku_init {
-    case "$(ku_shell)" in
+function _ku_init {
+    case "$(_ku_shell)" in
     bash)
         cat <<EOF
 export _NO_NEWLINE=1
@@ -37,8 +37,8 @@ EOF
     esac
 }
 
-function ku_title {
-    case "$(ku_shell)" in
+function _ku_title {
+    case "$(_ku_shell)" in
     bash)
         echo -en "\033]0;$1 $(pwd)\007"
         ;;
@@ -51,12 +51,12 @@ function ku_title {
     esac
 }
 
-function ku_prompt {
+function _ku_prompt {
     BLD=""
     RED=""
     CYN=""
     RST=""
-    case "$(ku_shell)" in
+    case "$(_ku_shell)" in
     bash)
         BLD="\[$(tput bold)\]"
         RST="\[$(tput sgr0)\]"
@@ -80,7 +80,7 @@ function ku_prompt {
     prompt+=' '
 
     ### Path to working dir
-    prompt+="$BLD$CYN$(ku_prompt_pwd)$RST"
+    prompt+="$BLD$CYN$(_ku_prompt_pwd)$RST"
     prompt+=' '
 
     ### Git
@@ -95,16 +95,16 @@ function ku_prompt {
 
     ### Sign
     if [ "$(id -u)" -eq 0 ]; then
-        prompt+="$BLD$RED$(ku_prompt_sign)$RST"
+        prompt+="$BLD$RED$(_ku_prompt_sign)$RST"
     else
-        prompt+="$BLD$(ku_prompt_sign)$RST"
+        prompt+="$BLD$(_ku_prompt_sign)$RST"
     fi
     prompt+=' '
 
     echo -n "$prompt"
 }
 
-function ku_prompt_pwd {
+function _ku_prompt_pwd {
     [ -z "$PWD" ] && PWD="$(pwd)"
     case "$PWD" in
     "$HOME")
@@ -123,7 +123,7 @@ function ku_prompt_pwd {
     esac
 }
 
-function ku_prompt_sign {
+function _ku_prompt_sign {
     if [ "$(id -u)" -eq 0 ]; then
         echo -n '#'
     else
@@ -133,13 +133,13 @@ function ku_prompt_sign {
 
 case "$1" in
 prompt)
-    ku_prompt "$2"
+    _ku_prompt "$2"
     ;;
 title)
-    ku_title "$2"
+    _ku_title "$2"
     ;;
 init)
-    ku_init "$2"
+    _ku_init "$2"
     ;;
 *)
     exit 1
