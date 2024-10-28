@@ -80,6 +80,10 @@
   cmd = code --wait $MERGED
 
 [alias]
+	uncommit = reset HEAD~
+	undo = uncommit
+
+
 	patch = add --patch
 	graph = log --graph --author-date-order
     fixup = commit --fixup
