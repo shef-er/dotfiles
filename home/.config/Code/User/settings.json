@@ -17,7 +17,7 @@
   "editor.find.loop": false,
   "editor.fontFamily": "'JetBrains Mono', 'monospace', monospace",
   "editor.fontSize": 13,
-  "editor.fontLigatures": true,
+  "editor.fontLigatures": false,
   "editor.formatOnPaste": true,
   "editor.quickSuggestions": {
     "comments": true
@@ -26,11 +26,12 @@
   "editor.guides.bracketPairs": "active",
   "diffEditor.ignoreTrimWhitespace": false,
   "files.associations": {
+    ".env.*": "dotenv",
     "*.blade.php": "html",
     "*.twig": "html",
     // better use .gotmpl or .tmpl
     "*.gohtml": "gotmpl",
-    "*.go.html": "gotmpl"
+    "*.go.html": "gotmpl",
   },
   "files.autoSave": "onFocusChange",
   "files.simpleDialog.enable": true,
