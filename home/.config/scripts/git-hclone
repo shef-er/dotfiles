@@ -1,20 +1,35 @@
 #!/usr/bin/env bash
 
+GITCMD="$(command -v git 2>/dev/null)"
+
+if [ -z "$GITCMD" ]; then
+    exit 1
+fi
+
+if [ -z "$1" ]; then
+    exit 1
+fi
+
 URI="$1"
 FRAG="${URI#*://}"
 FRAG="${FRAG#*@}"
+
+# Cut out '.git' suffix from uri
 FRAG="${FRAG%.git}"
 
-# check if url begins with schema section like ssh://
-if [[ "$URI" =~ ^[A-Za-z]+:// ]] ; then
-    # for URI-like urls
-    URI_HOST="${FRAG%%/*}"
-    URI_HOST="${URI_HOST%%\:*}"
+# Check if URI begins with schema section like 'http://' or 'ssh://'
+if [[ "$URI" =~ ^[A-Za-z]+:// ]]; then
+    # for URI-like
+    URI_HOST_DIRTY="${FRAG%%/*}"
+    URI_HOST="${URI_HOST_DIRTY%%\:*}"
+
     URI_PATH="${FRAG#*/}"
 else
-    # for scp-like urls
-    URI_HOST="${FRAG%%\:*}"
+    # for scp-like
+    URI_HOST_DIRTY="$FRAG"
+    URI_HOST="${URI_HOST_DIRTY%%\:*}"
+
     URI_PATH="${FRAG#*\:}"
 fi
 
-git clone "$URI" "$HOME/${GIT_CLONES_DIR:-Clones}/$URI_HOST/$URI_PATH"
+$GITCMD clone "$URI" "$HOME/${GIT_CLONE_ROOT:-Clones}/$URI_HOST/$URI_PATH"
