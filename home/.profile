@@ -28,5 +28,5 @@ path_prepend "$XDG_BIN_HOME"
 # move to bashrc?
 path_prepend "$XDG_CONFIG_HOME"/scripts
 
-# Unload our profile API functions
+# Unload profile API functions
 unset -f path_prepend

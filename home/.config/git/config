@@ -100,4 +100,5 @@
 	gwf = gw --first-parent
 
 	# Custom scripts aliases
-	clones = clones
+	hclone = hclone
+	clones = hclone
