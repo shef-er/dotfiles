@@ -10,13 +10,13 @@ if [ -z "$gitcmd" ]; then
     exit 1
 fi
 
-function _hclone_prepare_address_fragments {
-    fragments="$1"
+function _hclone_prepare_address {
+    address="$1"
 
-    # Cut out schema prefix
-    fragments="${fragments#*://}"
+    # Cut out 'schema://' prefix if present
+    fragments="${address#*://}"
 
-    # Cut out user prefix
+    # Cut out 'user@'' prefix
     fragments="${fragments#*@}"
 
     # Cut out '.git' suffix
@@ -26,7 +26,9 @@ function _hclone_prepare_address_fragments {
 }
 
 function _hclone_parse_path_from_url_address {
-    fragments="$(_hclone_prepare_address_fragments "$1")"
+    address="$1"
+
+    fragments="$(_hclone_prepare_address "$address")"
 
     host_fragment="${fragments%%/*}"
     host="${host_fragment%%\:*}"
@@ -37,7 +39,9 @@ function _hclone_parse_path_from_url_address {
 }
 
 function _hclone_parse_path_from_scp_address {
-    fragments="$(_hclone_prepare_address_fragments "$1")"
+    address="$1"
+
+    fragments="$(_hclone_prepare_address "$address")"
 
     host_fragment="$fragments"
     host="${host_fragment%%\:*}"
@@ -66,4 +70,6 @@ fi
 
 uri="$1"
 
-$gitcmd clone -- "$uri" "$HOME/$GIT_CLONE_ROOT/$(_hclone_parse_path_from_address "$uri")"
+path="$HOME/$GIT_CLONE_ROOT/$(_hclone_parse_path_from_address "$uri")"
+
+$gitcmd clone -- "$uri" "$path"
