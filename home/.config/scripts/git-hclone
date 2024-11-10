@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 
-GITCMD="$(command -v git 2>/dev/null)"
+GIT_CLONE_ROOT=${GIT_CLONE_ROOT:-Clones}
 
-if [ -z "$GITCMD" ]; then
+gitcmd="$(command -v git 2>/dev/null)"
+
+if [ -z "$gitcmd" ]; then
     exit 1
 fi
 
@@ -10,26 +12,29 @@ if [ -z "$1" ]; then
     exit 1
 fi
 
-URI="$1"
-FRAG="${URI#*://}"
-FRAG="${FRAG#*@}"
+uri="$1"
 
-# Cut out '.git' suffix from uri
-FRAG="${FRAG%.git}"
+# Cut out schema prefix
+fragments="${uri#*://}"
 
-# Check if URI begins with schema section like 'http://' or 'ssh://'
-if [[ "$URI" =~ ^[A-Za-z]+:// ]]; then
-    # for URI-like
-    URI_HOST_DIRTY="${FRAG%%/*}"
-    URI_HOST="${URI_HOST_DIRTY%%\:*}"
+# Cut out user prefix
+fragments="${fragments#*@}"
 
-    URI_PATH="${FRAG#*/}"
+# Cut out '.git' suffix
+fragments="${fragments%.git}"
+
+# Check if URI has schema prefix like 'http://' or 'ssh://'
+if [[ "$uri" =~ ^[A-Za-z]+:// ]]; then
+    uri_host_dirty="${fragments%%/*}"
+    uri_host="${uri_host_dirty%%\:*}"
+
+    uri_path="${fragments#*/}"
 else
-    # for scp-like
-    URI_HOST_DIRTY="$FRAG"
-    URI_HOST="${URI_HOST_DIRTY%%\:*}"
+    # For scp-like
+    uri_host_dirty="$fragments"
+    uri_host="${uri_host_dirty%%\:*}"
 
-    URI_PATH="${FRAG#*\:}"
+    uri_path="${fragments#*\:}"
 fi
 
-$GITCMD clone "$URI" "$HOME/${GIT_CLONE_ROOT:-Clones}/$URI_HOST/$URI_PATH"
+$gitcmd clone -- "$uri" "$HOME/$GIT_CLONE_ROOT/$uri_host/$uri_path"
