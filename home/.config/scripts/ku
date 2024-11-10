@@ -2,9 +2,9 @@
 
 function _ku_shell {
     if [ -n "$ZSH_VERSION" ]; then
-        echo -n 'zsh'
+        /usr/bin/echo -n 'zsh'
     elif [ -n "$BASH_VERSION" ]; then
-        echo -n 'bash'
+        /usr/bin/echo -n 'bash'
     fi
 }
 
@@ -40,10 +40,10 @@ EOF
 function _ku_title {
     case "$(_ku_shell)" in
     bash)
-        echo -en "\033]0;$1 $(pwd)\007"
+        /usr/bin/echo -en "\033]0;$1 $(pwd)\007"
         ;;
     zsh)
-        echo -en "\e]0;$1 $(pwd)\a"
+        /usr/bin/echo -en "\e]0;$1 $(pwd)\a"
         ;;
     *)
         exit 1
@@ -101,33 +101,33 @@ function _ku_prompt {
     fi
     prompt+=' '
 
-    echo -n "$prompt"
+    /usr/bin/echo -n "$prompt"
 }
 
 function _ku_prompt_pwd {
     [ -z "$PWD" ] && PWD="$(pwd)"
     case "$PWD" in
     "$HOME")
-        echo -n '~'
+        /usr/bin/echo -n '~'
         ;;
     "$HOME"/*/*)
-        echo -n "${PWD#"${PWD%/*/*}/"}"
+        /usr/bin/echo -n "${PWD#"${PWD%/*/*}/"}"
         ;;
     "$HOME"/*)
-        echo -n '~'/
-        echo -n "${PWD##*/}"
+        /usr/bin/echo -n '~'/
+        /usr/bin/echo -n "${PWD##*/}"
         ;;
     *)
-        echo -n "${PWD#"${PWD%/*/*}/"}"
+        /usr/bin/echo -n "${PWD#"${PWD%/*/*}/"}"
         ;;
     esac
 }
 
 function _ku_prompt_sign {
     if [ "$(id -u)" -eq 0 ]; then
-        echo -n '#'
+        /usr/bin/echo -n '#'
     else
-        echo -n '>'
+        /usr/bin/echo -n '>'
     fi
 }
 
