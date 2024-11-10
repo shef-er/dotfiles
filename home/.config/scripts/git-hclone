@@ -14,13 +14,13 @@ function _hclone_prepare_address {
     address="$1"
 
     # Cut out 'schema://' prefix if present
-    fragments="${address#*://}"
+    fragments="${address#*'://'}"
 
     # Cut out 'user@'' prefix
-    fragments="${fragments#*@}"
+    fragments="${fragments#*'@'}"
 
     # Cut out '.git' suffix
-    fragments="${fragments%.git}"
+    fragments="${fragments%'.git'}"
 
     /usr/bin/echo -n "$fragments"
 }
