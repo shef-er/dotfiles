@@ -48,7 +48,7 @@ function _hclone_parse_path_from_scp_address {
 }
 
 function _hclone_parse_path_from_address {
-    address="$2"
+    address="$1"
 
     # Check if address has schema prefix like 'http://' or 'ssh://'
     if [[ "$uri" =~ ^[A-Za-z]+:// ]]; then
