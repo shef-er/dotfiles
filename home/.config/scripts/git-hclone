@@ -64,6 +64,22 @@ function _hclone_parse_path_from_address {
     /usr/bin/echo -n "$path"
 }
 
+# args=()
+# while [ "$1" ]; do
+#     case "$1" in
+#     --) # End of input reading
+#         shift
+#         break
+#         ;;
+#     *)
+#         args+=("$1")
+#         shift
+#         ;;
+#     esac
+# done
+# # pass array this way
+# "${args[@]}"
+
 if [ -z "$1" ]; then
     exit 1
 fi
