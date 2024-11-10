@@ -55,7 +55,7 @@ function _hclone_parse_path_from_address {
     address="$1"
 
     # Check if address has schema prefix like 'http://' or 'ssh://'
-    if [[ "$uri" =~ ^[A-Za-z]+:// ]]; then
+    if [[ "$address" =~ ^[A-Za-z]+:// ]]; then
         path="$(_hclone_parse_path_from_url_address "$address")"
     else
         path="$(_hclone_parse_path_from_scp_address "$address")"
@@ -68,8 +68,8 @@ if [ -z "$1" ]; then
     exit 1
 fi
 
-uri="$1"
+address="$1"
 
-path="$HOME/$GIT_CLONE_ROOT/$(_hclone_parse_path_from_address "$uri")"
+path="$HOME/$GIT_CLONE_ROOT/$(_hclone_parse_path_from_address "$address")"
 
-$gitcmd clone -- "$uri" "$path"
+$gitcmd clone -- "$address" "$path"
