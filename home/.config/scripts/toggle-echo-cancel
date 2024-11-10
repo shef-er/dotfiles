@@ -1,12 +1,16 @@
 #!/usr/bin/env bash
 
-STATE_FILE=/tmp/pulse-echo-cancel
+STATE_FILE=${STATE_FILE:-/tmp/pulse-echo-cancel}
 
-if command -v pactl &> /dev/null && [ ! -f "$STATE_FILE" ]; then
-    echo "Enabled echo cancel module"
-    pactl load-module module-echo-cancel > "$STATE_FILE"
+pactlcmd="$(command -v pactl 2>/dev/null)"
+
+[ "$pactlcmd" ] || exit 1
+
+if [ ! -f "$STATE_FILE" ]; then
+    /usr/bin/echo "Enabled echo cancel module"
+    $pactlcmd load-module module-echo-cancel > "$STATE_FILE"
 else
-    echo "Disabled echo cancel module"
-    pactl unload-module module-echo-cancel
-    rm "$STATE_FILE"
+    /usr/bin/echo "Disabled echo cancel module"
+    $pactlcmd unload-module module-echo-cancel
+    /usr/bin/rm "$STATE_FILE"
 fi
