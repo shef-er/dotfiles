@@ -102,3 +102,4 @@
 	# Custom scripts aliases
 	hclone = hclone
 	clones = hclone
+	hc = hclone

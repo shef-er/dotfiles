@@ -8,33 +8,60 @@ if [ -z "$gitcmd" ]; then
     exit 1
 fi
 
+function _hclone_prepare_address_fragments {
+    fragments="$1"
+
+    # Cut out schema prefix
+    fragments="${fragments#*://}"
+
+    # Cut out user prefix
+    fragments="${fragments#*@}"
+
+    # Cut out '.git' suffix
+    fragments="${fragments%.git}"
+
+    echo -n "$fragments"
+}
+
+function _hclone_parse_path_from_url_address {
+    fragments="$(_hclone_prepare_address_fragments "$1")"
+
+    host_fragment="${fragments%%/*}"
+    host="${host_fragment%%\:*}"
+
+    path="${fragments#*/}"
+
+    echo -n "$host/$path"
+}
+
+function _hclone_parse_path_from_scp_address {
+    fragments="$(_hclone_prepare_address_fragments "$1")"
+
+    host_fragment="$fragments"
+    host="${host_fragment%%\:*}"
+
+    path="${fragments#*\:}"
+
+    echo -n "$host/$path"
+}
+
+function _hclone_parse_path_from_address {
+    address="$2"
+
+    # Check if address has schema prefix like 'http://' or 'ssh://'
+    if [[ "$uri" =~ ^[A-Za-z]+:// ]]; then
+        path="$(_hclone_parse_path_from_url_address "$address")"
+    else
+        path="$(_hclone_parse_path_from_scp_address "$address")"
+    fi
+
+    echo -n "$path"
+}
+
 if [ -z "$1" ]; then
     exit 1
 fi
 
 uri="$1"
 
-# Cut out schema prefix
-fragments="${uri#*://}"
-
-# Cut out user prefix
-fragments="${fragments#*@}"
-
-# Cut out '.git' suffix
-fragments="${fragments%.git}"
-
-# Check if URI has schema prefix like 'http://' or 'ssh://'
-if [[ "$uri" =~ ^[A-Za-z]+:// ]]; then
-    uri_host_dirty="${fragments%%/*}"
-    uri_host="${uri_host_dirty%%\:*}"
-
-    uri_path="${fragments#*/}"
-else
-    # For scp-like
-    uri_host_dirty="$fragments"
-    uri_host="${uri_host_dirty%%\:*}"
-
-    uri_path="${fragments#*\:}"
-fi
-
-$gitcmd clone -- "$uri" "$HOME/$GIT_CLONE_ROOT/$uri_host/$uri_path"
+$gitcmd clone -- "$uri" "$HOME/$GIT_CLONE_ROOT/$(_hclone_parse_path_from_address "$uri")"
