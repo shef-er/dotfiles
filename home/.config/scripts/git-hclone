@@ -30,10 +30,10 @@ function _hclone_parse_path_from_url_address {
 
     fragments="$(_hclone_prepare_address "$address")"
 
-    host_fragment="${fragments%%/*}"
-    host="${host_fragment%%\:*}"
+    host_fragment="${fragments%%'/'*}"
+    host="${host_fragment%%':'*}"
 
-    path="${fragments#*/}"
+    path="${fragments#*'/'}"
 
     /usr/bin/echo -n "$host/$path"
 }
@@ -44,9 +44,9 @@ function _hclone_parse_path_from_scp_address {
     fragments="$(_hclone_prepare_address "$address")"
 
     host_fragment="$fragments"
-    host="${host_fragment%%\:*}"
+    host="${host_fragment%%':'*}"
 
-    path="${fragments#*\:}"
+    path="${fragments#*':'}"
 
     /usr/bin/echo -n "$host/$path"
 }
@@ -88,4 +88,5 @@ address="$1"
 
 path="$HOME/$GIT_CLONE_ROOT/$(_hclone_parse_path_from_address "$address")"
 
-$gitcmd clone -- "$address" "$path"
+echo "$path"
+# $gitcmd clone -- "$address" "$path"
