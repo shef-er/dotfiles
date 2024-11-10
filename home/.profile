@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 # Prepend "$1" to $PATH when not already in.
-# This function API is accessible to scripts in ~/.config/profile.d
+# This function is accessible to scripts in ~/.config/profile.d
 path_prepend() {
     case ":$PATH:" in
     *"$1":*) ;;
