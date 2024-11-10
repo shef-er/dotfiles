@@ -2,6 +2,8 @@
 
 GIT_CLONE_ROOT=${GIT_CLONE_ROOT:-Clones}
 
+###
+
 gitcmd="$(command -v git 2>/dev/null)"
 
 if [ -z "$gitcmd" ]; then
@@ -20,7 +22,7 @@ function _hclone_prepare_address_fragments {
     # Cut out '.git' suffix
     fragments="${fragments%.git}"
 
-    echo -n "$fragments"
+    /usr/bin/echo -n "$fragments"
 }
 
 function _hclone_parse_path_from_url_address {
@@ -31,7 +33,7 @@ function _hclone_parse_path_from_url_address {
 
     path="${fragments#*/}"
 
-    echo -n "$host/$path"
+    /usr/bin/echo -n "$host/$path"
 }
 
 function _hclone_parse_path_from_scp_address {
@@ -42,7 +44,7 @@ function _hclone_parse_path_from_scp_address {
 
     path="${fragments#*\:}"
 
-    echo -n "$host/$path"
+    /usr/bin/echo -n "$host/$path"
 }
 
 function _hclone_parse_path_from_address {
@@ -55,7 +57,7 @@ function _hclone_parse_path_from_address {
         path="$(_hclone_parse_path_from_scp_address "$address")"
     fi
 
-    echo -n "$path"
+    /usr/bin/echo -n "$path"
 }
 
 if [ -z "$1" ]; then
