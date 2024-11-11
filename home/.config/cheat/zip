@@ -1,0 +1,12 @@
+---
+tags: [ archive ]
+---
+# Compress
+zip -r archive.zip ./target
+# Extract
+unzip ./archive.zip
+
+# Compress
+7z a archive.7z ./target
+# Extract
+7z x ./archive.zip

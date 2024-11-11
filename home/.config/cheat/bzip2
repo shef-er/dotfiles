@@ -1,0 +1,7 @@
+---
+tags: [ archive ]
+---
+# Compress
+bzip ./target
+# Extract
+bunzip2 ./archive.bz2

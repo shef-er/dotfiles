@@ -13,7 +13,7 @@ _cheat_help() {
 }
 
 _cheat_list() {
-    /usr/bin/ls -1A "$CHEAT_PATH"
+    /usr/bin/ls -1A -I '.*' "$CHEAT_PATH"
 }
 
 _cheat_show() {

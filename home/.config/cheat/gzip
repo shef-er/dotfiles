@@ -1,0 +1,7 @@
+---
+tags: [ archive ]
+---
+# Compress gzip
+gzip -c -9 -n ./target > archive.gz
+# Extract gzip
+gunzip archive.gz
