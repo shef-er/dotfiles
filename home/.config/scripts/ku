@@ -52,26 +52,26 @@ function _ku_title {
 }
 
 function _ku_prompt {
-    BLD=""
-    RED=""
-    CYN=""
-    RST=""
+    reset=""
+    bold=""
+    red=""
+    cyan=""
     case "$(_ku_shell)" in
     bash)
-        BLD="\[$(tput bold)\]"
-        RST="\[$(tput sgr0)\]"
-        RED="\[$(tput setaf 1)\]"
-        CYN="\[$(tput setaf 6)\]"
+        reset="\[$(tput sgr0)\]"
+        bold="\[$(tput bold)\]"
+        red="\[$(tput setaf 1)\]"
+        cyan="\[$(tput setaf 6)\]"
         ;;
     zsh)
-        BLD="$(tput bold)"
-        RST="$(tput sgr0)"
-        RED="$(tput setaf 1)"
-        CYN="$(tput setaf 6)"
+        reset="$(tput sgr0)"
+        bold="$(tput bold)"
+        red="$(tput setaf 1)"
+        cyan="$(tput setaf 6)"
         ;;
     esac
 
-    prompt="$RST"
+    prompt="$reset"
 
     ### New line
     if [ -z "$_NO_NEWLINE" ]; then
@@ -80,13 +80,13 @@ function _ku_prompt {
     prompt+=' '
 
     ### Path to working dir
-    prompt+="$BLD$CYN$(_ku_prompt_pwd)$RST"
+    prompt+="$bold$cyan$(_ku_prompt_pwd)$reset"
     prompt+=' '
 
     ### Git
     # git="$(prompt-git)"
     # if [ -n "$git" ]; then
-    #     prompt+="$BLD$blu$git$RST"
+    #     prompt+="$bold$blu$git$reset"
     # fi
     # prompt+=' '
     #
@@ -95,9 +95,9 @@ function _ku_prompt {
 
     ### Sign
     if [ "$(id -u)" -eq 0 ]; then
-        prompt+="$BLD$RED$(_ku_prompt_sign)$RST"
+        prompt+="$bold$red$(_ku_prompt_sign)$reset"
     else
-        prompt+="$BLD$(_ku_prompt_sign)$RST"
+        prompt+="$bold$(_ku_prompt_sign)$reset"
     fi
     prompt+=' '
 

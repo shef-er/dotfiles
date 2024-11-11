@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-if command -v dwebp &> /dev/null; then
-    dwebp "$1" -o "${1%'.webp'}".png
-else
-    echo "dwebp: Command not found..."
-fi
+dwebpcmd="$(command -v dwebp 2>/dev/null)"
+
+[ "$dwebpcmd" ] || exit 1
+
+dwebp "$1" -o "${1%'.webp'}".png

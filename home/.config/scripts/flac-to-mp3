@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
-if command -v ffmpeg &> /dev/null; then
-    for a in ./*.flac; do
-        ffmpeg -i "$a" -b:a 320k -qscale:a 0 "${a[@]/%flac/mp3}"
-    done
-else
-    echo "ffmpeg: Command not found..."
-fi
+ffmpegcmd="$(command -v ffmpeg 2>/dev/null)"
+
+[ "$ffmpegcmd" ] || exit 1
+
+for track in ./*.flac; do
+    $ffmpegcmd -i "$track" -b:a 320k -qscale:a 0 "${track/%'flac'/'mp3'}"
+done

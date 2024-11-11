@@ -40,7 +40,7 @@ _aur_install() {
 }
 
 _aur_clear_packages() {
-    [ -d "$PKGDEST" ] && paccache -c "$PKGDEST"
+    [ -d "$PKGDEST" ] && /usr/bin/paccache -c "$PKGDEST"
 }
 
 _aur_clear_snapshots() {
