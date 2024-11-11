@@ -11,8 +11,8 @@ help: ## Show this help
 
 .PHONY: link
 link: ## Link dotfiles to $HOME
-	@bash scripts/dotfiles.sh link home $(HOME)
+	@bash ./dotfiles.sh link ./home $(HOME)
 
 .PHONY: unlink
 unlink: ## Link dotfiles to $HOME
-	@bash scripts/dotfiles.sh unlink
+	@bash ./dotfiles.sh unlink
