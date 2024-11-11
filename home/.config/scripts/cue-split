@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+TRACKS_DIR=${TRACKS_DIR:-'flac'}
+
+###
+
+shnsplitcmd="$(command -v shnsplit 2>/dev/null)"
+[ "$shnsplitcmd" ] || exit 1
+
+cuetagcmd="$(command -v cuetag.sh 2>/dev/null)"
+[ "$cuetagcmd" ] || exit 1
+
+cuefile="$1"
+flacfile="$2"
+
+if [ -z "$cuefile" ] || [ -z "$flacfile" ]; then
+    echo "Usage: $0 CUE_FILE FLAC_FILE"
+    exit 1
+fi
+
+/usr/bin/mkdir "$TRACKS_DIR"
+(
+    cd "$TRACKS_DIR" \
+    && shnsplit -o flac -t "%n" -f ../"$cuefile" ../"$flacfile" \
+    && $cuetagcmd ../"$cuefile" ./*.flac
+)

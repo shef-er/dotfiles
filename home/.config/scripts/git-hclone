@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-GIT_CLONE_ROOT=${GIT_CLONE_ROOT:-Clones}
+GIT_CLONE_ROOT=${GIT_CLONE_ROOT:-'Clones'}
 
 ###
 
