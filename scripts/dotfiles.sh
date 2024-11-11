@@ -5,7 +5,7 @@ readonly STATE_FILE="$HOME"/.local/state/dotfiles
 ## Yes, I know about GNU Stow, just want to use my own solution
 _dotfiles_usage() {
     /usr/bin/echo
-    /usr/bin/echo "Usage: $0 [COMMAND]"
+    /usr/bin/echo "Usage: $0 COMMAND [OPTIONS...]"
     /usr/bin/echo
     /usr/bin/echo 'Commands:'
     /usr/bin/echo '  link SOURCE DESTINATION           Create symbolic links in DESTINATION dir to dotfiles in SOURCE dir'
