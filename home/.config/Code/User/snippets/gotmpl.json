@@ -10,28 +10,24 @@
             "$END$",
             "{{- end -}}"
         ],
-        "description": "Define template"
     },
     "Call template": {
         "prefix": "templ",
         "body": [
             "{{ template \"$1\" $0}}"
         ],
-        "description": "Call template"
     },
     "Go Template value": {
         "prefix": "val",
         "body": [
             "{{ .$0 }}"
         ],
-        "description": "Go Template value"
     },
     "Insert {{ else if }}": {
         "prefix": "elif",
         "body": [
             "{{ else if $0 }}"
         ],
-        "description": "Insert {{ else if }}"
     },
     "Insert {{ if }}": {
         "prefix": "if",
@@ -40,7 +36,6 @@
             "$0",
             "{{ end }}"
         ],
-        "description": "Insert {{ if }}"
     },
     "Insert {{ if }}{{ else }}": {
         "prefix": "if",
@@ -50,7 +45,6 @@
             "{{ else }}",
             "{{ end }}"
         ],
-        "description": "Insert {{ if }}{{ else }}"
     },
     "{{ range }}": {
         "prefix": "range",
@@ -59,7 +53,6 @@
             "$0",
             "{{ end }}"
         ],
-        "description": "{{ range }}"
     },
     "Insert {{ range }} with key/value variables": {
         "prefix": "rangekv",
@@ -68,7 +61,6 @@
             "$0",
             "{{ end }}"
         ],
-        "description": "Insert {{ range }} with key/value variables"
     },
     "Insert {{ with }}": {
         "prefix": "with",
@@ -77,6 +69,5 @@
             "$0",
             "{{ end }}"
         ],
-        "description": "Insert {{ with }}"
     }
 }
