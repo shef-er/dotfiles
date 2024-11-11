@@ -1,0 +1,112 @@
+#!/usr/bin/env sh
+
+_ar_compress() {
+    target="$1"
+    type="$2"
+
+    if [ -z "$target" ] || [ -z "$type" ]; then
+        echo "Usage: $0 FILENAME ARCHIVE_TYPE"
+        exit 1
+    fi
+
+    if [ ! -r "$target" ]; then
+        echo "Invalid file: '$target'"
+        exit 1
+    fi
+
+    case "$type" in
+    '' | tar)
+        tar -vp -cf "$target".tar "$target"
+        ;;
+    z | tgz)
+        tar -v -czf "$target".tar.gz "$target"
+        ;;
+    j | tbz)
+        tar -v -cjf "$target".tar.bz2 "$target"
+        ;;
+    J | txz)
+        tar -v -cJf "$target".tar.xz "$target"
+        ;;
+    gz)
+        gzip -c -9 -n "$target" >"$target.gz"
+        ;;
+    bz2)
+        bzip "$target"
+        ;;
+    zip)
+        zip -r "$target".zip "$target"
+        ;;
+    7z)
+        7z a "$target".7z "$target"
+        ;;
+    rar)
+        rar a "$target".rar "$target"
+        ;;
+    *)
+        echo "Unknown archive type: '$type'"
+        exit 1
+        ;;
+    esac
+}
+
+_ar_extract() {
+    target="$1"
+
+    if [ -z "$target" ]; then
+        echo "Usage: $0 FILENAME"
+        exit 1
+    fi
+
+    if [ ! -r "$target" ]; then
+        echo "Invalid file: '$target'"
+        exit 1
+    fi
+
+    case "$target" in
+    *.tar)
+        tar -v -xf "$target"
+        ;;
+    *.tar.gz | *.tgz)
+        tar -v -xzf "$target"
+        ;;
+    *.tar.bz2 | *.tar.bzip2 | *.tbz2 | .tb2 | *.tar.bz | *.tbz)
+        tar -v -xjf "$target"
+        ;;
+    *.tar.xz | *.txz)
+        tar -v -xJf "$target"
+        ;;
+    *.gz)
+        gunzip "$target"
+        ;;
+    *.bz2 | *.bz)
+        bunzip2 "$target"
+        ;;
+    *.zip | *.cbz)
+        unzip "$target"
+        ;;
+    *.7z)
+        7z x "$target"
+        ;;
+    *.rar | *.cbr)
+        unrar x "$target"
+        ;;
+    *)
+        echo "Unknown file type: '$target'"
+        exit 1
+        ;;
+    esac
+}
+
+case "$1" in
+c | compress)
+    shift
+    _ar_compress "$@"
+    ;;
+x | extract)
+    shift
+    _ar_extract "$@"
+    ;;
+*)
+    exit 1
+    ;;
+esac

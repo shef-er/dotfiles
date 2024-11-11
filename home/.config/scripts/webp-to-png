@@ -4,4 +4,4 @@ dwebpcmd="$(command -v dwebp 2>/dev/null)"
 
 [ "$dwebpcmd" ] || exit 1
 
-dwebp "$1" -o "${1%'.webp'}".png
+dwebp "$1" -o "${1/%'webp'/'png'}"
