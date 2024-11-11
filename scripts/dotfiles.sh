@@ -2,98 +2,98 @@
 
 readonly STATE_FILE="$HOME"/.local/state/dotfiles
 
-function dotfiles::main {
-    case "$1" in
-        "link")
-            [ -z "$2" ] || [ ! -d "$2" ] || [ -z "$3" ] || [ ! -d "$3" ] && dotfiles::usage && exit 1
-            dotfiles::link "$2" "$3"
-            ;;
-        "unlink")
-            dotfiles::unlink
-            ;;
-        *)
-            dotfiles::usage
-            ;;
-    esac
-}
-
 ## Yes, I know about GNU Stow, just want to use my own solution
-dotfiles::usage() {
-    echo
-    echo "Usage: $0 [COMMAND]"
-    echo
-    echo "Commands:"
-    echo "  link SOURCE DESTINATION           Create symbolic links in DESTINATION dir to dotfiles in SOURCE dir"
-    echo "  unlink                            Remove symbolic links to dotfiles"
+_dotfiles_usage() {
+    /usr/bin/echo
+    /usr/bin/echo "Usage: $0 [COMMAND]"
+    /usr/bin/echo
+    /usr/bin/echo 'Commands:'
+    /usr/bin/echo '  link SOURCE DESTINATION           Create symbolic links in DESTINATION dir to dotfiles in SOURCE dir'
+    /usr/bin/echo '  unlink                            Remove symbolic links to dotfiles'
 }
 
-dotfiles::link() {
-    [ -r "$STATE_FILE" ] && dotfiles::unlink
+_dotfiles_link() {
+    if [ -z "$1" ] || [ ! -d "$1" ] || [ -z "$2" ] || [ ! -d "$2" ]; then
+        _dotfiles_usage
+        exit 1
+    fi
 
-    target_dir="$(realpath "$1")"
-    destination_dir="$(realpath $2)"
+    [ -r "$STATE_FILE" ] && _dotfiles_unlink
 
-    targets="$(find "$target_dir" -mindepth 1 -type f -print)"
+    target_dir="$(/usr/bin/realpath "$1")"
+    destination_dir="$(/usr/bin/realpath "$2")"
+
+    targets="$(/usr/bin/find "$target_dir" -mindepth 1 -type f -print)"
 
     IFS=$'\n'
     for target in $targets; do
         link="$destination_dir${target#"$target_dir"}"
 
         if [ -e "$link" ]; then
-            dotfiles::exit_with_error "Cannot create link '$link': File already exists"
+            _dotfiles_exit_with_error "Cannot create link '$link': File already exists"
         fi
     done
 
-    mkdir -p "$(dirname "$STATE_FILE")"
+    /usr/bin/mkdir -p "$(/usr/bin/dirname "$STATE_FILE")"
 
     for target in $targets; do
         link="$destination_dir${target#"$target_dir"}"
 
-        mkdir -p "$(dirname "$link")" \
-            && ln -sT "$target" "$link" \
-            && dotfiles::echo_link "'$link' -> '$target'"
+        /usr/bin/mkdir -p "$(/usr/bin/dirname "$link")" &&
+            ln -sT "$target" "$link" &&
+            _dotfiles_echo_link "'$link' -> '$target'"
 
-        echo "$link" >> "$STATE_FILE"
+        /usr/bin/echo "$link" >>"$STATE_FILE"
     done
     unset IFS
 }
 
-dotfiles::unlink() {
+_dotfiles_unlink() {
     [ -r "$STATE_FILE" ] || exit 0
 
-    links="$(< "$STATE_FILE")"
+    links="$(<"$STATE_FILE")"
 
     IFS=$'\n'
     for link in $links; do
         if [ -e "$link" ] && [ ! -L "$link" ]; then
-            dotfiles::exit_with_error "Cannot remove link '$link': File is not a link"
+            _dotfiles_exit_with_error "Cannot remove link '$link': File is not a link"
         fi
     done
 
     for link in $links; do
-        rm -f "$link" && dotfiles::echo_unlink "'$link'"
+        /usr/bin/rm -f "$link" && _dotfiles_echo_unlink "'$link'"
     done
     unset IFS
 
-    rm -f "$STATE_FILE"
+    /usr/bin/rm -f "$STATE_FILE"
 }
 
-dotfiles::echo_link() {
-    echo -en '\e[32mLINK:\e[0m '
-    echo "$1"
+_dotfiles_echo_link() {
+    /usr/bin/echo -en '\e[32mLINK:\e[0m '
+    /usr/bin/echo "$1"
 }
 
-dotfiles::echo_unlink() {
-    echo -en '\e[33mUNLINK:\e[0m '
-    echo "$1"
+_dotfiles_echo_unlink() {
+    /usr/bin/echo -en '\e[33mUNLINK:\e[0m '
+    /usr/bin/echo "$1"
 }
 
-dotfiles::exit_with_error() {
-    echo -en '\e[31mERROR:\e[0m '
-    echo "${1:-}"
-    echo 'Aborting...'
+_dotfiles_exit_with_error() {
+    /usr/bin/echo -en '\e[31mERROR:\e[0m '
+    /usr/bin/echo "${1:-}"
+    /usr/bin/echo 'Aborting...'
     exit 1
 }
 
-dotfiles::main "$@"
- 
+case "$1" in
+link)
+    shift
+    _dotfiles_link "$@"
+    ;;
+unlink)
+    _dotfiles_unlink
+    ;;
+*)
+    _dotfiles_usage
+    ;;
+esac
