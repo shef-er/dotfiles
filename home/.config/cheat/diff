@@ -1,0 +1,6 @@
+---
+---
+# Compare two trees and show files with different contents
+diff --brief --recursive --new-file dir1/ dir2/
+# Same, but shorter
+diff -qrN dir1/ dir2/s

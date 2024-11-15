@@ -1,0 +1,4 @@
+---
+---
+# Copy disk image to removable media
+sudo dd bs=4M status=progress iflag=fullblock oflag=sync if= of=/dev/sdX
