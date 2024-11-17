@@ -3,7 +3,6 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
-# Just plain bash config
 if [ -d "$XDG_CONFIG_HOME"/bashrc.d/ ]; then
     for script in "$XDG_CONFIG_HOME"/bashrc.d/*; do
         # shellcheck disable=SC1090
