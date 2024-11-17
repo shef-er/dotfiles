@@ -24,8 +24,6 @@ if [ -d "$XDG_CONFIG_HOME"/profile.d/ ]; then
 fi
 
 path_prepend "$XDG_BIN_HOME"
-
-# move to bashrc?
 path_prepend "$XDG_CONFIG_HOME"/scripts
 
 # Unload profile API functions

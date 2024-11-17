@@ -3,12 +3,6 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
-# Should be near top
-# shellcheck disable=SC1090
-# shellcheck disable=SC1091
-# [ -f "/usr/share/blesh/ble.sh" ] &&
-#     source "/usr/share/blesh/ble.sh" --noattach
-
 # Just plain bash config
 if [ -d "$XDG_CONFIG_HOME"/bashrc.d/ ]; then
     for script in "$XDG_CONFIG_HOME"/bashrc.d/*; do
@@ -17,6 +11,3 @@ if [ -d "$XDG_CONFIG_HOME"/bashrc.d/ ]; then
     done
     unset script
 fi
-
-# Should be the last line
-# [[ ! ${BLE_VERSION-} ]] || ble-attach
