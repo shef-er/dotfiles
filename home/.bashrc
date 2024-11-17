@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# If not running interactively, don't do anything
+[[ $- != *i* ]] && return
+
 # Should be near top
 # shellcheck disable=SC1090
 # shellcheck disable=SC1091
