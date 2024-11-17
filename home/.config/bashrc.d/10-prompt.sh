@@ -10,7 +10,7 @@ export _NO_NEWLINE=1
 
 function _prompt_pwd {
     local count src dir acc
-    count="$1"
+    count="${1:-99}"
     src="${PWD/#"$HOME"/'~'}"
     for ((i = 1; i <= count; i++)); do
         dir="${src##*/}"
