@@ -6,6 +6,8 @@
 # | .__/|_|  \___/|_| |_| |_| .__/ \__|
 # |_|                       |_|
 
+export _NO_NEWLINE=1
+
 function _prompt_pwd {
     local count src dir acc
     count="${1:-99}"
@@ -27,7 +29,13 @@ function _prompt_precmd {
     reset="\[$(tput sgr0)\]"
 
     # prompt
-    PS1="$bold $(_prompt_pwd 2) $ $reset"
+    PS1=""
+    if [ -z "$_NO_NEWLINE" ]; then
+        PS1+=$'\n'
+    else
+        unset _NO_NEWLINE
+    fi
+    PS1+="$bold $(_prompt_pwd 2) > $reset"
 
     # title
     /usr/bin/echo -en "\033]0; $(pwd)\007"
