@@ -1,3 +1,3 @@
 #!/usr/bin/env sh
 
-export PAGER=less
+export PAGER="less -S"
