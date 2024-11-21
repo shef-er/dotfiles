@@ -85,8 +85,6 @@ if [ -z "$1" ]; then
 fi
 
 address="$1"
-
 path="$HOME/$GIT_CLONE_ROOT/$(_hclone_parse_path_from_address "$address")"
 
-echo "$path"
-# $gitcmd clone -- "$address" "$path"
+$gitcmd clone -- "$address" "$path"
