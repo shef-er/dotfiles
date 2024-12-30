@@ -1,9 +1,0 @@
-$strip($replace($if2(%albumartist%,%artist%),_,))
-/
-$if(%albumartist%,$year($if2(%originaldate%,%date%)) - $strip($replace(%album%,_,)),)
-$if(%discsubtitle%, \(%discsubtitle%\))
-$if($and($and($year(%date%), $year(%originaldate%)),$ne($year(%originaldate%),$year(%date%))), [$if($and(%catalognumber%,$ne(%catalognumber%,[none])),%catalognumber%\, ,)$year(%date%)],)
-/
-$if($gt(%totaldiscs%,1),%discnumber%-,)
-$if($and(%albumartist%,%tracknumber%),$num(%tracknumber%,2) ,)
-$replace($strip($replace(%title%,_,)),&,and)
