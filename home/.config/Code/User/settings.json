@@ -11,6 +11,7 @@
   "workbench.remoteIndicator.showExtensionRecommendations": false,
   "workbench.sideBar.location": "right",
   // "zenMode.hideTabs": false,
+  "zenMode.showTabs": "none",
   "zenMode.hideLineNumbers": false,
   // "editor.codeLens": false,
   "editor.minimap.enabled": false,
@@ -48,6 +49,7 @@
   "git.confirmSync": false,
   "git.inputValidationLength": 200,
   "git.inputValidationSubjectLength": null,
+  "git.replaceTagsWhenPull": true,
   "github.gitProtocol": "ssh",
   //// Telemetry
   "telemetry.telemetryLevel": "off",
@@ -59,9 +61,9 @@
     "ui.semanticTokens": true,
     "codelenses": {
       // Show a code lens toggling the display of gc's choices.
-      "gc_details": true,
-      // Don't show the `go generate` lens.
-      "generate": true
+      // "gc_details": true,
+      // Show the `go generate` lens.
+      "generate": true,
     }
   },
   "[gotmpl]": {
@@ -87,9 +89,6 @@
   },
   "[snippets]": {
     "editor.defaultFormatter": "vscode.json-language-features"
-  },
-  "[sql]": {
-    "editor.defaultFormatter": "lea21st.vscode-sql-formatter"
   },
   "[yaml]": {
     "editor.defaultFormatter": "redhat.vscode-yaml"
