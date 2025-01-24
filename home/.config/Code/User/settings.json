@@ -1,18 +1,24 @@
 {
+  //
+  // Window
   "window.customTitleBarVisibility": "auto",
   "window.dialogStyle": "custom",
   "window.titleBarStyle": "custom",
   "window.title": "${dirty}${activeEditorShort}${separator}${rootName}",
   "window.openFoldersInNewWindow": "on",
+  //
+  // Workbench
   "workbench.colorTheme": "Default Light Modern",
   "workbench.editor.highlightModifiedTabs": true,
   "workbench.editor.pinnedTabSizing": "compact",
   "workbench.editor.revealIfOpen": true,
   "workbench.remoteIndicator.showExtensionRecommendations": false,
   "workbench.sideBar.location": "right",
-  // "zenMode.hideTabs": false,
   "zenMode.showTabs": "none",
   "zenMode.hideLineNumbers": false,
+  // "zenMode.hideTabs": false,
+  //
+  // Editor
   // "editor.codeLens": false,
   "editor.minimap.enabled": false,
   "editor.find.loop": false,
@@ -38,7 +44,8 @@
   "files.simpleDialog.enable": true,
   "search.searchEditor.reusePriorSearchConfiguration": true,
   "search.showLineNumbers": true,
-  //// SCM
+  //
+  // SCM
   "scm.alwaysShowRepositories": true,
   "scm.defaultViewMode": "tree",
   "scm.repositories.sortOrder": "path",
@@ -51,12 +58,18 @@
   "git.inputValidationSubjectLength": null,
   "git.replaceTagsWhenPull": true,
   "github.gitProtocol": "ssh",
-  //// Telemetry
+  //
+  // Telemetry
   "telemetry.telemetryLevel": "off",
-  //// Extensions
+  //
+  // Chat
+  "chat.commandCenter.enabled": false,
+  //
+  // Extensions
   "extensions.autoUpdate": "onlyEnabledExtensions",
   "extensions.ignoreRecommendations": true,
-  //// Go
+  //
+  // Go
   "gopls": {
     "ui.semanticTokens": true,
     "codelenses": {
@@ -69,12 +82,15 @@
   "[gotmpl]": {
     "editor.defaultFormatter": "golang.go"
   },
-  //// PHP
+  //
+  // PHP
   "php.suggest.basic": false,
   "php.validate.enable": false,
-  //// Python
+  //
+  // Python
   "python.defaultInterpreterPath": "/usr/bin/python",
-  //// Etc...
+  //
+  // Etc...
   "[html]": {
     "editor.defaultFormatter": "vscode.html-language-features"
   },
