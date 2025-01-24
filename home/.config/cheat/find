@@ -1,0 +1,6 @@
+---
+---
+# List all files in current dir
+find .
+# Find file by pattern
+find . -name "*.txt"
