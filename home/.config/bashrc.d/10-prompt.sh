@@ -26,11 +26,15 @@ function _prompt_precmd {
     bold="\[$(tput bold)\]"
     reset="\[$(tput sgr0)\]"
 
-    # prompt
     PS1="$bold $(_prompt_pwd 2) $ $reset"
-
-    # title
-    /usr/bin/echo -en "\033]0; $(pwd)\007"
 }
-
 PROMPT_COMMAND+=('_prompt_precmd')
+
+
+# If no command running: shows current $PWD in terminal title, 
+# else: shows current $BASH_COMMAND in terminal title
+function _title_precmd {
+    /usr/bin/echo -en "\033]0; $PWD\007"
+}
+PROMPT_COMMAND+=('_title_precmd')
+trap 'echo -ne "\e]0;$BASH_COMMAND\007"' DEBUG
