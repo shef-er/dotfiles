@@ -22,8 +22,9 @@
   // "editor.codeLens": false,
   "editor.minimap.enabled": false,
   "editor.find.loop": false,
-  "editor.fontFamily": "'JetBrains Mono', 'monospace', monospace",
-  "editor.fontSize": 13,
+  "editor.fontFamily": "'Iosevka', 'monospace', monospace",
+  "editor.fontSize": 15,
+  "editor.lineHeight": 22,
   "editor.fontLigatures": false,
   "editor.formatOnPaste": true,
   "editor.quickSuggestions": {
@@ -106,4 +107,6 @@
   "[snippets]": {
     "editor.defaultFormatter": "vscode.json-language-features"
   },
+  "database-client.autoSync": true,
+  "hediet.vscode-drawio.resizeImages": null,
 }
