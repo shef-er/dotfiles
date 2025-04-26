@@ -31,10 +31,12 @@ function _prompt_precmd {
 PROMPT_COMMAND+=('_prompt_precmd')
 
 
-# If no command running: shows current $PWD in terminal title, 
-# else: shows current $BASH_COMMAND in terminal title
+# If no command running, then: terminal title set to current $PWD
 function _title_precmd {
     /usr/bin/echo -en "\033]0; $PWD\007"
 }
 PROMPT_COMMAND+=('_title_precmd')
-trap 'echo -ne "\e]0;$BASH_COMMAND\007"' DEBUG
+# else: terminal title set  to $BASH_COMMAND
+if [[ "$TERM_PROGRAM" =~ ^(kgx|vscode)$ ]]; then
+    trap 'echo -ne "\e]0;$BASH_COMMAND\007"' DEBUG
+fi
