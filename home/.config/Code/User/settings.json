@@ -24,6 +24,7 @@
   "editor.find.loop": false,
   "editor.fontFamily": "'Iosevka', 'monospace', monospace",
   "editor.fontSize": 15,
+  "terminal.integrated.fontSize": 16,
   "editor.lineHeight": 22,
   "editor.fontLigatures": false,
   "editor.formatOnPaste": true,
