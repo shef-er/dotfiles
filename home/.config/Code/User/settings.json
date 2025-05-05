@@ -27,7 +27,6 @@
   "terminal.integrated.fontSize": 16,
   "editor.lineHeight": 22,
   "editor.fontLigatures": false,
-  "editor.formatOnPaste": true,
   "editor.quickSuggestions": {
     "comments": true
   },
