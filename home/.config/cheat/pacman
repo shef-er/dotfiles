@@ -1,0 +1,4 @@
+---
+---
+# Show all packages installed as dependencies and not required by any package.
+pacman -Qdt
