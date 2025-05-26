@@ -61,9 +61,11 @@
   "github.gitProtocol": "ssh",
   //
   // Telemetry
+  "telemetry.feedback.enabled": false,
   "telemetry.telemetryLevel": "off",
   //
   // Chat
+  "chat.agent.enabled": false,
   "chat.commandCenter.enabled": false,
   //
   // Extensions
