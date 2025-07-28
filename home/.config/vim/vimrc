@@ -1,2 +1,2 @@
-runtime neovim-polyfill.vim
+runtime from-neovim.vim
 
