@@ -18,7 +18,7 @@ set encoding=utf-8
 set fillchars=
 set formatoptions=tcqj
 set grepprg=grep\ -HIn\ $*\ /dev/null
-"set guicursor=n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20,t:block-blinkon500-blinkoff500-TermCursor
+set guicursor=n-v-c-sm:block,i-ci-ve:ver25,r-cr-o:hor20
 set guifont=
 set guifontwide=
 set guioptions=
@@ -30,7 +30,6 @@ set history=10000
 set hlsearch
 set include=
 set incsearch
-"set jumpoptions=clean
 set jumpoptions=stack
 runtime! ftplugin/man.vim
 set keywordprg=:Man
