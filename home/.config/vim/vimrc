@@ -1,5 +1,2 @@
-
 runtime neovim-polyfill.vim
 
-
-set jumpoptions=stack
