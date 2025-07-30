@@ -28,8 +28,8 @@ set wildignore+=*.swp,*~
 "---------------------------------------
 "   Interface
 "---------------------------------------
-" colorscheme bubblegum-256-light
-colorscheme bubblegum-256-dark
+colorscheme bubblegum-256-light
+" colorscheme bubblegum-256-dark
 " colorscheme jellybeans
 
 " Print the line number in front of each line
