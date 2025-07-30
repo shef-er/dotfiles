@@ -14,7 +14,7 @@ let mapleader = ","
 
 " ,v
 " open settings
-nnoremap <leader>v <esc>:e ~/.config/vimrc<cr>
+nnoremap <leader>v <esc>:e ~/.config/vim/vimrc<cr>
 " ,vs
 " open shortcuts
 nnoremap <leader>vs <esc>:e ~/.config/vim/keymaps.vim<cr>
