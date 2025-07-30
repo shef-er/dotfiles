@@ -1,2 +1,42 @@
 runtime from-neovim.vim
+runtime plugins.vim
+runtime keymaps.vim
 
+syntax on
+filetype plugin indent on
+
+"---------------------------------------
+"   Environment
+"---------------------------------------
+" Don't create backups and swap files
+set nobackup
+set noswapfile
+set noundofile
+
+
+"---------------------------------------
+"   Completion
+"---------------------------------------
+" When more than one match, list all matches and complete first match, then complete the next full match
+set wildmode=list:longest,full
+set wildignorecase
+set wildignore+=*.git,*.hg,*.svn
+set wildignore+=*.DS_Store*
+set wildignore+=*.swp,*~
+
+  
+"---------------------------------------
+"   Interface
+"---------------------------------------
+" colorscheme bubblegum-256-light
+colorscheme bubblegum-256-dark
+" colorscheme jellybeans
+
+" Print the line number in front of each line
+set number
+
+" Do not wrap long lines
+" set nowrap
+
+" Don't break words when wrapping
+set linebreak

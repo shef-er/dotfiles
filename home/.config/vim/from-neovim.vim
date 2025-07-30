@@ -54,7 +54,6 @@ set path=.,,
 set ruler
 set sessionoptions-=options
 set sessionoptions+=unix,slash
-set shortmess+=CF
 set shortmess=ltToOCF
 set showcmd
 set sidescroll=1
@@ -76,4 +75,4 @@ set viewoptions-=options
 set viewoptions+=unix,slash
 set viminfo+=!
 set wildoptions=pum,tagfile
-set winaltkeys=maxsearchcount
+set winaltkeys=menu
