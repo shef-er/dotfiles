@@ -67,6 +67,11 @@
   // Chat
   "chat.agent.enabled": false,
   "chat.commandCenter.enabled": false,
+  "github.copilot.enable": false,
+  "github.copilot.editor.enableAutoCompletions": false,
+  "github.copilot.editor.enableCodeActions": false,
+  "github.copilot.nextEditSuggestions.enabled": false,
+  "github.copilot.renameSuggestions.triggerAutomatically": false,
   //
   // Extensions
   "extensions.autoUpdate": "onlyEnabledExtensions",
@@ -93,6 +98,9 @@
   // Python
   "python.defaultInterpreterPath": "/usr/bin/python",
   //
+  // Draw.io integration
+  "hediet.vscode-drawio.resizeImages": null,
+  //
   // Etc...
   "[html]": {
     "editor.defaultFormatter": "vscode.html-language-features"
@@ -109,6 +117,4 @@
   "[snippets]": {
     "editor.defaultFormatter": "vscode.json-language-features"
   },
-  "database-client.autoSync": true,
-  "hediet.vscode-drawio.resizeImages": null,
 }
