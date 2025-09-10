@@ -16,3 +16,17 @@ docker run hello-world
 echo '{ "registry-mirrors": ["https://mirror.gcr.io"] }' | sudo tee /etc/docker/daemon.json
 reboot
 ```
+
+## Ansible
+
+```shell
+pacman -Sy ansible-core
+```
+
+## Kubernetes
+
+```shell
+pacman -Sy k9s
+
+k9s
+```
