@@ -165,9 +165,7 @@ pacstrap -K /mnt \
     base linux-lts linux-firmware \
     base-devel \
     man-db man-pages \
-    nano nano-syntax-highlighting \
-    networkmanager iw wireless-regdb \
-    bluez bluez-utils
+    nano nano-syntax-highlighting
 ```
 
 > **Tip**  
@@ -181,7 +179,6 @@ In particular, consider installing:
 * userspace utilities for the management of [file systems](https://wiki.archlinux.org/title/File_systems) that will be used on the system,
 * utilities for accessing [RAID](https://wiki.archlinux.org/title/RAID) or [LVM](https://wiki.archlinux.org/title/LVM) partitions,
 * specific firmware for other devices not included in [linux-firmware](https://archlinux.org/packages/?name=linux-firmware) (e.g. [sof-firmware](https://archlinux.org/packages/?name=sof-firmware) for [sound cards](https://wiki.archlinux.org/title/Advanced_Linux_Sound_Architecture#ALSA_firmware)),
-* software necessary for [networking](https://wiki.archlinux.org/title/Networking), for example [NetworkManager](https://wiki.archlinux.org/title/Network_management) and [BlueZ](https://wiki.archlinux.org/title/bluetooth),
 * a [text editor](https://wiki.archlinux.org/title/Text_editor), for example [nano](https://wiki.archlinux.org/title/nano) or [vim](https://wiki.archlinux.org/title/vim)
 * packages for accessing documentation in [man](https://wiki.archlinux.org/title/Man) and [info](https://wiki.archlinux.org/title/Info) pages: [man-db](https://archlinux.org/packages/?name=man-db), [man-pages](https://archlinux.org/packages/?name=man-pages) and [texinfo](https://archlinux.org/packages/?name=texinfo).
 
@@ -226,8 +223,8 @@ This command assumes the hardware clock is set to [UTC](https://en.wikipedia.org
 Edit `/etc/locale.gen` and uncomment or add your preffered locales and `en_US.UTF-8 UTF-8` which is commonly used as a fallback locale.
 
 ```shell
-echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
-echo "ru_RU.UTF-8 UTF-8" >> /etc/locale.gen
+echo 'en_US.UTF-8 UTF-8' >> /etc/locale.gen
+echo 'ru_RU.UTF-8 UTF-8' >> /etc/locale.gen
 ```
 
 Generate the [locales](https://wiki.archlinux.org/title/Locale) by running:
@@ -241,7 +238,7 @@ Create the [locale.conf(5)](https://man.archlinux.org/man/locale.conf.5) file, a
 Create `/etc/locale.conf` with the follwing content:
 
 ```shell
-echo "LANG=ru_RU.UTF-8" > /etc/locale.conf
+echo 'LANG=ru_RU.UTF-8' > /etc/locale.conf
 ```
 
 ### 3.3 **Virtual console settings**
@@ -257,7 +254,7 @@ localectl list-keymaps
 For example, create `/etc/vconsole.conf` with following content, to set a russian keyboard layout:
 
 ```shell
-echo "KEYMAP=ru" >> /etc/vconsole.conf
+echo 'KEYMAP=ru' >> /etc/vconsole.conf
 ```
 
 [Console fonts](https://wiki.archlinux.org/title/Console_fonts) are located in `/usr/share/kbd/consolefonts/` and can likewise be set with [setfont(8)](https://man.archlinux.org/man/setfont.8).
@@ -270,21 +267,29 @@ Add `FONT` variable to `/etc/vconsole.conf` according to your display density.
 For HiDPI displays:
 
 ```shell
-echo "FONT=latarcyrheb-sun32" >> /etc/vconsole.conf
+echo 'FONT=latarcyrheb-sun32' >> /etc/vconsole.conf
 ```
 
 Or, for low DPI displays:
 
 ```shell
-echo "FONT=latarcyrheb-sun16" >> /etc/vconsole.conf
+echo 'FONT=latarcyrheb-sun16' >> /etc/vconsole.conf
 ```
 
 ### 3.4 **Network configuration**
 
+Install software necessary for [networking](https://wiki.archlinux.org/title/Networking), like [NetworkManager](https://wiki.archlinux.org/title/Network_management) and [BlueZ](https://wiki.archlinux.org/title/bluetooth)
+
+```shell
+pacman -S \
+    networkmanager iw wireless-regdb \
+    bluez bluez-utils
+```
+
 Create the [hostname](https://wiki.archlinux.org/title/Hostname) file:
 
 ```shell
-echo "my-hostname" > /etc/hostname
+echo 'my-hostname' > /etc/hostname
 ```
 
 Complete the [network configuration](https://wiki.archlinux.org/title/Network_configuration) for the newly installed environment.
@@ -458,13 +463,19 @@ NEWUSER=<USERNAME>
 To add a new user, use the `useradd` command: 
 
 ```shell
-useradd -m -G sys,rfkill,wheel -s /bin/bash $NEWUSER
+useradd -m -G sys,rfkill,wheel -s /bin/bash "$NEWUSER"
+```
+
+If you want to create user with existing home directory:
+
+```shell
+useradd -d /home/"$NEWUSER" -G sys,rfkill,wheel -s /bin/bash "$NEWUSER"
 ```
 
 Set password for this user with [passwd](https://man.archlinux.org/man/passwd.1) command:
 
 ```
-passwd $NEWUSER
+passwd "$NEWUSER"
 ```
 
 ### 4.3 **Security**
