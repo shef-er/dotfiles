@@ -356,36 +356,36 @@ Use the `initrd` option to load the microcode, before the initial ramdisk. If no
 
 The latest microcode `*-ucode.img` must be available at boot time in your ESP. The ESP must be mounted as `/boot` in order to have the microcode updated every time microcode is updated.
 
-An example of loader files launching Arch from a volume [labeled](https://wiki.archlinux.org/title/Persistent_block_device_naming#by-label) `ARCH_OS` and loading AMD CPU microcode is provided below.
+An example of loader files launching Arch from a volume [labeled](https://wiki.archlinux.org/title/Persistent_block_device_naming#by-label) `system` and loading AMD CPU microcode is provided below.
 
 Contents of `/boot/loader/loader.conf`:
 
 ```
-default arch.conf
-timeout 1
+default arch-lts.conf
 editor no
+timeout 3
 #console-mode keep
 ```
 
-Contents of `/boot/loader/entries/arch.conf`:
+Contents of `/boot/loader/entries/arch-lts.conf`:
 
 ```
 title   Arch Linux
 linux   /vmlinuz-linux-lts
 initrd  /amd-ucode.img
 initrd  /initramfs-linux-lts.img
-options root="LABEL=ARCH_OS" rw nmi_watchdog=0
+options root="LABEL=system" rw nmi_watchdog=0
 
 ```
 
-Contents of `/boot/loader/entries/arch-fallback.conf`:
+Contents of `/boot/loader/entries/arch-lts-fallback.conf`:
 
 ```
 title   Arch Linux Fallback
 linux   /vmlinuz-linux-lts
 initrd  /amd-ucode.img
 initrd  /initramfs-linux-lts-fallback.img
-options root="LABEL=ARCH_OS" rw nmi_watchdog=0
+options root="LABEL=system" rw nmi_watchdog=0
 
 ```
 
