@@ -162,7 +162,7 @@ Use the [pacstrap(8)](https://man.archlinux.org/man/pacstrap.8) script to instal
 
 ```shell
 pacstrap -K /mnt \
-    base linux-lts linux-firmware \
+    base linux-lts linux-firmware dracut \
     base-devel \
     man-db man-pages \
     nano nano-syntax-highlighting
@@ -303,17 +303,7 @@ Set the root password:
 passwd
 ```
 
-### 3.6 **Initramfs**
-
-Creating a new *initramfs* is usually not required, because [mkinitcpio](https://wiki.archlinux.org/title/Mkinitcpio) was run on installation of the [kernel](https://wiki.archlinux.org/title/Kernel) package with *pacstrap*.
-
-For [system encryption](https://wiki.archlinux.org/title/Dm-crypt) modify [mkinitcpio.conf(5)](https://man.archlinux.org/man/mkinitcpio.conf.5) and recreate the initramfs image:
-
-```shell
-mkinitcpio -P
-```
-
-### 3.7 **CPU Microcode**
+### 3.6 **CPU Microcode**
 
 Select your CPU architecture:
 
@@ -327,7 +317,7 @@ Enable [microcode](https://wiki.archlinux.org/title/Microcode) updates.
 pacman -S $CPU_ARCH-ucode
 ```
 
-### 3.9 **systemd-boot**
+### 3.7 **systemd-boot**
 
 To verify the boot mode, list the [efivars](https://wiki.archlinux.org/title/Efivars) directory:
 
@@ -399,7 +389,7 @@ options root="LABEL=system" rw nmi_watchdog=0
 > * An example entry file is located at `/usr/share/systemd/bootctl/arch.conf`.
 > * The [kernel parameters](https://wiki.archlinux.org/title/Kernel_parameters) for scenarios such as [LUKS](https://wiki.archlinux.org/title/LUKS) or [dm-crypt](https://wiki.archlinux.org/title/Dm-crypt) can be found on the relevant pages.
 
-## 3.10 **Reboot**
+## 3.8 **Reboot**
 
 Optionally manually unmount all the partitions with 
 
