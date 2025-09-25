@@ -1,5 +1,7 @@
 # Post-install
 
+Login into your user account.
+
 Refresh pacman database:
 
 ```shell
@@ -24,83 +26,74 @@ Open dotfiles directory and link configs to `$HOME`:
 (cd ~/.local/share/dotfiles && make link)
 ```
 
-## **Ble.sh**
-
-Install [ble.sh](https://wiki.archlinux.org/title/Bash#Syntax_highlighting_and_autosuggestions):
+Install [Noto](https://fonts.google.com/noto) fonts:
 
 ```shell
-aur install blesh
+sudo pacman -Sy noto-fonts noto-fonts-cjk noto-fonts-emoji noto-fonts-extra
 ```
 
-<!--
-```shell
-BLESH_URL="https://github.com/akinomyoga/ble.sh/releases/download/v0.3.4/ble-0.3.4.tar.xz"
-BLESH_DIR="$HOME/.local/share/blesh"
-BLESH_TMP="/tmp/ble.tar.xz"
-(curl -Lo "$BLESH_TMP" "$BLESH_URL"; mkdir -p "$BLESH_DIR"; cd "$BLESH_DIR"; tar xJf "$BLESH_TMP" --strip-components 1; rm "$BLESH_TMP")
-```
--->
+## **Settings**
 
-<!--
-### **Zsh**
+### **Tap to click**
 
-Install [zsh](https://wiki.archlinux.org/title/zsh) and make it your default shell
+Enable tap to click for your current user:
 
 ```shell
-sudo pacman -Sy zsh zsh-autosuggestions zsh-completions
-chsh -s /bin/zsh
+gsettings set org.gnome.desktop.peripherals.touchpad tap-to-click true
 ```
 
-After that relogin into your session.
--->
+Enable tap to click for gdm user and restart GDM:
 
-## **Essential applications**
+```shell
+sudo machinectl shell gdm@ /bin/bash -c 'gsettings set org.gnome.desktop.peripherals.touchpad tap-to-click true'
+sudo systemctl restart gdm
+```
+
+### **Use CapsLock as Ctrl key**
+
+```shell
+gsettings set org.gnome.desktop.input-sources xkb-options "['caps:ctrl_modifier']"
+```
+
+### **Monospaced font**
+
+Set [Iosevka](https://typeof.net/Iosevka/) as default monospace font:
+
+```shell
+sudo pacman -Sy ttc-iosevka
+gsettings set org.gnome.desktop.interface monospace-font-name 'Iosevka 14'
+```
+
+### **Install GTK3 theme to match GTK4 apps**
+
+Install [adw-gtk3](https://github.com/lassekongo83/adw-gtk3) and change the theme to `adw-gtk3` light:
+
+```shell
+sudo pacman -Sy adw-gtk-theme
+gsettings set org.gnome.desktop.interface gtk-theme 'adw-gtk3' 
+gsettings set org.gnome.desktop.interface color-scheme 'default'
+```
+
+## **Applications**
 
 Packages to install:
 
 ```shell
 sudo pacman -Sy \
-    htop
-    obsidian \
-    gnome-passwordsafe \
+    fuse \
+    htop \
+    gvim \
     seahorse \
-    neovim
-
-sudo pacman -Sy \
-    firefox \
-    firefox-i18n-ru \
-    telegram-desktop \
+    secrets \
     fragments \
-    transmission-gtk
-
-sudo pacman -Sy \
     libreoffice-fresh \
+    foliate \
     gimp \
     inkscape \
-    picard qt5-wayland
-```
-
-Install [Noto](https://fonts.google.com/noto) and [JetBrains Mono](https://www.jetbrains.com/lp/mono/) fonts:
-
-```shell
-sudo pacman -Sy noto-fonts noto-fonts-cjk noto-fonts-emoji noto-fonts-extra ttf-jetbrains-mono
-```
-
-Install [Flatpak](https://wiki.archlinux.org/title/Flatpak) and [flathub](https://flathub.org/) repository:
-
-```shell
-sudo pacman -Sy flatpak
-flatpak --user remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
-
-flatpak --user install flathub com.valvesoftware.Steam
-flatpak --user install flathub io.bassi.Amberol
-```
-
-Install and enable [Syncthing](https://wiki.archlinux.org/title/Syncthing):
-
-```shell
-sudo pacman -Sy syncthing
-systemctl --user enable --now syncthing.service
+    eartag \
+    picard \
+    qt5-wayland \
+    gst-plugins-ugly
 ```
 
 Packages to remove:
@@ -108,16 +101,35 @@ Packages to remove:
 ```shell
 sudo pacman -Rs \
     epiphany \
+    gnome-contacts \
     gnome-logs \
+    gnome-maps \
     gnome-music \
-    yelp \
-    gnome-user-docs
+    gnome-system-monitor \
+    gnome-tour
 ```
 
-### 2.2 **AppImage**
-
-AppImages require [FUSE](https://wiki.archlinux.org/title/FUSE) version 2 to run. Filesystem in Userspace (FUSE) is a system that lets non-root users mount filesystems.
+Install [Flathub](https://flathub.org/) repository and some applications:
 
 ```shell
-pacman -Sy fuse
+flatpak --user remote-add --if-not-exists flathub https://dl.flathub.org/repo/flathub.flatpakrepo
+
+flatpak --user install flathub io.github.flattool.Warehouse
+flatpak --user install flathub com.github.tchx84.Flatseal
+flatpak --user install flathub com.google.Chrome
+flatpak --user install flathub org.telegram.desktop
+flatpak --user install flathub md.obsidian.Obsidian
+
+flatpak --user install flathub com.valvesoftware.Steam
+
+flatpak --user install flathub io.gitlab.theevilskeleton.Upscaler
+flatpak --user install flathub org.nickvision.tubeconverter
+flatpak --user install flathub me.iepure.devtoolbox
+```
+
+Install and enable [Syncthing](https://wiki.archlinux.org/title/Syncthing):
+
+```shell
+sudo pacman -Sy syncthing
+systemctl --user enable --now syncthing.service
 ```

@@ -543,10 +543,9 @@ systemctl --user enable pipewire pipewire-pulse
 ```shell
 pacman -Sy \
     gnome \
-    xdg-desktop-portal-gnome \
+    webp-pixbuf-loader \
     gnome-shell-extensions \
     gnome-shell-extension-appindicator \
-    gnome-software-packagekit-plugin \
     dconf-editor
 ```
 

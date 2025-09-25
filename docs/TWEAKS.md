@@ -73,53 +73,7 @@ echo "vm.dirty_writeback_centisecs=6000" >> /etc/sysctl.d/vm.conf
 echo "vm.max_map_count=1048576" >> /etc/sysctl.d/vm.conf
 ```
 
-## **GNOME**
-
-### **Tap to click**
-
-Enable tap to click for your current user:
-
-```shell
-gsettings set org.gnome.desktop.peripherals.touchpad tap-to-click true
-```
-
-Enable tap to click for gdm user and restart GDM:
-
-```shell
-sudo machinectl shell gdm@ /bin/bash -c 'gsettings set org.gnome.desktop.peripherals.touchpad tap-to-click true'
-sudo systemctl restart gdm
-```
-
-### **Use CapsLock as Ctrl key**
-
-```shell
-gsettings set org.gnome.desktop.input-sources xkb-options "['caps:ctrl_modifier']"
-```
-
-### **Monospaced font**
-
-Set [JetBrains Mono](https://www.jetbrains.com/lp/mono/) as default monospace font:
-
-```shell
-gsettings set org.gnome.desktop.interface monospace-font-name 'JetBrains Mono 13'
-```
-
-### **GTK3 theme to match GTK4 apps**
-
-Install [adw-gtk3](https://github.com/lassekongo83/adw-gtk3):
-
-```shell
-sudo pacman -Sy adw-gtk-theme
-```
-
-Change the theme to adw-gtk3 light:
-
-```shell
-gsettings set org.gnome.desktop.interface gtk-theme 'adw-gtk3' 
-gsettings set org.gnome.desktop.interface color-scheme 'default'
-```
-
-## **LocalSearch**
+## **GNOME LocalSearch**
 
 Disable file indexing when running on battery:
 
