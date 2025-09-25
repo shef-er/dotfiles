@@ -101,6 +101,7 @@ Packages to remove:
 ```shell
 sudo pacman -Rs \
     epiphany \
+    gnome-connections \
     gnome-contacts \
     gnome-logs \
     gnome-maps \
