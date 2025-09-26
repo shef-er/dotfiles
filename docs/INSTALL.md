@@ -162,10 +162,10 @@ Use the [pacstrap(8)](https://man.archlinux.org/man/pacstrap.8) script to instal
 
 ```shell
 pacstrap -K /mnt \
-    base linux-lts linux-firmware dracut \
-    base-devel \
+    base dracut linux-lts linux-firmware \
+    nano nano-syntax-highlighting \
     man-db man-pages \
-    nano nano-syntax-highlighting
+    base-devel
 ```
 
 > **Tip**  
