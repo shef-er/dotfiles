@@ -1,0 +1,4 @@
+---
+---
+# To base64 encode field
+jq 'map(.value |= @base64)'
