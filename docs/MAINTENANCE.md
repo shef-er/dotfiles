@@ -28,6 +28,13 @@ Pacman 6.0 introduced the option to download packages in parallel. `ParallelDown
 
 Visit the [Mirrors](https://wiki.archlinux.org/title/Mirrors) article for steps on taking full advantage of using the fastest and most up to date mirrors of the official repositories. As explained in the article, a particularly good advice is to routinely check the [Mirror Status](https://archlinux.org/mirrors/status/) page for a list of mirrors that have been recently synced. This can be automated with [Reflector](https://wiki.archlinux.org/title/Reflector). 
 
+### **Ranking mirrors**
+
+You can use `/usr/bin/rankmirrors` from [pacman-contrib](https://archlinux.org/packages/?name=pacman-contrib)
+
+```bash
+rankmirrors -n 0 ~/.config/pacman/ru-secure.mirrorlist | sudo tee /etc/pacman.d/mirrorlist
+```
 
 ### **Cleaning the package cache**
 
